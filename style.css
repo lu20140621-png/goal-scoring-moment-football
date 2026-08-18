@@ -56,3 +56,114 @@ h1{margin:0;font-size:clamp(20px,3vw,30px)}
 .yardLines{position:absolute;left:92px;right:92px;top:0;bottom:0;pointer-events:none;z-index:0}.yardLine{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.18)}.hashGroup{position:absolute;top:50%;transform:translateY(-50%);height:220px;width:16px;pointer-events:none}.hash{position:absolute;left:0;height:2px;width:12px;background:rgba(255,255,255,.25)}.hash.top1{top:0}.hash.top2{top:28px}.hash.top3{top:56px}.hash.top4{top:84px}.hash.bottom1{bottom:0}.hash.bottom2{bottom:28px}.hash.bottom3{bottom:56px}.hash.bottom4{bottom:84px}.yardNum{position:absolute;top:16px;font-size:28px;font-weight:900;color:rgba(255,255,255,.25);letter-spacing:.06em;line-height:1;transform:translateX(-50%)}.yardNum.bottom{top:auto;bottom:16px}
 .scrimmageLine{position:absolute;top:0;bottom:0;width:4px;z-index:1;background:linear-gradient(180deg,transparent 0,rgba(255,219,111,.88) 12%,rgba(255,219,111,.88) 88%,transparent 100%);box-shadow:0 0 18px rgba(230,183,90,.35);pointer-events:none;transition:left .68s cubic-bezier(.2,.8,.2,1)}.scrimmageBadge{position:absolute;top:50%;transform:translate(-50%,-50%);z-index:3;background:#171207;color:#f7d889;border:1px solid rgba(230,183,90,.72);border-radius:999px;padding:5px 8px;font-size:10px;font-weight:950;white-space:nowrap;pointer-events:none;transition:left .68s cubic-bezier(.2,.8,.2,1)}.driveHint{position:absolute;left:50%;top:11px;transform:translateX(-50%);z-index:3;background:rgba(4,12,8,.76);border:1px solid rgba(255,255,255,.11);border-radius:999px;padding:6px 10px;font-size:10px;color:#eef6f0;white-space:nowrap}.tdRunner{transition:left .85s cubic-bezier(.16,.84,.26,1), transform .85s ease !important;transform:scale(1.08) !important;z-index:10 !important;box-shadow:0 0 0 5px rgba(230,183,90,.24),0 0 36px rgba(230,183,90,.50),0 14px 28px rgba(0,0,0,.34)!important}.touchdownBox{text-align:center;max-width:620px}.touchdownWord{font-size:clamp(44px,9vw,82px);font-weight:1000;letter-spacing:.05em;line-height:1;color:#f3c86a;text-shadow:0 5px 24px rgba(230,183,90,.28);margin:6px 0 10px}.touchdownTeam{font-size:24px;font-weight:950;margin-bottom:8px}.touchdownRoute{font-size:14px;color:#cbd9d1;line-height:1.7;margin-bottom:15px}.yardPosition{font-size:18px;font-weight:950;margin-top:5px}
 .playerSwitchTop{margin:10px 0 10px;padding:10px;border-radius:14px;background:rgba(5,14,9,.52);border:1px solid rgba(255,255,255,.08)}.playerSwitchLabel{font-size:11px;font-weight:900;color:var(--muted);margin-bottom:7px;letter-spacing:.08em}.playerSwitchTop .switchList{display:flex;gap:8px;flex-wrap:wrap}.playerSwitchTop .switchBtn{width:auto;min-width:120px;flex:0 0 auto}.actionPanel{margin:10px 0 12px;position:relative;z-index:5;background:linear-gradient(180deg,rgba(47,35,14,.96),rgba(28,22,11,.96));border:1px solid rgba(230,183,90,.62);box-shadow:0 8px 24px rgba(0,0,0,.18)}.actionPanel.hidden{display:none}.actionTitle{font-size:13px;font-weight:950;color:#f3cf82;margin-bottom:8px}.actionButtons{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Mobile is a dedicated layout, not a squeezed desktop page. */
+@media (max-width:700px){
+  body{overflow-x:hidden}
+  .shell{width:100%;max-width:none;padding:10px}
+  .topbar{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px}
+  .brand{align-items:center;min-width:0}
+  .logo{font-size:24px;padding:7px 9px}
+  h1{font-size:19px;line-height:1.05}
+  .sub{font-size:9px;letter-spacing:.05em;margin-top:3px}
+  .topbar>div:last-child{display:grid!important;grid-template-columns:repeat(3,1fr);gap:6px!important}
+  .topbar .btn{padding:9px 4px;font-size:12px;min-width:0}
+
+  .main{gap:10px}
+  .fieldPanel{min-height:0;padding:10px;border-radius:18px}
+  .fieldPanel::before{height:90px}
+  .fieldPanel::after{top:40px;height:80px}
+  .stadiumTop{display:grid;grid-template-columns:1fr;gap:8px;padding:10px;margin-bottom:9px;border-radius:13px}
+  .stadiumTop>div:first-child{min-width:0}
+  .stadiumTop>div:first-child>div:first-child{font-size:14px!important;line-height:1.2}
+  .modeInfo{font-size:10px;line-height:1.45;margin-top:3px}
+  .scoreMini{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+  .scoreTag{padding:7px 4px;font-size:9px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .fieldArea{height:300px;min-height:300px;margin-top:5px;border-radius:15px}
+  .endzone{width:42px;font-size:9px;letter-spacing:.08em}
+  .yardLines{left:42px;right:42px}
+  .yardLine{width:1px;background:rgba(255,255,255,.20)}
+  .hashGroup{height:170px;width:10px}
+  .hash{width:8px;height:1px}
+  .hash.top2{top:24px}.hash.top3{top:48px}.hash.top4{top:72px}
+  .hash.bottom2{bottom:24px}.hash.bottom3{bottom:48px}.hash.bottom4{bottom:72px}
+  .yardNum{top:14px;font-size:13px;letter-spacing:0}
+  .yardNum.bottom{top:auto;bottom:14px}
+  .centerMark{width:48px;height:48px;font-size:20px;border-width:2px}
+  .centerLine{width:2px}
+  .player{width:44px;height:44px;border-width:1px;box-shadow:0 7px 14px rgba(0,0,0,.28)}
+  .player.active{outline:2px solid var(--gold);box-shadow:0 0 0 3px rgba(230,183,90,.14),0 7px 14px rgba(0,0,0,.3)}
+  .player.ball{box-shadow:0 0 0 3px rgba(230,183,90,.18),0 0 18px rgba(230,183,90,.28),0 7px 14px rgba(0,0,0,.3)}
+  .player .num{font-size:12px}.player .role{font-size:7px;margin-top:1px}.player .ballIcon{font-size:13px;right:-5px;top:-8px}
+  .driveHint{top:7px;width:calc(100% - 100px);font-size:8px;line-height:1.25;padding:5px 7px;white-space:normal;text-align:center;border-radius:9px}
+  .scrimmageLine{width:3px}
+  .scrimmageBadge{font-size:8px;padding:4px 6px;max-width:105px;overflow:hidden;text-overflow:ellipsis}
+  .benchNote{display:none}
+
+  .bottomStatus{margin-top:8px;grid-template-columns:1fr 1fr;gap:6px;padding:8px;border-radius:14px}
+  .centerInfo{grid-column:1/-1;grid-row:1}
+  .teamBox{padding:8px;border-radius:11px}
+  .teamTitle{font-size:10px}
+  .progressRow{gap:5px;margin-top:5px}
+  .progressRow b{font-size:11px;white-space:nowrap}
+  .bar{height:7px;min-width:0}
+  .footballs{font-size:14px;margin-top:4px}
+  .centerPill{font-size:10px;padding:6px 9px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .centerSub{font-size:9px;margin-top:3px}
+
+  .cardPanel{margin-top:0;padding:10px;border-radius:18px}
+  .handHeader{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:7px}
+  .currentPlayer{font-size:13px;gap:7px}
+  .currentBadge{width:29px;height:29px}
+  .ops{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .ops .btn{padding:8px 5px;font-size:11px}
+  .playerSwitchTop{margin:7px 0;padding:8px;border-radius:12px}
+  .playerSwitchLabel{font-size:10px;margin-bottom:5px}
+  .playerSwitchTop .switchList{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+  .playerSwitchTop .switchBtn{min-width:0;width:100%;padding:8px 7px;font-size:10px}
+  .switchBtn small{font-size:8px;margin-top:2px}
+
+  .actionPanel{margin:7px 0 8px;padding:9px!important;border-radius:12px}
+  .actionTitle{font-size:11px;margin-bottom:6px}
+  .actionButtons{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+  .actionButtons .btn{padding:8px 5px;font-size:10px;min-width:0}
+
+  .infoRow{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:7px}
+  .chip{font-size:9px;padding:5px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+  .handArea{min-height:165px;height:165px;padding:9px 4px 7px;border-radius:13px;overflow-x:hidden;overflow-y:visible;align-items:flex-end}
+  .hand{width:100%;height:100%;padding:5px 2px 2px;display:flex;align-items:flex-end;justify-content:center}
+  .card{width:74px;min-width:74px;height:116px;min-height:116px;margin-left:-31px;border-radius:12px;padding:7px 6px;box-shadow:0 8px 15px rgba(0,0,0,.24)}
+  .hand .card:first-child{margin-left:0}
+  .card .icon{font-size:20px}.card .name{font-size:9px;line-height:1.05}.card .desc{font-size:7px;line-height:1.15}
+  .playHint{font-size:9px;line-height:1.35;margin-top:6px}
+
+  .sidePanel{padding:10px;border-radius:18px}
+  .sideTitle{font-size:10px;margin-bottom:6px}
+  .log{min-height:120px;max-height:180px;gap:5px;margin-bottom:7px}
+  .logItem{font-size:9px;line-height:1.3;padding-left:6px}
+  .footerNote{font-size:9px;line-height:1.4}
+
+  .modal,.privacy{padding:10px}
+  .modalBox,.privacyBox{width:100%;max-height:92vh;overflow:auto;border-radius:18px;padding:14px}
+  .setupGrid{gap:8px}
+  .optionBox{padding:10px}
+  .optionList{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+  .optionBox:nth-child(2) .optionList{grid-template-columns:1fr 1fr}
+  .selectBtn{padding:9px 5px;font-size:11px}
+  .startWrap{margin-top:10px}
+  .startWrap .btn{width:100%}
+  .touchdownWord{font-size:48px}
+  .touchdownTeam{font-size:18px}
+  .touchdownRoute{font-size:12px}
+}
+
+@media (max-width:380px){
+  .shell{padding:7px}
+  .fieldArea{height:270px;min-height:270px}
+  .player{width:40px;height:40px}
+  .player .num{font-size:11px}
+  .card{width:68px;min-width:68px;height:108px;min-height:108px;margin-left:-29px;padding:6px 5px}
+  .handArea{height:154px;min-height:154px}
+  .card .icon{font-size:18px}.card .name{font-size:8px}.card .desc{font-size:6.5px}
+}
