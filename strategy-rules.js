@@ -1,200 +1,265 @@
 (()=>{
 const zh=`
-<div style="font-size:15px;line-height:1.78">
-<b style="font-size:18px">🏈 策略模式怎么玩？</b><br>
-第一次玩也没关系。单人模式里，<b>你只操作红队，蓝队由电脑自动操作</b>。按照下面顺序做，就能把一整轮攻防玩明白。<br><br>
+<div style="font-size:15px;line-height:1.8">
+<b style="font-size:19px">🏈 策略模式：从开局到获胜的完整流程</b><br>
+这不是几个例子，而是<b>整场游戏所有主要流程</b>。第一次玩的玩家按顺序看，就能知道什么时候进攻、什么时候防守、什么时候反制、什么时候换球权。<br><br>
 
-<b>① 先选人数</b><br>
-• <b>2v2：</b>每名球员 7 张牌。<br>
-• <b>3v3：</b>每名球员 6 张牌。<br>
-• <b>4v4：</b>每名球员 5 张牌。<br>
-单人模式里，你负责红队所有球员；电脑负责蓝队所有球员。你不需要帮电脑出牌。<br><br>
+<b>① 选择人数和操作模式</b><br>
+• 2v2：每人 7 张牌。<br>• 3v3：每人 6 张牌。<br>• 4v4：每人 5 张牌。<br>
+<b>单人模式：</b>你控制红队，蓝队由电脑自动操作。<br>
+<b>多人模式：</b>红蓝双方都由真人操作，轮到另一方时交接设备。<br><br>
 
-<b>② 先记住怎么赢</b><br>
-每支队伍都从 <b>50码线</b> 开始。一次成功进攻就前进一格：<br>
-<b>50 → 40 → 30 → 20 → 10</b><br>
-第 4 次成功到达 10 码线后，当前持球者会自动冲进 <b>END ZONE</b>，完成 <b>TOUCHDOWN</b>。<br>
-1 次 TOUCHDOWN = 1 个 🏈。<b>先拿到 3 个 🏈 的队伍获胜。</b><br><br>
+<b>② 游戏目标</b><br>
+双方都从 <b>50码线</b> 开始。每完成 1 次成功进攻就推进 1 格：<br>
+<b>第1次：50→40　 第2次：40→30　 第3次：30→20　 第4次：20→10→自动冲入 END ZONE</b><br>
+第4次成功直接 TOUCHDOWN，不需要第5次进攻。<br>
+1次 TOUCHDOWN 获得 1 个 🏈；<b>先获得 3 个 🏈 的队伍获胜。</b><br><br>
 
-<b>③ 一轮开始：先选持球者</b><br>
-轮到红队进攻时，系统会让你从红队里选一名有 <b>RUN</b> 或 <b>PASS</b> 的球员当持球者。<br>
-只有当前持球者可以发动这次进攻。<br><br>
+<b>③ 一轮开始：确定进攻方和持球者</b><br>
+系统确定本轮先攻方。进攻方从自己队伍中选择一名<b>手里有 RUN 或 PASS</b>的球员作为持球者。<br>
+持球者确定后进入<b>进攻时刻</b>。当前持球者选择 RUN 或 PASS 发动一次进攻。<br><br>
 
-<b>④ 进攻时，你主要有两个选择</b><br>
-<b>RUN 🏃</b>：持球者自己带球往前跑。<br>
-<b>PASS 🎯</b>：把球传给一名队友。点击 PASS 后，系统会让你选择接球队友。<br><br>
+<b style="font-size:17px">④ RUN 的完整进攻 → 防守 → 反制流程</b><br>
+<b>步骤1：</b>持球者打出 <b>RUN 🏃</b>。<br>
+<b>步骤2：</b>系统立刻进入防守时刻。防守方查看自己能使用的防守牌。<br>
+<b>步骤3：防守方有三种选择：</b><br>
+• <b>不防守</b> → RUN 直接成功。<br>
+• <b>TACKLE 💥</b> → 尝试阻止 RUN。TACKLE 不会自动抢走球。<br>
+• <b>BLITZ ⚡</b> → 这次 RUN 直接失败。<br><br>
+<b>如果防守方选择“不防守”：</b><br>
+RUN 成功 → 系统自动推进 1 格 → 原持球者继续持球 → 如果仍有 RUN/PASS，可以继续下一次进攻。<br><br>
+<b>如果防守方打出 BLITZ：</b><br>
+RUN 失败 → 不推进 → 球仍在原持球者手上 → 进入下一次可进行的进攻判断。<br><br>
+<b>如果防守方打出 TACKLE：</b><br>
+系统切回进攻方，进入<b>BLOCK反制时刻</b>。<br>
+进攻方可以：<br>
+• <b>不用 BLOCK</b> → TACKLE 生效 → RUN失败 → 不推进。<br>
+• <b>打出 BLOCK 🛡️</b> → 取消这张 TACKLE。<br><br>
+<b>如果进攻方打出 BLOCK：</b><br>
+系统再次切回防守方，进入<b>最后反制</b>。防守方可以：<br>
+• <b>放弃 BLITZ</b> → BLOCK成功保护RUN → RUN成功 → 推进1格。<br>
+• <b>打出 BLITZ</b> → 最终阻止进攻 → RUN失败 → 不推进。<br><br>
+<b>RUN完整链：</b><br>
+RUN → 不防守 = 成功<br>
+RUN → BLITZ = 失败<br>
+RUN → TACKLE → 不BLOCK = 失败<br>
+RUN → TACKLE → BLOCK → 不BLITZ = 成功<br>
+RUN → TACKLE → BLOCK → BLITZ = 失败<br><br>
 
-<b>⑤ 如果你打出 RUN，会发生什么？</b><br>
-流程是：<br>
-<b>你出 RUN → 电脑蓝队防守 → 你可能反制 → 系统判定成功或失败。</b><br><br>
-电脑可能做 3 种事：<br>
-• <b>TACKLE 💥</b>：拦住这次 RUN。<br>
-• <b>BLITZ ⚡</b>：直接让这次进攻失败。<br>
-• <b>不防守</b>：RUN 直接成功，你的球队自动前进一格。<br><br>
-如果电脑出了 <b>TACKLE</b>，系统会切回你这边。<br>
-如果你手里有 <b>BLOCK 🛡️</b>，可以打出 BLOCK 取消 TACKLE。<br>
-你用了 BLOCK 后，电脑还有最后一次机会使用 <b>BLITZ</b>。<br>
-• 电脑出 BLITZ → 这次 RUN 失败。<br>
-• 电脑不出 BLITZ → 这次 RUN 成功，你前进一格。<br><br>
+<b style="font-size:17px">⑤ PASS 的完整进攻 → 防守 → 反制流程</b><br>
+<b>步骤1：</b>持球者打出 <b>PASS 🎯</b>。<br>
+<b>步骤2：</b>从自己的队友中选择一名<b>接球队友</b>。PASS成功后，这名队友会成为新的持球者。<br>
+<b>步骤3：</b>如果传球者是技能还没使用的 <b>QB</b>，系统先弹出“是否使用QB技能”。处理完技能后再进入防守。<br>
+<b>步骤4：</b>系统进入防守时刻。防守方有三种选择：<br>
+• <b>不防守</b> → PASS成功。<br>
+• <b>INTERCEPTION 🦅</b> → 尝试抄截PASS。<br>
+• <b>BLITZ ⚡</b> → PASS直接失败。<br><br>
+<b>如果防守方选择“不防守”：</b><br>
+PASS成功 → 接球队友获得球权 → 系统推进1格 → 新持球者可以继续进攻。<br><br>
+<b>如果防守方打出 BLITZ：</b><br>
+PASS失败 → 不推进 → 球仍由原进攻方持有。<br><br>
+<b>如果防守方打出 INTERCEPTION：</b><br>
+系统切回进攻方，进入<b>BLOCK反制时刻</b>。<br>
+进攻方可以：<br>
+• <b>不用 BLOCK</b> → INTERCEPTION成功 → 出INTERCEPTION的防守球员直接获得球权 → 攻守立即交换。<br>
+• <b>打出 BLOCK 🛡️</b> → 取消INTERCEPTION。<br><br>
+<b>如果进攻方用 BLOCK 取消抄截：</b><br>
+系统再次切回防守方。防守方可以：<br>
+• <b>放弃 BLITZ</b> → PASS成功 → 接球队友持球 → 推进1格。<br>
+• <b>打出 BLITZ</b> → PASS最终失败 → 不推进。<br><br>
+<b>PASS完整链：</b><br>
+PASS → 选接球人 → 不防守 = 成功<br>
+PASS → 选接球人 → BLITZ = 失败<br>
+PASS → 选接球人 → INTERCEPTION → 不BLOCK = 抄截成功，防守方拿球<br>
+PASS → 选接球人 → INTERCEPTION → BLOCK → 不BLITZ = PASS成功<br>
+PASS → 选接球人 → INTERCEPTION → BLOCK → BLITZ = PASS失败<br><br>
 
-<b>⑥ 如果你打出 PASS，会发生什么？</b><br>
-流程是：<br>
-<b>你出 PASS → 选择接球队友 → 如果是 QB 可先决定技能 → 电脑防守 → 你可能反制 → 系统判定。</b><br><br>
-电脑可能做 3 种事：<br>
-• <b>INTERCEPTION 🦅</b>：抄截这次 PASS。成功后，出这张牌的蓝队球员直接获得球权。<br>
-• <b>BLITZ ⚡</b>：直接让 PASS 失败。<br>
-• <b>不防守</b>：PASS 成功，接球队友成为新的持球者，你的球队前进一格。<br><br>
-如果电脑出了 <b>INTERCEPTION</b>，系统会切回你这边。<br>
-如果你有 <b>BLOCK 🛡️</b>，可以用 BLOCK 取消 INTERCEPTION。<br>
-BLOCK 后，电脑仍然可以再用 BLITZ 做最后反制。<br><br>
+<b style="font-size:17px">⑥ QB 身份技能的完整流程</b><br>
+只有 <b>QB 打出 PASS</b> 时才会出现技能选择。<br>
+PASS → 选择接球队友 → 系统弹出“是否使用身份卡技能？”<br>
+• <b>暂不使用</b> → 技能保留，以后还能用。<br>
+• <b>使用技能</b> → 技能立即消耗。<br>
+如果这次PASS最终成功，本次推进按<b>2格</b>计算。<br>
+如果已经选择使用技能，但PASS之后被 INTERCEPTION 或 BLITZ 阻止，<b>技能仍然算使用过，不返还。</b><br><br>
 
-<b>⑦ QB 身份技能什么时候用？</b><br>
-如果打出 PASS 的球员是 <b>QB</b>，而且技能还没用过，系统会先弹出：<br>
-<b>“是否使用 QB 身份技能？”</b><br>
-• 选择“使用技能” → 技能立刻消耗。<br>
-• 如果这次 PASS 最终成功 → 本次推进按 <b>2格</b> 计算。<br>
-• 如果 PASS 最后被 INTERCEPTION 或 BLITZ 拦住 → 技能也不会返还。<br><br>
+<b style="font-size:17px">⑦ 当蓝队/对方拿到球以后，攻防角色完全交换</b><br>
+如果 INTERCEPTION 成功，蓝队马上成为进攻方。<br>
+<b>单人模式：</b>电脑自动选择蓝队持球者并自动出 RUN/PASS；这时你是红队防守方。<br>
+电脑出 <b>RUN</b> 后，你可以选择：<b>TACKLE / BLITZ / 不防守</b>。<br>
+电脑出 <b>PASS</b> 后，你可以选择：<b>INTERCEPTION / BLITZ / 不防守</b>。<br>
+如果你打出 TACKLE 或 INTERCEPTION，电脑可以根据手牌使用 BLOCK；如果电脑用了 BLOCK，你还有机会用 BLITZ 做最后反制。<br>
+所以无论红队还是蓝队进攻，<b>攻防链规则完全相同，只是双方身份交换。</b><br><br>
 
-<b>⑧ 防守牌分别记什么？</b><br>
-<b>TACKLE 💥</b>：主要阻止 RUN。它不会拿走球员，也不会自动抢走球。<br>
-<b>INTERCEPTION 🦅</b>：主要阻止 PASS。成功后防守方获得球权。<br>
-<b>BLOCK 🛡️</b>：用来取消 TACKLE 或 INTERCEPTION。<br>
-<b>BLITZ ⚡</b>：强力防守牌，可以让 RUN 或 PASS 直接失败，也可以在 BLOCK 后做最后反制。<br><br>
+<b style="font-size:17px">⑧ 每次进攻结束后发生什么？</b><br>
+<b>进攻成功：</b>系统自动推进；持球者按RUN/PASS结果更新；如果当前进攻方还有可用的 RUN/PASS，就可以继续发动下一次进攻。<br>
+<b>进攻失败：</b>不推进；系统检查当前队伍是否还能继续进攻。<br>
+<b>抄截成功：</b>立即换球权，原防守方变成新的进攻方。<br><br>
 
-<b>⑨ 一次进攻什么时候算成功？</b><br>
-只有当整条攻防结束后，RUN 或 PASS 没有被成功拦住，系统才会判定：<b>进攻成功</b>。<br>
-进攻成功 → 自动前进。<br>
-进攻失败 → 不前进，场上位置保持不变。<br><br>
+<b style="font-size:17px">⑨ 什么时候需要重新选择持球者？</b><br>
+如果当前持球者已经没有 RUN/PASS，但同队其他球员还有 RUN/PASS，系统会让该队<b>重新选择一名持球者</b>。<br>
+如果整个队伍都没有 RUN/PASS，而另一队还有进攻牌，则球权交给另一队，由另一队选择持球者。<br><br>
 
-<b>⑩ 什么时候会换球权？</b><br>
-• <b>INTERCEPTION 成功</b> → 球权马上给蓝队。<br>
-• 当前持球者已经没有 RUN / PASS，而另一队还有进攻牌 → 球权换给另一队。<br>
-• 双方都没有 RUN / PASS → 这一轮结束，系统重新发牌。<br>
-• TOUCHDOWN → 这一轮结束，下一轮重新从 50 码线开始。<br><br>
+<b style="font-size:17px">⑩ 一轮什么时候结束？</b><br>
+当双方都已经没有可以继续使用的 RUN/PASS 时，本轮结束。<br>
+系统收回并重新整理牌，然后按照人数重新发牌：2v2每人7张、3v3每人6张、4v4每人5张。<br>
+下一轮由另一方先攻。<br>
+<b>注意：普通的一轮结束不会把已经推进的码线清零；达阵后该队才重新从50码开始新的达阵推进。</b><br><br>
 
-<b>⑪ 一轮结束后会发生什么？</b><br>
-系统会把本轮使用过和剩下的牌重新整理，再按照人数重新发牌。<br>
-下一轮由另一方先攻。<br><br>
+<b style="font-size:17px">⑪ TOUCHDOWN 的完整流程</b><br>
+球队成功推进第1次：50→40。<br>
+第2次：40→30。<br>
+第3次：30→20。<br>
+第4次：20→10。<br>
+第4次成功后，当前持球者<b>自动从10码线冲入END ZONE</b> → 弹出 TOUCHDOWN → 获得1个🏈。<br>
+不需要再出第5张进攻牌。<br>
+达阵完成后，该队下一次达阵推进重新从50码线开始。<br><br>
 
-<b>⑫ 最容易懂的一整套攻防例子</b><br>
-<b>例子 A：RUN</b><br>
-红队持球者出 RUN → 蓝队电脑出 TACKLE → 你出 BLOCK → 蓝队没有 BLITZ → RUN 成功 → 红队从 50 前进到 40。<br><br>
-<b>例子 B：PASS</b><br>
-红队持球者出 PASS → 选择红队队友 → 蓝队电脑出 INTERCEPTION → 你出 BLOCK → 蓝队再出 BLITZ → PASS 失败 → 红队不前进。<br><br>
-<b>例子 C：QB 技能</b><br>
-红队 QB 出 PASS → 选择队友 → 选择“使用 QB 技能” → 蓝队不防守 → PASS 成功 → 本次直接推进 2 格。<br><br>
+<b style="font-size:17px">⑫ 整场比赛循环</b><br>
+<b>选择持球者 → RUN/PASS进攻 → 对方防守 → 必要时BLOCK反制 → 必要时BLITZ最终反制 → 系统判定成功/失败 → 推进或换球权 → 继续下一次进攻 → 一轮结束重新发牌 → 第4次成功TOUCHDOWN → 获得🏈 → 继续比赛。</b><br><br>
+当一支队伍获得第3个🏈时，系统立即结束比赛，这支队伍获胜。<br><br>
 
-<b>⭐ 最简单记法</b><br>
-你的操作顺序：<br>
-<b>选持球者 → RUN 或 PASS → 等电脑防守 → 有 BLOCK 就决定要不要反制 → 成功就前进。</b><br>
-<b>连续 4 次成功 = TOUCHDOWN = 1 个 🏈；先拿 3 个 🏈 就赢。</b>
+<b>⭐ 六张牌最简单记法</b><br>
+🏃 RUN = 跑球进攻<br>
+🎯 PASS = 传球进攻<br>
+💥 TACKLE = 防RUN<br>
+🦅 INTERCEPTION = 防PASS，成功会抢到球权<br>
+🛡️ BLOCK = 取消TACKLE或INTERCEPTION<br>
+⚡ BLITZ = 强力终止RUN/PASS，也可以在BLOCK后做最后反制
 </div>`;
 
 const en=`
-<div style="font-size:15px;line-height:1.78">
-<b style="font-size:18px">🏈 HOW TO PLAY STRATEGY MODE</b><br>
-New to the game? No problem. In Solo Mode, <b>you only control Red Team and the computer controls Blue Team</b>. Follow these steps in order and you can play the full attack-and-defense flow.<br><br>
+<div style="font-size:15px;line-height:1.8">
+<b style="font-size:19px">🏈 STRATEGY MODE: COMPLETE GAME FLOW</b><br>
+This is not a list of examples. It explains the <b>full game flow</b> from the start of a drive to offense, defense, counters, possession changes, touchdowns, and winning the game.<br><br>
 
-<b>1. Choose the game size</b><br>
-• <b>2v2:</b> 7 cards per player.<br>
-• <b>3v3:</b> 6 cards per player.<br>
-• <b>4v4:</b> 5 cards per player.<br>
-In Solo Mode, you control every Red player. The computer controls every Blue player. You never need to play Blue's cards yourself.<br><br>
+<b>1. Choose team size and play mode</b><br>
+• 2v2: 7 cards per player.<br>• 3v3: 6 cards per player.<br>• 4v4: 5 cards per player.<br>
+<b>Solo Mode:</b> you control Red Team and the computer controls Blue Team.<br>
+<b>Local Multiplayer:</b> both teams are controlled by players and the device is passed when sides switch.<br><br>
 
-<b>2. Know how to win</b><br>
-Each team starts at the <b>50-yard line</b>. Every successful offensive play moves your team one space:<br>
-<b>50 → 40 → 30 → 20 → 10</b><br>
-On the 4th successful play, the current ball carrier reaches the 10 and automatically runs into the <b>END ZONE</b> for a <b>TOUCHDOWN</b>.<br>
-1 TOUCHDOWN = 1 🏈. <b>The first team to collect 3 🏈 wins.</b><br><br>
+<b>2. How to win</b><br>
+Both teams begin at the <b>50-yard line</b>. Each successful offensive play advances one space:<br>
+<b>1st: 50→40　 2nd: 40→30　 3rd: 30→20　 4th: 20→10→automatic run into the END ZONE</b><br>
+The 4th successful play scores the TOUCHDOWN. There is no 5th play.<br>
+Each TOUCHDOWN earns 1 🏈. <b>The first team to collect 3 🏈 wins.</b><br><br>
 
-<b>3. Start a drive by choosing a ball carrier</b><br>
-When Red Team is on offense, choose a Red player who has a <b>RUN</b> or <b>PASS</b> card. That player becomes the ball carrier.<br>
-Only the current ball carrier can start the next offensive play.<br><br>
+<b>3. Start a round: offense and ball carrier</b><br>
+The game decides which team attacks first. The offensive team chooses a player who has a <b>RUN or PASS</b> card to become the ball carrier.<br>
+The ball carrier then starts an offensive play by choosing RUN or PASS.<br><br>
 
-<b>4. Your two main offensive choices</b><br>
-<b>RUN 🏃</b>: The ball carrier tries to run forward with the ball.<br>
-<b>PASS 🎯</b>: Pass the ball to a teammate. After you tap PASS, choose the teammate who will receive it.<br><br>
+<b style="font-size:17px">4. Complete RUN offense → defense → counter flow</b><br>
+<b>Step 1:</b> The ball carrier plays <b>RUN 🏃</b>.<br>
+<b>Step 2:</b> The game immediately enters the defense phase.<br>
+<b>Step 3: The defense has three choices:</b><br>
+• <b>No Defense</b> → RUN succeeds immediately.<br>
+• <b>TACKLE 💥</b> → tries to stop RUN. TACKLE does not automatically steal possession.<br>
+• <b>BLITZ ⚡</b> → the RUN fails immediately.<br><br>
+<b>If the defense chooses No Defense:</b><br>
+RUN succeeds → the system advances one space → the same ball carrier keeps the ball → if that offense still has RUN/PASS, it may continue attacking.<br><br>
+<b>If the defense plays BLITZ:</b><br>
+RUN fails → no advance → the original ball carrier keeps possession → the system checks the next available offensive action.<br><br>
+<b>If the defense plays TACKLE:</b><br>
+The game switches back to the offense for a <b>BLOCK response</b>.<br>
+The offense may:<br>
+• <b>Use no BLOCK</b> → TACKLE works → RUN fails.<br>
+• <b>Play BLOCK 🛡️</b> → cancel TACKLE.<br><br>
+<b>After BLOCK:</b><br>
+The defense gets one final response:<br>
+• <b>Skip BLITZ</b> → BLOCK protects the RUN → RUN succeeds → advance one space.<br>
+• <b>Play BLITZ</b> → the offense is stopped → RUN fails.<br><br>
+<b>Every RUN chain:</b><br>
+RUN → No Defense = success<br>
+RUN → BLITZ = fail<br>
+RUN → TACKLE → No BLOCK = fail<br>
+RUN → TACKLE → BLOCK → No BLITZ = success<br>
+RUN → TACKLE → BLOCK → BLITZ = fail<br><br>
 
-<b>5. What happens after you play RUN?</b><br>
-The flow is:<br>
-<b>You play RUN → Blue computer defends → you may counter → the game decides success or failure.</b><br><br>
-The computer may do one of three things:<br>
-• <b>TACKLE 💥</b>: Stops the RUN.<br>
-• <b>BLITZ ⚡</b>: Makes the offensive play fail immediately.<br>
-• <b>No Defense</b>: Your RUN succeeds and your team automatically advances one space.<br><br>
-If the computer plays <b>TACKLE</b>, the game switches back to you.<br>
-If you have <b>BLOCK 🛡️</b>, you may play BLOCK to cancel the TACKLE.<br>
-After BLOCK, the computer gets one final chance to use <b>BLITZ</b>.<br>
-• Blue uses BLITZ → the RUN fails.<br>
-• Blue does not use BLITZ → the RUN succeeds and Red advances one space.<br><br>
+<b style="font-size:17px">5. Complete PASS offense → defense → counter flow</b><br>
+<b>Step 1:</b> The ball carrier plays <b>PASS 🎯</b>.<br>
+<b>Step 2:</b> Choose a teammate as the <b>receiver</b>. If the PASS succeeds, that teammate becomes the new ball carrier.<br>
+<b>Step 3:</b> If the passer is a QB with an unused skill, the QB skill decision appears before defense.<br>
+<b>Step 4:</b> The defense has three choices:<br>
+• <b>No Defense</b> → PASS succeeds.<br>
+• <b>INTERCEPTION 🦅</b> → tries to intercept the PASS.<br>
+• <b>BLITZ ⚡</b> → PASS fails immediately.<br><br>
+<b>If the defense chooses No Defense:</b><br>
+PASS succeeds → the receiver gains possession → advance one space → the new ball carrier may continue the drive.<br><br>
+<b>If the defense plays BLITZ:</b><br>
+PASS fails → no advance → possession stays with the original offensive team.<br><br>
+<b>If the defense plays INTERCEPTION:</b><br>
+The game switches back to the offense for a <b>BLOCK response</b>.<br>
+The offense may:<br>
+• <b>Use no BLOCK</b> → INTERCEPTION succeeds → the defender who played it takes possession → offense and defense immediately switch.<br>
+• <b>Play BLOCK 🛡️</b> → cancel the INTERCEPTION.<br><br>
+<b>After BLOCK cancels the interception:</b><br>
+The defense gets a final response:<br>
+• <b>Skip BLITZ</b> → PASS succeeds → receiver takes the ball → advance one space.<br>
+• <b>Play BLITZ</b> → PASS finally fails → no advance.<br><br>
+<b>Every PASS chain:</b><br>
+PASS → choose receiver → No Defense = success<br>
+PASS → choose receiver → BLITZ = fail<br>
+PASS → choose receiver → INTERCEPTION → No BLOCK = interception; defense takes possession<br>
+PASS → choose receiver → INTERCEPTION → BLOCK → No BLITZ = PASS succeeds<br>
+PASS → choose receiver → INTERCEPTION → BLOCK → BLITZ = PASS fails<br><br>
 
-<b>6. What happens after you play PASS?</b><br>
-The flow is:<br>
-<b>You play PASS → choose a receiver → if the passer is QB, decide on the skill → Blue defends → you may counter → the game decides the result.</b><br><br>
-The computer may do one of three things:<br>
-• <b>INTERCEPTION 🦅</b>: Intercepts the PASS. If it succeeds, the Blue player who used the card takes possession.<br>
-• <b>BLITZ ⚡</b>: Makes the PASS fail immediately.<br>
-• <b>No Defense</b>: The PASS succeeds, the receiver becomes the new ball carrier, and Red advances one space.<br><br>
-If the computer plays <b>INTERCEPTION</b>, the game switches back to you.<br>
-If you have <b>BLOCK 🛡️</b>, you may use BLOCK to cancel the INTERCEPTION.<br>
-After BLOCK, Blue may still use BLITZ as the final response.<br><br>
+<b style="font-size:17px">6. Complete QB skill flow</b><br>
+The QB skill decision appears only when the <b>QB plays PASS</b> and the skill is still unused.<br>
+PASS → choose receiver → “Use QB Skill?”<br>
+• <b>Skip Skill</b> → keep the skill for later.<br>
+• <b>Use Skill</b> → the skill is consumed immediately.<br>
+If the PASS finally succeeds, that play advances <b>2 spaces</b> instead of 1.<br>
+If you already used the skill and the PASS is later stopped by INTERCEPTION or BLITZ, <b>the skill is still spent and is not refunded.</b><br><br>
 
-<b>7. When do you use the QB skill?</b><br>
-If the player who uses PASS is the <b>QB</b> and the skill has not been used yet, the game asks:<br>
-<b>“Use QB Skill?”</b><br>
-• Choose Use Skill → the skill is consumed immediately.<br>
-• If the PASS succeeds → this play advances <b>2 spaces</b> instead of 1.<br>
-• If the PASS is later stopped by INTERCEPTION or BLITZ → the skill is still spent and does not return.<br><br>
+<b style="font-size:17px">7. When Blue/the opponent gains possession</b><br>
+A successful INTERCEPTION immediately makes the defending team the new offense.<br>
+<b>Solo Mode:</b> the computer automatically chooses a Blue ball carrier and automatically plays RUN/PASS. You now defend as Red Team.<br>
+When the computer plays <b>RUN</b>, you may choose <b>TACKLE / BLITZ / No Defense</b>.<br>
+When the computer plays <b>PASS</b>, you may choose <b>INTERCEPTION / BLITZ / No Defense</b>.<br>
+If you play TACKLE or INTERCEPTION, the computer may use BLOCK. If the computer uses BLOCK, you may still use BLITZ as the final response.<br>
+The same attack-and-defense chain is used no matter which team has possession; the two teams simply switch roles.<br><br>
 
-<b>8. Remember what each defense card does</b><br>
-<b>TACKLE 💥</b>: Mainly stops RUN. It does not remove a player and does not automatically steal the ball.<br>
-<b>INTERCEPTION 🦅</b>: Mainly stops PASS. If it succeeds, the defense gains possession.<br>
-<b>BLOCK 🛡️</b>: Cancels TACKLE or INTERCEPTION.<br>
-<b>BLITZ ⚡</b>: A strong defense card that can make a RUN or PASS fail, including as the final answer after BLOCK.<br><br>
+<b style="font-size:17px">8. What happens after each offensive play?</b><br>
+<b>Successful play:</b> the system advances the team automatically, updates the ball carrier, and checks whether that offense can continue with another RUN/PASS.<br>
+<b>Failed play:</b> no advance; the system checks whether the current team can continue attacking.<br>
+<b>Successful interception:</b> possession changes immediately and the former defense becomes the offense.<br><br>
 
-<b>9. When is an offensive play successful?</b><br>
-RUN or PASS only counts as successful after the full response chain ends and the defense has not stopped it.<br>
-Successful play → the system advances your team automatically.<br>
-Failed play → no advance; your field position stays where it is.<br><br>
+<b style="font-size:17px">9. When do you choose a new ball carrier?</b><br>
+If the current ball carrier has no RUN/PASS but another teammate still has RUN/PASS, that team chooses a <b>new ball carrier</b>.<br>
+If the entire team has no RUN/PASS but the other team still has offensive cards, possession goes to the other team and it chooses a ball carrier.<br><br>
 
-<b>10. When does possession change?</b><br>
-• <b>Successful INTERCEPTION</b> → possession immediately goes to Blue.<br>
-• The current ball carrier has no RUN/PASS and the other team still has offense cards → possession changes sides.<br>
-• Neither team has any RUN/PASS → the round ends and the game redeals.<br>
-• TOUCHDOWN → the round ends and the next drive starts again from the 50-yard line.<br><br>
+<b style="font-size:17px">10. When does a round end?</b><br>
+When neither team has any RUN/PASS cards left, the round ends.<br>
+The game gathers the cards and redeals based on team size: 7 each in 2v2, 6 each in 3v3, or 5 each in 4v4.<br>
+The other team attacks first in the next round.<br>
+<b>Important: a normal round ending does not erase field progress. A team's field position resets to the 50 only after that team scores a touchdown.</b><br><br>
 
-<b>11. What happens when a round ends?</b><br>
-The game collects the used and remaining cards, mixes them again, and redeals based on the selected game size.<br>
-The other team starts the next round on offense.<br><br>
+<b style="font-size:17px">11. Complete TOUCHDOWN flow</b><br>
+1st successful play: 50→40.<br>
+2nd: 40→30.<br>
+3rd: 30→20.<br>
+4th: 20→10.<br>
+After the 4th success, the current ball carrier <b>automatically runs from the 10 into the END ZONE</b> → TOUCHDOWN appears → the team earns 1 🏈.<br>
+You do not play a 5th offensive card.<br>
+After the touchdown, that team's next touchdown drive begins again from the 50.<br><br>
 
-<b>12. Easy full-play examples</b><br>
-<b>Example A — RUN</b><br>
-Red ball carrier plays RUN → Blue computer plays TACKLE → you play BLOCK → Blue has no BLITZ → RUN succeeds → Red moves from the 50 to the 40.<br><br>
-<b>Example B — PASS</b><br>
-Red plays PASS → chooses a Red receiver → Blue plays INTERCEPTION → you play BLOCK → Blue plays BLITZ → PASS fails → Red does not advance.<br><br>
-<b>Example C — QB Skill</b><br>
-Red QB plays PASS → chooses a receiver → you choose Use QB Skill → Blue does not defend → PASS succeeds → this play advances 2 spaces.<br><br>
+<b style="font-size:17px">12. The full game loop</b><br>
+<b>Choose ball carrier → RUN/PASS → opponent defends → BLOCK response if needed → final BLITZ response if needed → system decides success/failure → advance or change possession → continue attacking → redeal when the round ends → 4th success scores TOUCHDOWN → earn 🏈 → continue the game.</b><br><br>
+When one team collects its 3rd 🏈, the game ends immediately and that team wins.<br><br>
 
-<b>⭐ EASY WAY TO REMEMBER IT</b><br>
-Your turn is always:<br>
-<b>choose a ball carrier → play RUN or PASS → wait for the computer's defense → use BLOCK if you want to counter → if the play succeeds, advance.</b><br>
-<b>4 successful plays = TOUCHDOWN = 1 🏈. First to 3 🏈 wins.</b>
+<b>⭐ Six-card quick reference</b><br>
+🏃 RUN = running offense<br>
+🎯 PASS = passing offense<br>
+💥 TACKLE = defend against RUN<br>
+🦅 INTERCEPTION = defend against PASS; a successful interception changes possession<br>
+🛡️ BLOCK = cancel TACKLE or INTERCEPTION<br>
+⚡ BLITZ = strongly stop RUN/PASS and can also be the final response after BLOCK
 </div>`;
 
-function applyRules(){
- const el=document.getElementById('rulesBody');
- if(!el)return;
- const isZh=(document.documentElement.lang||'').toLowerCase().startsWith('zh');
- const wanted=isZh?zh:en;
- if(el.innerHTML!==wanted)el.innerHTML=wanted;
+function apply(){
+ if(!window.I18N)return;
+ I18N.zh.rulesBody=zh;
+ I18N.en.rulesBody=en;
+ if(typeof updateStaticText==='function')updateStaticText();
 }
-window.addEventListener('DOMContentLoaded',()=>{
- applyRules();
- const body=document.getElementById('rulesBody');
- if(body)new MutationObserver(()=>setTimeout(applyRules,0)).observe(body,{childList:true,subtree:true,characterData:true});
- const lang=document.getElementById('langToggleBtn');
- if(lang)lang.addEventListener('click',()=>setTimeout(applyRules,0));
- const rules=document.getElementById('rulesBtn');
- if(rules)rules.addEventListener('click',()=>setTimeout(applyRules,0));
-});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply);else apply();
 })();
