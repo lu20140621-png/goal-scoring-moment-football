@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Goal-Scoring Moment - 橄榄球现场版</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">🏈</div>
+      <div>
+        <h1>GOAL-SCORING MOMENT</h1>
+        <div class="sub" id="subtitleText">橄榄球比赛现场版 · 单人演示 / 多人本地操作</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="rulesBtn">玩法说明</button>
+      <button class="btn" id="restartBtn">重新设置</button>
+      <button class="btn" id="langToggleBtn">中文 / EN</button>
+    </div>
+  </div>
+
+  <div class="main">
+      <section class="fieldPanel">
+        <div class="stadiumTop">
+          <div>
+            <div style="font-weight:900;font-size:16px" id="stadiumTitle">真实美式橄榄球比赛现场视角</div>
+            <div class="modeInfo" id="modeText">等待设置模式</div>
+          </div>
+          <div class="scoreMini">
+            <span class="scoreTag" id="turnTag">当前查看：--</span>
+            <span class="scoreTag" id="deckTag">牌库：0 张</span>
+            <span class="scoreTag" id="activeModeTag">--</span>
+          </div>
+        </div>
+
+        <div class="fieldArea">
+          <div class="endzone top" id="leftEndzone">RED TEAM END ZONE</div>
+          <div class="yardLines">
+            <div class="yardLine" style="left:10%"></div><div class="yardLine" style="left:20%"></div><div class="yardLine" style="left:30%"></div><div class="yardLine" style="left:40%"></div><div class="yardLine" style="left:50%"></div><div class="yardLine" style="left:60%"></div><div class="yardLine" style="left:70%"></div><div class="yardLine" style="left:80%"></div><div class="yardLine" style="left:90%"></div>
+            <div class="hashGroup" style="left:10%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:20%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:30%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:40%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:50%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:60%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:70%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:80%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="hashGroup" style="left:90%"><div class="hash top1"></div><div class="hash top2"></div><div class="hash top3"></div><div class="hash top4"></div><div class="hash bottom1"></div><div class="hash bottom2"></div><div class="hash bottom3"></div><div class="hash bottom4"></div></div>
+            <div class="yardNum" style="left:10%">10</div><div class="yardNum bottom" style="left:10%">10</div><div class="yardNum" style="left:20%">20</div><div class="yardNum bottom" style="left:20%">20</div><div class="yardNum" style="left:30%">30</div><div class="yardNum bottom" style="left:30%">30</div><div class="yardNum" style="left:40%">40</div><div class="yardNum bottom" style="left:40%">40</div><div class="yardNum" style="left:50%">50</div><div class="yardNum bottom" style="left:50%">50</div><div class="yardNum" style="left:60%">40</div><div class="yardNum bottom" style="left:60%">40</div><div class="yardNum" style="left:70%">30</div><div class="yardNum bottom" style="left:70%">30</div><div class="yardNum" style="left:80%">20</div><div class="yardNum bottom" style="left:80%">20</div><div class="yardNum" style="left:90%">10</div><div class="yardNum bottom" style="left:90%">10</div>
+          </div>
+          <div class="centerLine"></div><div class="centerMark">🏈</div>
+          <div class="scrimmageLine" id="scrimmageLine" style="left:50%"></div><div class="scrimmageBadge" id="scrimmageBadge" style="left:50%">BALL ON 50</div>
+          <div class="driveHint" id="driveHint">4次成功 = TOUCHDOWN · 起点50 → 40 → 30 → 20 → 第4次到10后自动冲入END ZONE</div>
+          <div class="endzone bottom" id="rightEndzone">BLUE TEAM END ZONE</div><div id="fieldPlayers"></div>
+          <div class="benchNote">现在是横向美式橄榄球场视角：左到右显示 10 / 20 / 30 / 40 / 50 / 40 / 30 / 20 / 10。</div>
+        </div>
+
+        <div class="bottomStatus">
+          <div class="teamBox red"><div class="teamTitle" id="redTeamTitle">红队推进位置</div><div class="progressRow"><div class="bar"><div class="fill red" id="redFill"></div></div><b id="redProg">50 YD</b></div><div class="footballs" id="redBalls">⚪ ⚪ ⚪</div></div>
+          <div class="centerInfo"><div class="centerPill" id="holderText">🏈 当前持球者：--</div><div class="centerSub" id="roundText">点击“下一个人”切换到下一位玩家</div></div>
+          <div class="teamBox blue"><div class="teamTitle" id="blueTeamTitle">蓝队推进位置</div><div class="progressRow"><b id="blueProg">50 YD</b><div class="bar"><div class="fill blue" id="blueFill"></div></div></div><div class="footballs" id="blueBalls">⚪ ⚪ ⚪</div></div>
+        </div>
+      </section>
+
+      <section class="cardPanel">
+        <div class="handHeader"><div class="currentPlayer"><div class="currentBadge">🎴</div><div id="currentPlayerText">当前手牌：--</div></div><div class="ops"><button class="btn" id="prevBtn">上一个人</button><button class="btn primary" id="nextBtn">下一个人</button></div></div>
+        <div class="playerSwitchTop"><div class="playerSwitchLabel" id="playerSwitchLabel">快速换人</div><div class="switchList" id="switchList"></div></div>
+        <div class="actionPanel hidden" id="actionPanel"><div class="actionTitle" id="actionTitle">当前操作</div><div class="actionButtons" id="actionButtons"></div></div>
+        <div class="infoRow"><span class="chip" id="viewModeChip">模式：--</span><span class="chip" id="roleChip">身份：--</span><span class="chip" id="skillChip">技能状态：--</span><span class="chip" id="teamChip">队伍：--</span><span class="chip" id="ruleChip">50是起点 · 第4次成功直接达阵</span></div>
+        <div class="handArea"><div class="hand" id="hand"></div></div>
+        <div class="playHint" id="playHint">当前操作提示固定在手牌上方。换球员以后不需要再滚到页面底部；这里只显示当前球员的手牌和当前阶段允许的操作。</div>
+      </section>
+
+    <section class="sidePanel"><div class="sideTitle" id="logTitle">对局记录</div><div class="log" id="log"></div><div class="footerNote" id="footerNote">单人演示模式：你可以操作红蓝双方，系统不遮挡换边。<br>多人本地操作：轮到另一队时会自动遮挡画面并提示交接设备。<br>这里仅保留记录与说明，不再放任何必须点击的游戏操作。</div></section>
+  </div>
+</div>
+
+<div class="modal show" id="setupModal"><div class="modalBox"><h2 style="margin-top:0" id="setupTitle">开始游戏</h2><div class="setupGrid"><div class="optionBox"><div class="optionTitle" id="sizeTitle">选择人数模式</div><div class="optionList"><button class="selectBtn active" data-size="2">2v2</button><button class="selectBtn" data-size="3">3v3</button><button class="selectBtn" data-size="4">4v4</button></div><div style="margin-top:10px;color:var(--muted);font-size:12px" id="sizeDesc">2v2：每人7张　/　3v3：每人6张　/　4v4：每人5张</div></div><div class="optionBox"><div class="optionTitle" id="viewTitle">选择操作模式</div><div class="optionList"><button class="selectBtn active" data-view="single" id="singleModeBtn">单人演示</button><button class="selectBtn" data-view="multi" id="multiModeBtn">多人本地操作</button></div><div style="margin-top:10px;color:var(--muted);font-size:12px" id="viewDesc">多人本地操作会在换人时先遮挡画面，让下一位玩家再看自己的手牌。</div></div></div><div class="startWrap"><button class="btn primary" id="startBtn" style="padding:12px 22px">开始进入比赛现场</button></div></div></div>
+
+<div class="modal" id="rulesModal"><div class="modalBox"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h2 style="margin:0" id="rulesHeading">界面说明</h2><button class="btn" id="closeRulesBtn">关闭</button></div><div style="margin-top:12px;line-height:1.75;color:#dbe5de" id="rulesBody"><b>这一版改成真正由系统判定攻防：</b><br>1. 已删除“红队 +1 / 蓝队 +1”手动按钮。RUN / PASS 最终成功后，系统自动增加进度；失败则不加。<br>2. 进攻方打出 RUN 后：自动切到对方防守，对方可使用 TACKLE / BLITZ / 不防守。<br>3. 进攻方打出 PASS 后：先选择队友；若当前持球者是技能可用的 QB，会先弹出“是否使用身份卡技能”；确认后才切到对方防守。<br>4. PASS 防守：对方可 INTERCEPTION / BLITZ / 不防守。INTERCEPTION 成功后防守球员直接获得球权。<br>5. TACKLE / INTERCEPTION 出现后，系统切回进攻方，可以使用 BLOCK；BLOCK 后再切回防守方，可用 BLITZ 最终反制。<br>6. 多人本地模式下，每次红蓝双方切换都会先出现“轮到蓝队 / 轮到红队”的遮挡页，像大富翁一样交接设备。<br>7. QB 点击“使用技能”后技能立即消耗。若 PASS 最终成功，本次系统自动多加 1 格；若 PASS 失败，技能也不会返还。<br>8. 每队都从 50 码线开始，50 只是起始位置，不算一次成功。第1次成功到40，第2次到30，第3次到20，第4次到10。<br>9. 第4次成功到达10码线后，不需要第5次进攻；当前持球者立即自动冲进对方 END ZONE，并弹出 TOUCHDOWN / 达阵成功。之后该队推进位置重置到50。<br>10. 获得 1 个🏈后进入下一回合；先获得 3 个🏈的队伍获胜。<br></div></div></div>
+
+<div class="privacy" id="privacyModal"><div class="privacyBox"><h2 id="privacyTitle">轮到下一方</h2><p id="privacyText">请把设备交给下一方玩家。</p><button class="btn primary" id="privacyConfirmBtn">我已准备好，显示手牌</button></div></div>
+<div class="modal" id="skillModal"><div class="modalBox"><h2 style="margin-top:0" id="skillHeading">QUARTERBACK 身份技能</h2><div id="skillText" style="line-height:1.6;color:#dbe5de;margin-bottom:12px">是否使用身份技能？</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" id="useSkillBtn">使用技能（立即消耗）</button><button class="btn" id="skipSkillBtn">暂不使用</button></div></div></div>
+<div class="modal" id="touchdownModal"><div class="modalBox touchdownBox"><div class="touchdownWord">TOUCHDOWN!</div><div class="touchdownTeam" id="touchdownTeam">红队达阵成功！</div><div class="touchdownRoute" id="touchdownRoute">起点50 → 40 → 30 → 20 → 第4次成功到10后自动冲入END ZONE</div><button class="btn primary" id="touchdownContinueBtn">继续下一回合</button></div></div>
+
+<script src="game.js"></script>
+</body>
+</html>
