@@ -1,7 +1,7 @@
 (()=>{
   // Solo mode AI: Red is the human side; Blue is controlled automatically.
   const $=id=>document.getElementById(id);
-  let timer=null, busy=false;
+  let timer=null,busy=false;
   const text=el=>(el?.textContent||'').trim();
   const isSingle=()=>text($('viewModeChip')).includes('单人')||text($('viewModeChip')).includes('Solo');
   const blueActive=()=>text($('activeModeTag')).startsWith('蓝队')||text($('activeModeTag')).startsWith('Blue Team');
@@ -11,8 +11,7 @@
   const clickLater=(el,delay=550)=>{if(!el||busy)return;busy=true;clearTimeout(timer);timer=setTimeout(()=>{busy=false;el.click();},delay)};
 
   function ensureOverlay(){
-    let panel=document.querySelector('.cardPanel');
-    if(!panel)return null;
+    let panel=document.querySelector('.cardPanel');if(!panel)return null;
     let o=$('computerTurnOverlay');
     if(!o){
       panel.style.position='relative';
@@ -24,74 +23,34 @@
     return o;
   }
   function overlay(on){
-    let o=ensureOverlay(); if(!o)return;
+    let o=ensureOverlay();if(!o)return;
     o.style.display=on?'flex':'none';
+    const field=$('fieldPlayers');if(field)field.style.pointerEvents=on?'none':'';
     const zh=document.documentElement.lang!=='en';
-    const title=o.querySelector('.aiTitle'),sub=o.querySelector('.aiSub');
-    title.textContent=zh?'电脑回合':'Computer Turn';
-    sub.textContent=zh?'蓝队正在自动操作…':'Blue Team is playing automatically…';
+    o.querySelector('.aiTitle').textContent=zh?'电脑回合':'Computer Turn';
+    o.querySelector('.aiSub').textContent=zh?'蓝队正在自动操作…':'Blue Team is playing automatically…';
+    if($('footerNote'))$('footerNote').innerHTML=zh?'单人模式：红队由你操作，蓝队由电脑自动操作。<br>多人本地模式：红蓝双方都由现场玩家操作。<br>对局记录与说明固定在最底部。':'Solo mode: you control Red; Blue is controlled by the computer.<br>Local multiplayer: both teams are controlled by players.<br>Match log and notes stay at the bottom.';
+    if($('viewDesc'))$('viewDesc').textContent=zh?'单人模式：你只操作红队，蓝队由电脑自动完成进攻、防守和技能决策。':'Solo mode: you control only Red; Blue automatically handles offense, defense and skill decisions.';
   }
-
-  function chooseHolder(){
-    const btns=Array.from(document.querySelectorAll('#actionButtons button'));
-    if(btns.length) clickLater(btns[0],500);
-  }
-  function attack(){
-    const pass=enabled('PASS'),run=enabled('RUN');
-    // Prefer PASS when available, otherwise RUN.
-    clickLater(pass||run,650);
-  }
-  function defense(){
-    const title=actionTitle();
-    let card;
-    if(/RUN|持球推进/.test(title)) card=enabled('TACKLE')||enabled('BLITZ');
-    else card=enabled('INTERCEPTION')||enabled('BLITZ');
-    if(card) clickLater(card,650);
-    else{
-      const btns=Array.from(document.querySelectorAll('#actionButtons button'));
-      clickLater(btns[0],450); // No Defense
-    }
-  }
-  function response(){
-    const block=enabled('BLOCK');
-    if(block) clickLater(block,650);
-    else{
-      const btns=Array.from(document.querySelectorAll('#actionButtons button'));
-      clickLater(btns[0],450); // No BLOCK
-    }
-  }
-  function finalBlitz(){
-    const blitz=enabled('BLITZ');
-    if(blitz) clickLater(blitz,650);
-    else{
-      const btns=Array.from(document.querySelectorAll('#actionButtons button'));
-      clickLater(btns[0],450); // Skip BLITZ
-    }
-  }
-  function passTarget(){
-    const btns=Array.from(document.querySelectorAll('#actionButtons button'));
-    if(btns.length) clickLater(btns[Math.floor(Math.random()*btns.length)],500);
-  }
-  function skill(){
-    const use=$('useSkillBtn'),skip=$('skipSkillBtn');
-    // Use QB skill when available. It is consumed immediately by the game rules.
-    clickLater(use||skip,650);
-  }
-
+  function chooseHolder(){const b=Array.from(document.querySelectorAll('#actionButtons button'));if(b.length)clickLater(b[0],500)}
+  function attack(){clickLater(enabled('PASS')||enabled('RUN'),650)}
+  function defense(){const title=actionTitle();let c=/RUN|持球推进/.test(title)?enabled('TACKLE')||enabled('BLITZ'):enabled('INTERCEPTION')||enabled('BLITZ');if(c)clickLater(c,650);else clickLater(Array.from(document.querySelectorAll('#actionButtons button'))[0],450)}
+  function response(){clickLater(enabled('BLOCK')||Array.from(document.querySelectorAll('#actionButtons button'))[0],650)}
+  function finalBlitz(){clickLater(enabled('BLITZ')||Array.from(document.querySelectorAll('#actionButtons button'))[0],550)}
+  function passTarget(){const b=Array.from(document.querySelectorAll('#actionButtons button'));if(b.length)clickLater(b[Math.floor(Math.random()*b.length)],500)}
+  function skill(){clickLater($('useSkillBtn')||$('skipSkillBtn'),650)}
   function tick(){
-    if(!isSingle()||!blueActive()){overlay(false);busy=false;return;}
+    if(!isSingle()||!blueActive()){overlay(false);busy=false;return}
     overlay(true);
-    if($('skillModal')?.classList.contains('show')){skill();return;}
-    if($('touchdownModal')?.classList.contains('show')){const b=$('touchdownContinueBtn');if(b)clickLater(b,900);return;}
-    const ap=$('actionPanel');
-    const title=actionTitle();
-    if(ap?.classList.contains('hidden')){attack();return;}
-    if(/选择持球者|Choose Ball Carrier/.test(title)){chooseHolder();return;}
-    if(/PASS 给哪名队友|Choose a PASS target/.test(title)){passTarget();return;}
-    if(/对方发动|Opponent used/.test(title)){defense();return;}
-    if(/对方使用|Opponent played/.test(title)){response();return;}
-    if(/最终反制|Final response|BLOCK/.test(title)){finalBlitz();return;}
+    if($('skillModal')?.classList.contains('show')){skill();return}
+    if($('touchdownModal')?.classList.contains('show')){clickLater($('touchdownContinueBtn'),900);return}
+    const ap=$('actionPanel'),title=actionTitle();
+    if(ap?.classList.contains('hidden')){attack();return}
+    if(/选择持球者|Choose Ball Carrier/.test(title)){chooseHolder();return}
+    if(/PASS 给哪名队友|Choose a PASS target/.test(title)){passTarget();return}
+    if(/对方发动|Opponent used/.test(title)){defense();return}
+    if(/对方使用|Opponent played/.test(title)){response();return}
+    if(/最终反制|Final response|BLOCK/.test(title)){finalBlitz();return}
   }
-
   setInterval(tick,700);
 })();
