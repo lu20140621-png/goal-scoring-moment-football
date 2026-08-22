@@ -1,181 +1,39 @@
 (()=>{
 const manual={
-zh:`<div style="font-size:15px;line-height:1.82">
-<b style="font-size:20px">🏈 策略模式 · 单人模式完整说明书</b><br>
-这份说明书按<b>整场游戏真正发生的顺序</b>来写：开局 → 分队 → 身份 → 石头剪刀布 → 发牌 → 选持球者 → 进攻 → 防守 → 成功/失败 → 换球权 → 回合结束 → TOUCHDOWN → 获胜。<br><br>
-
-<b>一、选择人数并分队</b><br>
-先选择：<b>2v2 / 3v3 / 4v4</b>。<br>
-• 2v2：红队2名球员，蓝队2名球员，每人7张牌。<br>
-• 3v3：红队3名球员，蓝队3名球员，每人6张牌。<br>
-• 4v4：红队4名球员，蓝队4名球员，每人5张牌。<br>
-<b>单人模式：</b>你固定控制红队全部球员；蓝队全部球员由电脑控制。你不需要替蓝队选牌。<br><br>
-
-<b>二、分配身份</b><br>
-每队都会有普通球员和1名 <b>QUARTERBACK（QB）</b>，由系统分配。<br>
-QB有一次技能：QB打出PASS并选好接球人后，可以选择是否使用。若该PASS最终成功，本次推进2格；若之后失败，技能也不会返还。<br><br>
-
-<b>三、第一轮先攻：石头剪刀布</b><br>
-游戏开始后不会直接默认红队先攻。<br>
-你代表红队选择：<b>✊石头 / 🖐️布 / ✌️剪刀</b>。<br>
-电脑蓝队同时随机选择。<br>
-• 你赢 → 红队获得第一轮先攻。<br>
-• 电脑赢 → 蓝队获得第一轮先攻。<br>
-• 平局 → 重新选择，直到分出胜负。<br>
-<b>只有第一轮用石头剪刀布。</b>之后每轮先攻方自动交替，例如：红 → 蓝 → 红 → 蓝。<br><br>
-
-<b>四、发牌</b><br>
-系统洗牌并按人数发牌：2v2每人7张、3v3每人6张、4v4每人5张。<br>
-牌包括：<b>RUN、PASS、TACKLE、INTERCEPTION、BLOCK、BLITZ</b>。<br>
-<b>出一张后不会立刻补一张。</b>本轮就使用当前手牌。等本轮结束后，系统统一收牌、洗牌、重新发牌。<br><br>
-
-<b>五、每轮开始：先选择持球者</b><br>
-本轮先攻方先从自己队伍里选择一名<b>手里有RUN或PASS</b>的球员作为持球者。<br>
-球会显示在这个球员身上。<br>
-只有当前持球者可以发动下一次RUN或PASS。<br><br>
-
-<b style="font-size:18px">六、RUN 的完整流程</b><br>
-<b>步骤1：进攻方打出 RUN 🏃</b><br>
-持球者自己带球进攻。<br><br>
-<b>步骤2：防守方选择</b><br>
-对RUN，防守方可以：<br>
-• <b>不防守</b><br>
-• <b>TACKLE 💥</b><br>
-• <b>BLITZ ⚡</b><br><br>
-<b>情况A：不防守</b><br>
-→ RUN <b>成功</b><br>
-→ 系统自动推进1格<br>
-→ 原持球者继续持球<br>
-→ 如果还有RUN/PASS，可以继续进攻。<br><br>
-<b>情况B：直接BLITZ</b><br>
-→ RUN <b>失败</b><br>
-→ 不推进<br>
-→ 球仍在原进攻方<br>
-→ 系统检查该队是否还能继续进攻。<br><br>
-<b>情况C：TACKLE</b><br>
-系统切回进攻方。进攻方可以：<br>
-• <b>不用BLOCK</b> → TACKLE生效 → RUN失败 → 不推进。<br>
-• <b>打出BLOCK 🛡️</b> → 取消TACKLE。<br><br>
-如果进攻方用了BLOCK，系统再切回防守方：<br>
-• <b>防守方不再出BLITZ</b> → RUN成功 → 推进1格。<br>
-• <b>防守方再出BLITZ</b> → RUN失败 → 不推进。<br><br>
-<b>RUN所有结果：</b><br>
-RUN → 不防守 = <b>成功</b><br>
-RUN → BLITZ = <b>失败</b><br>
-RUN → TACKLE → 不BLOCK = <b>失败</b><br>
-RUN → TACKLE → BLOCK → 不BLITZ = <b>成功</b><br>
-RUN → TACKLE → BLOCK → BLITZ = <b>失败</b><br><br>
-
-<b style="font-size:18px">七、PASS 的完整流程</b><br>
-<b>步骤1：进攻方打出 PASS 🎯</b><br>
-<b>步骤2：选择一名同队队友作为接球人</b><br>
-如果PASS成功，这名接球人会成为新的持球者。<br><br>
-<b>步骤3：QB技能判断</b><br>
-如果传球者是QB且技能还没用过，系统先问是否使用技能。<br>
-• 暂不使用 → 技能保留。<br>
-• 使用 → 技能立即消耗；PASS若最终成功，本次推进2格。<br><br>
-<b>步骤4：防守方选择</b><br>
-对PASS，防守方可以：<br>
-• <b>不防守</b><br>
-• <b>INTERCEPTION 🦅</b><br>
-• <b>BLITZ ⚡</b><br><br>
-<b>情况A：不防守</b><br>
-→ PASS <b>成功</b><br>
-→ 接球人成为新持球者<br>
-→ 系统推进1格；若QB技能生效则推进2格。<br><br>
-<b>情况B：直接BLITZ</b><br>
-→ PASS <b>失败</b><br>
-→ 不推进<br>
-→ 球仍属于原进攻方。<br><br>
-<b>情况C：INTERCEPTION</b><br>
-系统切回进攻方。进攻方可以：<br>
-• <b>不用BLOCK</b> → INTERCEPTION成功 → 出INTERCEPTION的防守球员直接拿到球 → <b>立即换球权</b>。<br>
-• <b>打出BLOCK</b> → 取消INTERCEPTION。<br><br>
-如果进攻方用了BLOCK，系统再次切回防守方：<br>
-• <b>不再出BLITZ</b> → PASS成功 → 接球人持球 → 推进。<br>
-• <b>再出BLITZ</b> → PASS失败 → 不推进。<br><br>
-<b>PASS所有结果：</b><br>
-PASS → 选接球人 → 不防守 = <b>成功</b><br>
-PASS → 选接球人 → BLITZ = <b>失败</b><br>
-PASS → 选接球人 → INTERCEPTION → 不BLOCK = <b>抄截成功，换球权</b><br>
-PASS → 选接球人 → INTERCEPTION → BLOCK → 不BLITZ = <b>成功</b><br>
-PASS → 选接球人 → INTERCEPTION → BLOCK → BLITZ = <b>失败</b><br><br>
-
-<b>八、当电脑蓝队进攻时，你怎么防守</b><br>
-单人模式中，如果蓝队拿到球，电脑会自动选持球者并自动出RUN或PASS。<br>
-你只负责红队防守：<br>
-• 电脑出RUN → 你选 TACKLE / BLITZ / 不防守。<br>
-• 电脑出PASS → 你选 INTERCEPTION / BLITZ / 不防守。<br>
-如果你的TACKLE或INTERCEPTION被电脑BLOCK，你还可以决定是否再用BLITZ。<br>
-<b>红队进攻和蓝队进攻使用完全相同的成功/失败规则，只是双方角色互换。</b><br><br>
-
-<b>九、一次进攻结算后做什么</b><br>
-<b>成功：</b>系统自动推进；RUN时通常原球员继续持球，PASS成功时接球人成为新持球者。<br>
-<b>失败：</b>不推进，系统检查当前进攻方是否还能继续。<br>
-<b>INTERCEPTION成功：</b>立刻换球权，原防守方成为新的进攻方。<br><br>
-
-<b>十、什么时候重新选持球者</b><br>
-如果当前持球者已经没有RUN/PASS，但同队其他球员还有RUN/PASS，系统会要求同队重新选持球者。<br>
-如果整支队伍都没有RUN/PASS，而另一队还有RUN/PASS，则球权交给另一队，由另一队选持球者。<br><br>
-
-<b>十一、一轮什么时候结束</b><br>
-当<b>红队和蓝队都没有可以继续使用的RUN/PASS</b>时，本轮结束。<br>
-系统会：<br>
-1. 收回本轮已使用和未使用的牌；<br>
-2. 重新洗牌；<br>
-3. 按2v2/3v3/4v4重新发牌；<br>
-4. 下一轮由上一轮先攻方的对手先攻。<br>
-<b>普通轮次结束不会清空已经推进的码线。</b><br><br>
-
-<b>十二、推进与TOUCHDOWN</b><br>
-每队自己的推进从50码开始：<br>
-第1次成功：<b>50 → 40</b><br>
-第2次成功：<b>40 → 30</b><br>
-第3次成功：<b>30 → 20</b><br>
-第4次成功：<b>20 → 10</b>，然后当前持球者自动冲进 <b>END ZONE</b>。<br>
-→ 弹出 <b>TOUCHDOWN</b><br>
-→ 获得1个🏈<br>
-→ 该队下一次达阵推进重新从50码开始。<br>
-<b>不需要第5次成功。</b><br><br>
-
-<b>十三、整场比赛完整顺序</b><br>
-<b>选人数/模式 → 分队和QB → 石头剪刀布决定第一轮先攻 → 发牌 → 先攻方选持球者 → RUN/PASS → 对方防守 → BLOCK反制（如有） → BLITZ最终反制（如有） → 系统判定成功/失败/抄截 → 推进或换球权 → 继续下一次攻防 → 双方无RUN/PASS后本轮结束 → 重新发牌 → 下一轮换另一队先攻 → 第4次成功TOUCHDOWN → 获得🏈 → 继续比赛。</b><br><br>
-<b>先获得3个🏈的队伍立即获胜。</b>
+zh:`<div class="manualDoc"><div class="manualLead"><b>🏈 策略模式 · 单人模式完整说明书</b><br>按整场游戏真正发生的顺序阅读。上面的目录可以直接跳到你想看的部分。</div>
+<div class="manualToc">
+<a href="#m-setup">1 开局与分队</a><a href="#m-rps">2 石头剪刀布</a><a href="#m-deal">3 发牌</a><a href="#m-round">4 每轮开始</a><a href="#m-run">5 RUN流程</a><a href="#m-pass">6 PASS流程</a><a href="#m-defense">7 防守流程</a><a href="#m-result">8 成功/失败</a><a href="#m-possession">9 换球权</a><a href="#m-redeal">10 回合结束</a><a href="#m-td">11 TOUCHDOWN</a><a href="#m-win">12 获胜</a>
+</div>
+<section id="m-setup"><h3>1. 开局与分队</h3><p>先选择 <b>2v2 / 3v3 / 4v4</b>。</p><p>2v2：红2人 vs 蓝2人，每人7张牌。<br>3v3：红3人 vs 蓝3人，每人6张牌。<br>4v4：红4人 vs 蓝4人，每人5张牌。</p><p><b>单人模式：</b>你只控制红队，蓝队由电脑控制。每队系统分配1名QB，其余为普通球员。</p><p>QB只有一次身份技能：QB打出PASS、选好接球人后，可以决定是否使用。使用后如果PASS最终成功，本次推进2格；如果最终失败，技能也不会返还。</p></section>
+<section id="m-rps"><h3>2. 第一轮先攻：石头剪刀布</h3><p>正式开局先用<b>石头剪刀布</b>决定第一轮谁拿球、谁先进攻。</p><p>你代表红队选择：✊石头 / 🖐️布 / ✌️剪刀；电脑蓝队随机选择。</p><p>你赢 → 红队第一轮先攻。<br>电脑赢 → 蓝队第一轮先攻。<br>平局 → 重新选择，直到分出胜负。</p><div class="keyRule">只有第一轮用石头剪刀布。之后每轮先攻方交替：红 → 蓝 → 红 → 蓝……</div></section>
+<section id="m-deal"><h3>3. 发牌规则</h3><p>系统洗牌并按人数发牌：2v2每人7张，3v3每人6张，4v4每人5张。</p><p>牌包括：<b>RUN、PASS、TACKLE、INTERCEPTION、BLOCK、BLITZ</b>。</p><div class="warning">不是“出一张就马上补一张”。本轮使用现有手牌；本轮结束后才统一收牌、洗牌、重新发牌。</div></section>
+<section id="m-round"><h3>4. 每轮开始要做什么</h3><p>先攻方从自己队伍里选择一名<b>手里有RUN或PASS</b>的球员作为持球者。</p><p>只有当前持球者可以发动下一次进攻。每次进攻固定按这个顺序：</p><ol><li>持球者选择RUN或PASS</li><li>PASS时选择接球队友</li><li>QB打PASS时决定是否使用技能</li><li>防守方选择防守牌或不防守</li><li>遇到TACKLE/INTERCEPTION时，进攻方决定是否BLOCK</li><li>BLOCK后防守方可决定是否BLITZ</li><li>系统自动结算成功、失败、推进或换球权</li></ol></section>
+<section id="m-run"><h3>5. RUN 完整流程</h3><p><b>持球者出 RUN 🏃 → 防守方响应。</b></p><div class="comboChain">RUN → 不防守 = ✅ 成功 → 推进1格</div><div class="comboChain">RUN → BLITZ = ❌ 失败 → 不推进</div><div class="comboChain">RUN → TACKLE → 不BLOCK = ❌ 失败</div><div class="comboChain">RUN → TACKLE → BLOCK → 不BLITZ = ✅ 成功</div><div class="comboChain">RUN → TACKLE → BLOCK → BLITZ = ❌ 失败</div><p>TACKLE只是阻止RUN，<b>不会自动抢走球</b>。RUN成功时通常由原持球者继续持球。</p></section>
+<section id="m-pass"><h3>6. PASS 完整流程</h3><p><b>持球者出 PASS 🎯 → 选择同队接球人 → 如为QB先决定技能 → 防守方响应。</b></p><div class="comboChain">PASS → 不防守 = ✅ 成功 → 接球人持球 → 推进1格</div><div class="comboChain">PASS → BLITZ = ❌ 失败 → 不推进</div><div class="comboChain">PASS → INTERCEPTION → 不BLOCK = 🦅 抄截成功 → 防守方获得球权</div><div class="comboChain">PASS → INTERCEPTION → BLOCK → 不BLITZ = ✅ PASS成功</div><div class="comboChain">PASS → INTERCEPTION → BLOCK → BLITZ = ❌ PASS失败</div><p>PASS成功后，所选接球队友成为新的持球者。</p></section>
+<section id="m-defense"><h3>7. 当你处于防守方</h3><p>对方出<b>RUN</b> → 你可以用 <b>TACKLE / BLITZ / 不防守</b>。</p><p>对方出<b>PASS</b> → 你可以用 <b>INTERCEPTION / BLITZ / 不防守</b>。</p><p>如果你的TACKLE或INTERCEPTION被BLOCK取消，你还有最后一次机会使用<b>BLITZ</b>。</p><p>单人模式中，如果蓝队持球，电脑会自动选择持球者和RUN/PASS；你只负责红队的防守选择。</p></section>
+<section id="m-result"><h3>8. 成功和失败怎么判定</h3><p><b>✅ 成功：</b>完整攻防链结束后，RUN/PASS没有被最终阻止。系统自动推进。</p><p><b>❌ 失败：</b>最终被TACKLE、BLITZ等有效防守阻止。场地位置不前进。</p><p><b>🦅 抄截：</b>INTERCEPTION最终没有被BLOCK取消，出INTERCEPTION的防守球员直接获得球权。</p><div class="keyRule">成功或失败都由系统自动结算，不需要玩家手动点“+1”。</div></section>
+<section id="m-possession"><h3>9. 什么时候换球权或换持球者</h3><p>INTERCEPTION成功 → 立即换球权。</p><p>当前持球者没有RUN/PASS，但同队其他球员还有 → 同队重新选持球者，不换队。</p><p>整支当前队伍都没有RUN/PASS，但另一队还有 → 球权交给另一队，由另一队选持球者。</p></section>
+<section id="m-redeal"><h3>10. 一轮什么时候结束</h3><p>当红蓝双方都没有RUN/PASS可以继续进攻时，本轮结束。</p><p>系统会统一收回已使用和未使用的牌，重新洗牌，再按2v2/3v3/4v4重新发牌。</p><p>下一轮由上一轮先攻方的对手先攻。</p><div class="keyRule">普通轮次结束不会清除已经推进的码线位置。</div></section>
+<section id="m-td"><h3>11. TOUCHDOWN 完整流程</h3><p>50码只是起点，不算一次成功。</p><p>第1次成功：50→40<br>第2次成功：40→30<br>第3次成功：30→20<br>第4次成功：20→10，然后当前持球者自动冲入END ZONE。</p><p>第4次成功后直接弹出<b>TOUCHDOWN</b>，获得1个🏈，<b>不需要第5次进攻</b>。</p><p>达阵后，该队下一次达阵推进重新从50码开始。</p></section>
+<section id="m-win"><h3>12. 怎么赢 + 整场循环</h3><p><b>先获得3个🏈的队伍立即获胜。</b></p><div class="comboChain">选人数/模式 → 分队/QB → 石头剪刀布 → 发牌 → 选持球者 → RUN/PASS → 防守 → BLOCK反制 → BLITZ最终反制 → 系统判定成功/失败/抄截 → 推进或换球权 → 双方无RUN/PASS后重新发牌 → 下一轮换先攻 → 第4次成功TOUCHDOWN → 获得🏈 → 先拿3个🏈获胜</div></section>
 </div>`,
-en:`<div style="font-size:15px;line-height:1.82">
-<b style="font-size:20px">🏈 STRATEGY MODE · SOLO MODE COMPLETE RULEBOOK</b><br>
-This rulebook follows the actual game from start to finish: setup → teams → roles → Rock-Paper-Scissors → deal → choose ball carrier → offense → defense → success/failure → possession changes → round end → touchdown → win.<br><br>
-<b>1. Choose team size and teams</b><br>
-Choose <b>2v2 / 3v3 / 4v4</b>.<br>• 2v2: 2 Red vs 2 Blue; 7 cards each.<br>• 3v3: 3 Red vs 3 Blue; 6 cards each.<br>• 4v4: 4 Red vs 4 Blue; 5 cards each.<br><b>Solo Mode:</b> you control all Red players; the computer controls all Blue players.<br><br>
-<b>2. Assign roles</b><br>
-Each team includes one <b>QUARTERBACK (QB)</b>. The game assigns roles. The QB has a once-per-game PASS skill. If used and the PASS finally succeeds, advance 2 spaces. If the play later fails, the skill is still spent.<br><br>
-<b>3. First offense: Rock-Paper-Scissors</b><br>
-The game does not automatically give Red first offense. You choose Rock, Paper, or Scissors for Red while the Blue computer chooses randomly.<br>• Red wins → Red attacks first.<br>• Blue wins → Blue attacks first.<br>• Tie → choose again until there is a winner.<br><b>Only Round 1 uses Rock-Paper-Scissors.</b> After that, first offense alternates each round.<br><br>
-<b>4. Deal cards</b><br>
-Deal 7 each in 2v2, 6 each in 3v3, or 5 each in 4v4. Cards are RUN, PASS, TACKLE, INTERCEPTION, BLOCK, and BLITZ.<br><b>Do not draw a replacement card after every play.</b> Hands are used during the round. The game gathers, shuffles, and redeals only when the round ends.<br><br>
-<b>5. Start each round: choose the ball carrier</b><br>
-The team attacking first chooses a player with RUN or PASS to hold the ball. Only the current ball carrier can start the next RUN or PASS.<br><br>
-<b style="font-size:18px">6. Complete RUN flow</b><br>
-RUN → defense chooses No Defense / TACKLE / BLITZ.<br><br>
-<b>No Defense:</b> RUN succeeds → advance 1 → same ball carrier keeps possession.<br><br>
-<b>BLITZ:</b> RUN fails → no advance → offense keeps possession.<br><br>
-<b>TACKLE:</b> offense may use BLOCK.<br>• No BLOCK → RUN fails.<br>• BLOCK → TACKLE is canceled → defense gets one final BLITZ choice.<br>　• No BLITZ → RUN succeeds.<br>　• BLITZ → RUN fails.<br><br>
-<b>All RUN results:</b><br>RUN → No Defense = <b>SUCCESS</b><br>RUN → BLITZ = <b>FAIL</b><br>RUN → TACKLE → No BLOCK = <b>FAIL</b><br>RUN → TACKLE → BLOCK → No BLITZ = <b>SUCCESS</b><br>RUN → TACKLE → BLOCK → BLITZ = <b>FAIL</b><br><br>
-<b style="font-size:18px">7. Complete PASS flow</b><br>
-Play PASS → choose a teammate receiver → QB skill decision if available → defense chooses No Defense / INTERCEPTION / BLITZ.<br><br>
-<b>No Defense:</b> PASS succeeds → receiver becomes ball carrier → advance 1, or 2 if QB skill applies.<br><br>
-<b>BLITZ:</b> PASS fails → no advance → original offense keeps possession.<br><br>
-<b>INTERCEPTION:</b> offense may use BLOCK.<br>• No BLOCK → interception succeeds → defender who played INTERCEPTION takes possession immediately.<br>• BLOCK → interception is canceled → defense gets one final BLITZ choice.<br>　• No BLITZ → PASS succeeds.<br>　• BLITZ → PASS fails.<br><br>
-<b>All PASS results:</b><br>PASS → receiver → No Defense = <b>SUCCESS</b><br>PASS → receiver → BLITZ = <b>FAIL</b><br>PASS → receiver → INTERCEPTION → No BLOCK = <b>INTERCEPTION; POSSESSION CHANGES</b><br>PASS → receiver → INTERCEPTION → BLOCK → No BLITZ = <b>SUCCESS</b><br>PASS → receiver → INTERCEPTION → BLOCK → BLITZ = <b>FAIL</b><br><br>
-<b>8. When Blue computer is on offense</b><br>
-The computer chooses Blue's ball carrier and RUN/PASS automatically. You defend as Red.<br>Against RUN: choose TACKLE / BLITZ / No Defense.<br>Against PASS: choose INTERCEPTION / BLITZ / No Defense.<br>If the computer BLOCKs your TACKLE/INTERCEPTION, you may still use BLITZ as the final response.<br><br>
-<b>9. After each play</b><br><b>Success:</b> advance automatically.<br><b>Failure:</b> no advance; the system checks whether the offense can continue.<br><b>Successful INTERCEPTION:</b> possession changes immediately.<br><br>
-<b>10. Choose a new ball carrier</b><br>If the current carrier has no RUN/PASS but a teammate does, choose a new carrier. If the whole team has no RUN/PASS and the opponent still does, possession goes to the opponent.<br><br>
-<b>11. When a round ends</b><br>A round ends when neither team has a RUN/PASS available. The game gathers, shuffles, and redeals. The other team attacks first next round. <b>Normal round endings do not erase field progress.</b><br><br>
-<b>12. TOUCHDOWN</b><br>1st success: 50→40.<br>2nd: 40→30.<br>3rd: 30→20.<br>4th: 20→10, then the ball carrier automatically runs into the END ZONE.<br>TOUCHDOWN → earn 1 🏈 → that team's next touchdown drive starts again from the 50. <b>There is no 5th successful play.</b><br><br>
-<b>13. Full game order</b><br><b>Choose size/mode → assign teams and QB → Rock-Paper-Scissors for Round 1 → deal → choose ball carrier → RUN/PASS → defense → BLOCK if needed → final BLITZ if needed → system decides success/failure/interception → advance or change possession → continue → when both teams have no RUN/PASS, redeal → other team starts next round → 4th success scores TOUCHDOWN → earn 🏈 → continue.</b><br><br><b>First team to collect 3 🏈 wins immediately.</b>
-</div>`};
-function build(){const top=document.querySelector('.topbar > div:last-child');if(!top||document.getElementById('manualBtn'))return;const btn=document.createElement('button');btn.className='btn';btn.id='manualBtn';top.insertBefore(btn,document.getElementById('rulesBtn'));const modal=document.createElement('div');modal.className='modal';modal.id='manualModal';modal.innerHTML='<div class="modalBox"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h2 style="margin:0" id="manualHeading"></h2><button class="btn" id="closeManualBtn"></button></div><div style="margin-top:12px;line-height:1.75;color:#dbe5de" id="manualBody"></div></div>';document.body.appendChild(modal);btn.onclick=()=>{render();modal.classList.add('show')};document.getElementById('closeManualBtn').onclick=()=>modal.classList.remove('show');modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});render()}
-function render(){if(!document.getElementById('manualBtn'))return;const lang=document.documentElement.lang.startsWith('en')?'en':'zh',en=lang==='en';document.getElementById('manualBtn').textContent=en?'Rulebook':'说明书';document.getElementById('manualHeading').textContent=en?'Strategy Mode Rulebook':'策略模式说明书';document.getElementById('closeManualBtn').textContent=en?'Close':'关闭';document.getElementById('manualBody').innerHTML=manual[lang]}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();document.addEventListener('click',e=>{if(e.target&&e.target.id==='langToggleBtn')setTimeout(render,0)});
+en:`<div class="manualDoc"><div class="manualLead"><b>🏈 STRATEGY MODE · SOLO MODE COMPLETE RULEBOOK</b><br>Read the game in its real order. Use the menu below to jump directly to any section.</div>
+<div class="manualToc"><a href="#m-setup">1 Setup & Teams</a><a href="#m-rps">2 Rock-Paper-Scissors</a><a href="#m-deal">3 Deal</a><a href="#m-round">4 Round Start</a><a href="#m-run">5 RUN Flow</a><a href="#m-pass">6 PASS Flow</a><a href="#m-defense">7 Defense</a><a href="#m-result">8 Success / Fail</a><a href="#m-possession">9 Possession</a><a href="#m-redeal">10 Round End</a><a href="#m-td">11 Touchdown</a><a href="#m-win">12 Win</a></div>
+<section id="m-setup"><h3>1. Setup and teams</h3><p>Choose <b>2v2 / 3v3 / 4v4</b>.</p><p>2v2: 2 Red vs 2 Blue, 7 cards each.<br>3v3: 3 Red vs 3 Blue, 6 cards each.<br>4v4: 4 Red vs 4 Blue, 5 cards each.</p><p><b>Solo Mode:</b> you control Red Team only. The computer controls Blue Team. Each team has one QB.</p><p>The QB has one role skill: after the QB plays PASS and a receiver is chosen, you may use the skill. If the PASS finally succeeds, advance 2 spaces. If the play later fails, the skill is still spent.</p></section>
+<section id="m-rps"><h3>2. First offense: Rock-Paper-Scissors</h3><p>You choose Rock, Paper, or Scissors for Red; the Blue computer chooses randomly.</p><p>Red wins → Red attacks first.<br>Blue wins → Blue attacks first.<br>Tie → play again until there is a winner.</p><div class="keyRule">Only Round 1 uses Rock-Paper-Scissors. After that, first offense alternates each round.</div></section>
+<section id="m-deal"><h3>3. Deal cards</h3><p>Deal 7 each in 2v2, 6 each in 3v3, or 5 each in 4v4.</p><p>Cards: <b>RUN, PASS, TACKLE, INTERCEPTION, BLOCK, BLITZ</b>.</p><div class="warning">Do not draw a replacement after each card. Use the current hand for the round; gather, shuffle, and redeal only when the round ends.</div></section>
+<section id="m-round"><h3>4. Start of each round</h3><p>The team attacking first chooses a player with <b>RUN or PASS</b> as the ball carrier.</p><ol><li>Ball carrier chooses RUN or PASS</li><li>Choose receiver for PASS</li><li>QB skill decision if available</li><li>Defense responds</li><li>Offense may BLOCK TACKLE/INTERCEPTION</li><li>Defense may use final BLITZ after BLOCK</li><li>System resolves success, failure, advance, or possession change</li></ol></section>
+<section id="m-run"><h3>5. Complete RUN flow</h3><div class="comboChain">RUN → No Defense = ✅ success → advance 1</div><div class="comboChain">RUN → BLITZ = ❌ fail</div><div class="comboChain">RUN → TACKLE → No BLOCK = ❌ fail</div><div class="comboChain">RUN → TACKLE → BLOCK → No BLITZ = ✅ success</div><div class="comboChain">RUN → TACKLE → BLOCK → BLITZ = ❌ fail</div><p>TACKLE stops RUN but <b>does not automatically steal possession</b>.</p></section>
+<section id="m-pass"><h3>6. Complete PASS flow</h3><div class="comboChain">PASS → choose receiver → No Defense = ✅ success</div><div class="comboChain">PASS → BLITZ = ❌ fail</div><div class="comboChain">PASS → INTERCEPTION → No BLOCK = 🦅 interception; defense takes possession</div><div class="comboChain">PASS → INTERCEPTION → BLOCK → No BLITZ = ✅ PASS succeeds</div><div class="comboChain">PASS → INTERCEPTION → BLOCK → BLITZ = ❌ PASS fails</div><p>After a successful PASS, the chosen receiver becomes the new ball carrier.</p></section>
+<section id="m-defense"><h3>7. When you are on defense</h3><p>Against <b>RUN</b>: TACKLE / BLITZ / No Defense.</p><p>Against <b>PASS</b>: INTERCEPTION / BLITZ / No Defense.</p><p>If TACKLE or INTERCEPTION is canceled by BLOCK, you may still use BLITZ as the final response.</p><p>In Solo Mode, Blue chooses its offense automatically; you make Red Team's defense decisions.</p></section>
+<section id="m-result"><h3>8. Success and failure</h3><p><b>✅ Success:</b> the full chain ends without a final stop; the system advances automatically.</p><p><b>❌ Failure:</b> the final defense stops the play; no field progress.</p><p><b>🦅 Interception:</b> INTERCEPTION is not canceled; that defender takes possession.</p><div class="keyRule">The system calculates results automatically. Never press a manual +1.</div></section>
+<section id="m-possession"><h3>9. Possession and new ball carrier</h3><p>Successful INTERCEPTION → possession changes immediately.</p><p>Current ball carrier has no RUN/PASS but a teammate does → choose a new ball carrier on the same team.</p><p>The whole current team has no RUN/PASS but the other team does → possession goes to the other team.</p></section>
+<section id="m-redeal"><h3>10. Round end</h3><p>The round ends when neither team has a RUN/PASS available.</p><p>The game gathers all cards, shuffles, and redeals. The other team attacks first next round.</p><div class="keyRule">A normal round ending does not erase field progress.</div></section>
+<section id="m-td"><h3>11. TOUCHDOWN flow</h3><p>The 50 is only the starting point.</p><p>1st success: 50→40<br>2nd: 40→30<br>3rd: 30→20<br>4th: 20→10, then the ball carrier automatically runs into the END ZONE.</p><p>The 4th success scores the TOUCHDOWN and earns 1 🏈. <b>There is no 5th play.</b></p></section>
+<section id="m-win"><h3>12. Win and full game loop</h3><p><b>The first team to collect 3 🏈 wins immediately.</b></p><div class="comboChain">Choose size/mode → teams/QB → Rock-Paper-Scissors → deal → choose ball carrier → RUN/PASS → defense → BLOCK counter → final BLITZ → system resolves success/fail/interception → advance or possession change → redeal when no RUN/PASS remains → alternate first offense → 4th success TOUCHDOWN → earn 🏈 → first to 3 wins</div></section></div>`};
+function addStyle(){if(document.getElementById('manualDocStyle'))return;const s=document.createElement('style');s.id='manualDocStyle';s.textContent=`.manualDoc{font-size:14px;line-height:1.65}.manualLead{background:#2b2715;border:2px solid #b99b4b;border-radius:12px;padding:11px;margin:6px 0 10px}.manualToc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:10px 0 14px;position:sticky;top:-12px;background:#101a12;padding:8px;z-index:8;border-radius:10px}.manualToc a{background:#244f31;color:#fff;text-decoration:none;border-radius:8px;padding:8px 5px;font-size:11px;font-weight:900;text-align:center}.manualDoc section{scroll-margin-top:95px;background:#152017;border:1px solid #405b46;border-radius:12px;padding:11px;margin:10px 0}.manualDoc h3{margin:0 0 7px;color:#f0cf78;font-size:17px}.manualDoc p,.manualDoc li{margin:5px 0}.manualDoc ol{padding-left:21px}.keyRule{background:#302914;border:1px solid #b99b4b;border-radius:9px;padding:8px;margin:7px 0;font-weight:900}.warning{background:#321a1a;border-left:5px solid #b94c4c;border-radius:8px;padding:8px;margin:7px 0;font-weight:850}.comboChain{background:#0c1510;border-left:4px solid #d0ae55;border-radius:7px;padding:8px;margin:6px 0;font-weight:850}@media(min-width:700px){.manualToc{grid-template-columns:repeat(4,minmax(0,1fr))}}`;document.head.appendChild(s)}
+function getLang(){return (document.documentElement.lang||'zh').toLowerCase().startsWith('en')?'en':'zh'}
+function render(){const lang=getLang(),btn=document.getElementById('manualBtn');if(!btn)return;btn.textContent=lang==='en'?'RULEBOOK':'说明书';document.getElementById('manualHeading').textContent=lang==='en'?'Strategy Mode Rulebook':'策略模式说明书';document.getElementById('closeManualBtn').textContent=lang==='en'?'Close':'关闭';document.getElementById('manualBody').innerHTML=manual[lang]}
+function build(){addStyle();const top=document.querySelector('.topbar > div:last-child');if(!top||document.getElementById('manualBtn'))return;const btn=document.createElement('button');btn.className='btn';btn.id='manualBtn';top.insertBefore(btn,document.getElementById('rulesBtn'));const modal=document.createElement('div');modal.className='modal';modal.id='manualModal';modal.innerHTML='<div class="modalBox"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><h2 style="margin:0" id="manualHeading"></h2><button class="btn" id="closeManualBtn"></button></div><div id="manualBody" style="margin-top:10px;color:#dbe5de"></div></div>';document.body.appendChild(modal);btn.onclick=()=>{render();modal.classList.add('show');modal.querySelector('.modalBox').scrollTop=0};document.getElementById('closeManualBtn').onclick=()=>modal.classList.remove('show');modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});const langBtn=document.getElementById('langToggleBtn');if(langBtn)langBtn.addEventListener('click',()=>setTimeout(render,30));render()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
 })();
