@@ -1,0 +1,9 @@
+(()=>{
+const zh=`<div class="keyRule footballCardNote"><b>🏈 重要：橄榄球本身是一张 FOOTBALL CARD（橄榄球卡），不是额外的棋子。</b><br>开局决定先攻后，先攻方获得这张橄榄球卡。游戏里说“持球者”，就是当前拿着这张橄榄球卡的球员。<br>RUN成功：橄榄球卡仍留在原持球者手上。<br>PASS成功：把橄榄球卡交给你选择的接球队友。<br>INTERCEPTION成功：橄榄球卡转移给成功抄截的防守球员，球权立即交换。<br><b>整场比赛始终只有这一张橄榄球卡代表球权。</b></div>`;
+const en=`<div class="keyRule footballCardNote"><b>🏈 IMPORTANT: The football itself is a FOOTBALL CARD, not a separate game piece.</b><br>After first possession is decided, the team on offense receives the Football Card. A “ball carrier” means the player currently holding this Football Card.<br>Successful RUN: the Football Card stays with the same ball carrier.<br>Successful PASS: move the Football Card to the chosen receiver.<br>Successful INTERCEPTION: move the Football Card to the defender who made the interception; possession changes immediately.<br><b>There is only one Football Card representing possession during the game.</b></div>`;
+function lang(){return (document.documentElement.lang||'zh').toLowerCase().startsWith('en')?'en':'zh'}
+function inject(id){const root=document.getElementById(id);if(!root)return;const old=root.querySelector('.footballCardNote');if(old)old.remove();const box=document.createElement('div');box.innerHTML=lang()==='en'?en:zh;const note=box.firstElementChild;const lead=root.querySelector('.manualLead,.guideLead');if(lead)lead.insertAdjacentElement('afterend',note);else root.prepend(note)}
+function apply(){inject('manualBody');inject('rulesBody')}
+function setup(){apply();['manualBtn','rulesBtn','langToggleBtn'].forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener('click',()=>setTimeout(apply,40))})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+})();
