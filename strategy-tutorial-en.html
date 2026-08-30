@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN" style="visibility:hidden">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Goal-Scoring Moment Football — Strategy Tutorial</title>
+<link rel="stylesheet" href="strategy-tutorial-v3.css?v=20260825-cards2">
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">🎓🏈 GOAL-SCORING MOMENT · STRATEGY TUTORIAL</div>
+    <div class="topBtns"><a class="btn" href="index.html" id="homeBtn">← Home</a><a class="btn" href="strategy-game.html" id="gameBtn">Solo Game</a><button class="btn gold" id="selectLessonBtn">Choose Lesson</button><button class="btn" id="restartBtn">Restart Tutorial</button><button class="btn" id="langBtn" style="display:none">Switch to English</button></div>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <div class="stepbar" id="stepbar"></div>
+      <div class="pitch" id="pitch"><div class="pitchBorder"></div><div class="end left">RED END ZONE</div><div class="end right">BLUE END ZONE</div><div id="yards"></div><div class="los" id="los"></div><div class="badge" id="badge">BALL ON 50</div>
+        <div class="player red" id="r1" style="left:42%;top:34%">R1<img class="footballCardMini" id="ball1" style="display:none" src="cards/football-card.png" alt="FOOTBALL CARD"></div>
+        <div class="player red" id="r2" style="left:42%;top:61%">R2<small>QB</small><img class="footballCardMini" id="ball2" style="display:none" src="cards/football-card.png" alt="FOOTBALL CARD"></div>
+        <div class="player blue" id="b1" style="left:58%;top:34%">B1<img class="footballCardMini" id="ball3" style="display:none" src="cards/football-card.png" alt="FOOTBALL CARD"></div>
+        <div class="player blue" id="b2" style="left:58%;top:61%">B2<small>QB</small></div><div class="flash" id="flash"></div>
+      </div>
+      <div class="scoreline"><div class="scorebox">RED<b id="rs">🏈 0 / 3</b></div><div class="scorebox"><span id="round">ROUND 1 · RED OFFENSE</span><b id="pos">50 YD</b></div><div class="scorebox">BLUE<b id="bs">🏈 0 / 3</b></div></div>
+    </div>
+    <div class="panel side"><div id="lessonNo" style="font-size:11px;color:#e6bf62;font-weight:950"></div><h2 id="title"></h2><p id="text"></p><div class="rulebox" id="rule"></div><div class="flow" id="flow"></div><div class="cards" id="cards"></div><div class="actions" id="actions"></div><div class="result" id="result"></div><div class="toast" id="toast"></div></div>
+  </div>
+</div>
+<div class="overlay" id="lessonModal"><div class="dialog"><h2 id="lessonModalTitle">Choose a Lesson to Review</h2><p id="lessonModalText">Choose any lesson to jump directly to that step and study it again.</p><div class="lessonGrid" id="lessonGrid"></div><div class="dialogBtns"><button class="secondary" id="closeLessonBtn">Close</button><button class="primary" id="restartFromModalBtn">Restart from Lesson 1</button></div></div></div>
+<div class="overlay" id="finishModal"><div class="dialog"><h2 id="finishTitle">🎉 Tutorial Complete</h2><p id="finishText">You completed the full Strategy Mode tutorial. You can restart from Lesson 1 or return to the home page.</p><div class="dialogBtns"><button class="primary" id="finishRestartBtn">Restart Tutorial</button><a class="secondary" href="index.html" id="finishHomeBtn">Return Home</a></div></div></div>
+<script src="strategy-tutorial-v3.js?v=20260825-cards2"></script>
+<script src="strategy-tutorial-football-step.js?v=20260825-football2"></script>
+<script src="english-only.js?v=20260830-en"></script>
+</body>
+</html>
