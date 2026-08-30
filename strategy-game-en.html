@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN" style="visibility:hidden">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Goal-Scoring Moment Football — Strategy Solo</title>
+<link rel="stylesheet" href="strategy-game-v2.css?v=20260825-cards1">
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">🏈 GOAL-SCORING MOMENT · STRATEGY · SOLO</div>
+    <div class="score"><div class="team">RED</div><div class="num" id="redScore">0</div><b>-</b><div class="num" id="blueScore">0</div><div class="team">BLUE AI</div></div>
+    <div class="nav"><a class="btn" id="homeBtn" href="index.html">← Home</a><button class="btn gold" id="manualBtn">Rulebook</button><button class="btn" id="rulesBtn">How to Play</button><button class="btn" id="resetBtn">Restart</button><button class="btn" id="langBtn" style="display:none">Switch to English</button></div>
+  </div>
+  <div class="arena">
+    <aside class="panel roster"><h3 id="redRosterTitle">Red Players</h3><div id="redRoster"></div></aside>
+    <main class="panel pitchWrap">
+      <div class="pitchHead"><b id="stadiumTitle">Top-Down American Football Field</b><span id="phaseLabel">Waiting</span></div>
+      <div class="footballPitchCleanV3" id="pitch">
+        <div class="pitchBorder"></div><div class="midline"></div><div class="endzone left">RED END ZONE</div><div class="endzone right">BLUE END ZONE</div><div id="yardLayer"></div><div class="los" id="los" style="left:50%"></div><div class="ballBadge" id="ballBadge" style="left:50%">BALL ON 50</div><div class="drive">4 SUCCESSFUL PLAYS = TOUCHDOWN</div><div id="playersLayer"></div><div class="flash" id="flash"></div>
+      </div>
+    </main>
+    <aside class="panel roster"><h3 id="blueRosterTitle">Blue AI</h3><div id="blueRoster"></div></aside>
+  </div>
+  <div class="lower">
+    <section class="panel logPanel"><h3 id="logTitle">Game Log</h3><div class="log" id="log"></div><div class="status" style="margin-top:8px"><span class="pill" id="roundPill">Round 1</span><span class="pill" id="posPill">Possession: --</span><span class="pill" id="yardPill">BALL ON 50</span></div></section>
+    <section class="panel handPanel"><h3 id="handTitle">Your Hand</h3><div class="status"><span class="pill" id="rolePill">Role: --</span><span class="pill" id="skillPill">Skill: --</span><span class="pill footballKey"><img src="cards/football-card.png" alt="FOOTBALL CARD">FOOTBALL CARD = POSSESSION</span></div><div class="switches" id="switches"></div><div class="prompt" id="prompt"><div class="promptTitle" id="promptTitle"></div><div class="promptBtns" id="promptBtns"></div></div><div class="cards" id="cards"></div></section>
+  </div>
+</div>
+<div class="overlay show" id="setup"><div class="dialog"><h2 id="setupTitle">Strategy Mode · Solo vs AI</h2><p id="setupText">You control Red only. Blue is fully computer-controlled.</p><h3 id="chooseSizeTitle">Choose Team Size</h3><div class="setupGrid"><button class="choice active" data-size="2">2v2<br><small>7 cards each</small></button><button class="choice" data-size="3">3v3<br><small>6 cards each</small></button><button class="choice" data-size="4">4v4<br><small>5 cards each</small></button></div><div style="text-align:center;margin-top:14px"><button class="btn gold" id="startBtn">Start Game</button></div></div></div>
+<div class="overlay" id="rps"><div class="dialog" style="max-width:600px;text-align:center"><h2 id="rpsTitle">Rock-Paper-Scissors Decides Round 1</h2><p id="rpsText">You are Red. The computer chooses at the same time.</p><div class="rps"><button class="choice" data-rps="rock">✊</button><button class="choice" data-rps="paper">🖐️</button><button class="choice" data-rps="scissors">✌️</button></div><p id="rpsResult"></p></div></div>
+<div class="overlay" id="doc"><div class="dialog"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2 id="docTitle">Rulebook</h2><button class="btn" id="closeDoc">Close</button></div><div id="docBody"></div></div></div>
+<div class="overlay" id="gameOver"><div class="dialog" style="text-align:center"><h2 id="gameOverTitle">Game Over</h2><p id="gameOverText"></p><a class="btn gold" id="restartGameBtn" href="strategy-game.html">Restart</a></div></div>
+<script src="strategy-game-v2.js?v=20260825-cards1"></script>
+<script src="strategy-doc-card-gallery.js?v=20260825-doccards1"></script>
+<script src="english-only.js?v=20260830-en"></script>
+</body>
+</html>
