@@ -1,13 +1,4 @@
 (()=>{
-  const CARD_PNG={
-    RUN:'cards/run-card.png',
-    PASS:'cards/pass-card.png',
-    TACKLE:'cards/tackle-card.png',
-    INTERCEPTION:'cards/interception-card.png',
-    BLOCK:'cards/block-card.png',
-    BLITZ:'cards/blitz-card.png'
-  };
-
   const CARD_WEBP={
     RUN:'cards/run-card.webp',
     PASS:'cards/pass-card.webp',
@@ -17,9 +8,16 @@
     BLITZ:'cards/blitz-card.webp'
   };
 
-  let lastSignature='';
-  let timer=null;
+  const CARD_PNG={
+    RUN:'cards/run-card.png',
+    PASS:'cards/pass-card.png',
+    TACKLE:'cards/tackle-card.png',
+    INTERCEPTION:'cards/interception-card.png',
+    BLOCK:'cards/block-card.png',
+    BLITZ:'cards/blitz-card.png'
+  };
 
+  let timer=null;
 
   function displayName(card){
     return card==='BLITZ'
@@ -27,11 +25,25 @@
       : card;
   }
 
+  function isMobile(){
+    return window.matchMedia('(max-width:560px)').matches;
+  }
+
+  function removeReveal(){
+    const old=document.getElementById('aiCardReveal');
+
+    if(old){
+      old.remove();
+    }
+  }
 
   function createReveal(){
+
     let root=document.getElementById('aiCardReveal');
 
-    if(root) return root;
+    if(root){
+      return root;
+    }
 
     root=document.createElement('div');
 
@@ -43,10 +55,7 @@
         BLUE AI PLAYED
       </div>
 
-      <img
-        id="aiCardRevealImg"
-        alt=""
-      >
+      <img id="aiCardRevealImg" alt="">
 
       <div
         class="aiCardRevealName"
@@ -59,39 +68,44 @@
     return root;
   }
 
+  function loadImage(img,card){
 
-  function setImageWithFallback(img,card){
-
-    const webp=CARD_WEBP[card];
-    const png=CARD_PNG[card];
-
+    img.onload=null;
     img.onerror=null;
 
     img.onerror=()=>{
       img.onerror=null;
-      img.src=png;
+      img.src=CARD_PNG[card];
     };
 
-    img.src=webp;
+    /* WebP first */
+    img.src=CARD_WEBP[card];
   }
 
+  window.showAiPlayedCard=function(card){
 
-  function reveal(card){
-
-    if(!window.matchMedia('(max-width:560px)').matches){
-      return;
-    }
-
+    /*
+      IMPORTANT:
+      Only call this when Blue AI really spends/plays a card.
+    */
 
     if(card==='BREAK THROUGH'){
       card='BLITZ';
     }
 
-
     if(!CARD_WEBP[card]){
       return;
     }
 
+    /*
+      Desktop:
+      Never create/show the reveal card.
+      This fixes the giant card staying under the field.
+    */
+    if(!isMobile()){
+      removeReveal();
+      return;
+    }
 
     const root=createReveal();
 
@@ -103,15 +117,11 @@
       'aiCardRevealName'
     );
 
-
     name.textContent=displayName(card);
 
     img.alt=displayName(card)+' card';
 
-
-    /* WEBP FIRST -> PNG FALLBACK */
-    setImageWithFallback(img,card);
-
+    loadImage(img,card);
 
     root.classList.remove('show');
 
@@ -119,83 +129,25 @@
 
     root.classList.add('show');
 
-
     clearTimeout(timer);
 
     timer=setTimeout(()=>{
       root.classList.remove('show');
     },1400);
-  }
+  };
 
-
-  function detectCard(line){
-
-    let m=line.match(
-      /Blue AI(?:\s+B\d+)?\s+plays\s+(RUN|PASS|TACKLE|INTERCEPTION|BLOCK|BLITZ|BREAK THROUGH)/i
-    );
-
-    if(m){
-      return m[1].toUpperCase();
+  /*
+    If page changes from mobile width to desktop width,
+    remove any existing reveal immediately.
+  */
+  window.addEventListener('resize',()=>{
+    if(!isMobile()){
+      removeReveal();
     }
+  });
 
-
-    m=line.match(
-      /Blue AI(?:\s+B\d+)?\s+uses\s+(?:a\s+final\s+)?(RUN|PASS|TACKLE|INTERCEPTION|BLOCK|BLITZ|BREAK THROUGH)/i
-    );
-
-    if(m){
-      return m[1].toUpperCase();
-    }
-
-
-    if(
-      /Blue AI uses a final BLITZ/i.test(line) ||
-      /Blue AI uses a final BREAK THROUGH/i.test(line)
-    ){
-      return 'BLITZ';
-    }
-
-
-    return null;
+  if(!isMobile()){
+    removeReveal();
   }
 
-
-  function scanLog(){
-
-  const log=document.getElementById('log');
-
-  if(!log){
-    return;
-  }
-
-  const lines=log.innerText
-    .split('\n')
-    .map(x=>x.trim())
-    .filter(Boolean);
-
-  if(!lines.length){
-    return;
-  }
-
-  /* Only check the newest log entry.
-     This prevents an older PASS/RUN from being shown again
-     when AI later chooses No Defense or skips a response. */
-  const line=lines[lines.length-1];
-
-  const card=detectCard(line);
-
-  if(!card){
-    return;
-  }
-
-  const signature=
-    lines.length+'|'+line;
-
-  if(signature===lastSignature){
-    return;
-  }
-
-  lastSignature=signature;
-
-  reveal(card);
-}
+})();
