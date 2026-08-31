@@ -162,95 +162,40 @@
 
   function scanLog(){
 
-    const log=document.getElementById('log');
+  const log=document.getElementById('log');
 
-    if(!log){
-      return;
-    }
-
-
-    const lines=log.innerText
-      .split('\n')
-      .map(x=>x.trim())
-      .filter(Boolean);
-
-
-    if(!lines.length){
-      return;
-    }
-
-
-    for(
-      let i=Math.max(0,lines.length-5);
-      i<lines.length;
-      i++
-    ){
-
-      const line=lines[i];
-
-      const card=detectCard(line);
-
-      if(!card){
-        continue;
-      }
-
-
-      const signature=
-        lines.length+'|'+line;
-
-
-      if(signature===lastSignature){
-        continue;
-      }
-
-
-      lastSignature=signature;
-
-      reveal(card);
-    }
+  if(!log){
+    return;
   }
 
+  const lines=log.innerText
+    .split('\n')
+    .map(x=>x.trim())
+    .filter(Boolean);
 
-  function start(){
-
-    const log=document.getElementById('log');
-
-    if(!log){
-      setTimeout(start,100);
-      return;
-    }
-
-
-    const observer=
-      new MutationObserver(()=>{
-        scanLog();
-      });
-
-
-    observer.observe(
-      log,
-      {
-        childList:true,
-        subtree:true,
-        characterData:true
-      }
-    );
-
-
-    scanLog();
+  if(!lines.length){
+    return;
   }
 
+  /* Only check the newest log entry.
+     This prevents an older PASS/RUN from being shown again
+     when AI later chooses No Defense or skips a response. */
+  const line=lines[lines.length-1];
 
-  if(document.readyState==='loading'){
+  const card=detectCard(line);
 
-    document.addEventListener(
-      'DOMContentLoaded',
-      start
-    );
-
-  }else{
-
-    start();
+  if(!card){
+    return;
   }
 
-})();
+  const signature=
+    lines.length+'|'+line;
+
+  if(signature===lastSignature){
+    return;
+  }
+
+  lastSignature=signature;
+
+  reveal(card);
+}
