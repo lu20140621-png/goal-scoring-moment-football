@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Goal-Scoring Moment Football — Strategy Solo</title>
 <link rel="stylesheet" href="strategy-game-v2.css?v=20260825-cards1">
+<link rel="stylesheet" href="strategy-game-mobile.css?v=20260831-mobile1">
 </head>
 <body>
 <div class="app">
@@ -20,6 +21,7 @@
       <div class="footballPitchCleanV3" id="pitch">
         <div class="pitchBorder"></div><div class="midline"></div><div class="endzone left">RED END ZONE</div><div class="endzone right">BLUE END ZONE</div><div id="yardLayer"></div><div class="los" id="los" style="left:50%"></div><div class="ballBadge" id="ballBadge" style="left:50%">BALL ON 50</div><div class="drive">4 SUCCESSFUL PLAYS = TOUCHDOWN</div><div id="playersLayer"></div><div class="flash" id="flash"></div>
       </div>
+      <div class="aiCardReveal" id="aiCardReveal"><img id="aiCardImg" alt=""><div class="aiCardRevealText"><span id="aiCardWho">BLUE AI PLAYS</span><b id="aiCardName"></b></div></div>
     </main>
     <aside class="panel roster"><h3 id="blueRosterTitle">Blue AI</h3><div id="blueRoster"></div></aside>
   </div>
@@ -35,5 +37,6 @@
 <script src="strategy-game-v2.js?v=20260825-cards1"></script>
 <script src="strategy-doc-card-gallery.js?v=20260825-doccards1"></script>
 <script src="english-only.js?v=20260831-break-through"></script>
+<script src="strategy-mobile-ai-reveal.js?v=20260831-mobile1"></script>
 </body>
 </html>
