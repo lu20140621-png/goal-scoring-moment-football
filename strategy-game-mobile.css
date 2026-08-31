@@ -639,3 +639,107 @@
     height:32px !important;
   }
 }
+/* ===== MOBILE POLISH V3 ===== */
+@media (max-width:560px){
+
+  /* Top scoreboard: make it readable again */
+  .top{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto auto !important;
+    gap:5px !important;
+    padding:6px 7px !important;
+  }
+
+  .score{
+    width:100% !important;
+    justify-content:center !important;
+    gap:5px !important;
+  }
+
+  .team{
+    padding:5px 8px !important;
+    font-size:11px !important;
+    border-width:2px !important;
+  }
+
+  .num{
+    min-width:40px !important;
+    padding:2px 6px !important;
+    font-size:21px !important;
+    line-height:1.15 !important;
+    border-width:2px !important;
+  }
+
+  .nav{
+    width:100% !important;
+    justify-content:center !important;
+    gap:4px !important;
+  }
+
+  .nav .btn{
+    padding:5px 7px !important;
+    font-size:9px !important;
+  }
+
+
+  /* Slightly reduce field height */
+  .arena{
+    flex:0 0 29svh !important;
+  }
+
+
+  /* Hand panel should only occupy what it needs */
+  .handPanel{
+    flex:0 0 auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    padding:5px !important;
+  }
+
+  .handPanel h3{
+    font-size:13px !important;
+    margin:0 0 4px !important;
+  }
+
+
+  /* Cards shorter + smaller */
+  .cards{
+    height:91px !important;
+    min-height:91px !important;
+    padding:2px !important;
+    gap:5px !important;
+  }
+
+  .card{
+    flex:0 0 56px !important;
+    width:56px !important;
+    height:84px !important;
+  }
+
+
+  /* Prompt stays compact */
+  .prompt{
+    max-height:48px !important;
+    padding:4px 6px !important;
+    margin-bottom:3px !important;
+  }
+
+  .promptTitle{
+    font-size:8px !important;
+    line-height:1.15 !important;
+  }
+
+
+  /* Game Log fills remaining bottom space */
+  .lower{
+    flex:1 1 auto !important;
+  }
+
+  .logPanel{
+    flex:1 1 auto !important;
+    min-height:70px !important;
+    max-height:110px !important;
+    margin-top:auto !important;
+  }
+}
