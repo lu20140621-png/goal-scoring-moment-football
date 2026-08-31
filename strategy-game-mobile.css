@@ -743,3 +743,65 @@
     margin-top:auto !important;
   }
 }
+/* ===== MOBILE GAP FIX V4 ===== */
+@media (max-width:560px){
+
+  /* Lower area should not stretch the Game Log to the bottom */
+  .lower{
+    flex:0 0 auto !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:flex-start !important;
+    gap:5px !important;
+    min-height:0 !important;
+    overflow:visible !important;
+  }
+
+  /* Hand only uses the space it actually needs */
+  .handPanel{
+    order:1 !important;
+    flex:0 0 auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:5px !important;
+  }
+
+  /* Keep cards compact */
+  .cards{
+    height:90px !important;
+    min-height:90px !important;
+    max-height:90px !important;
+    margin:0 !important;
+    padding:2px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+  }
+
+  .card{
+    flex:0 0 56px !important;
+    width:56px !important;
+    height:84px !important;
+  }
+
+  /* Game Log immediately follows Your Hand */
+  .logPanel{
+    order:2 !important;
+    flex:0 0 auto !important;
+    width:100% !important;
+    min-height:78px !important;
+    max-height:92px !important;
+    height:82px !important;
+
+    margin:0 !important;
+    margin-top:0 !important;
+
+    padding:4px 5px !important;
+  }
+
+  .log{
+    height:43px !important;
+    max-height:43px !important;
+    overflow-y:auto !important;
+  }
+}
