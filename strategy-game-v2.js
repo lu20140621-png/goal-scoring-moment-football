@@ -26,6 +26,7 @@ function cardImageHtml(card,className='',altText=''){
   >`;
 }
 let lang='zh';
+let rpsLocked=false;
 let G={size:2,players:[],deck:[],discard:[],round:1,firstTeam:null,offense:null,holder:null,redProgress:0,blueProgress:0,redBalls:0,blueBalls:0,phase:'setup',pending:null,currentRed:'R1',logs:[]};
 const TXT={zh:{home:'← 首页',manual:'说明书',rules:'玩法说明',reset:'重新开始',lang:'Switch to English',redRoster:'红队球员',blueRoster:'蓝队电脑',stadium:'俯视美式橄榄球比赛现场',log:'比赛记录',hand:'你的手牌',role:'身份',skill:'技能',used:'已使用',ready:'可用',none:'无主动技能',pos:'球权',round:'第{n}回合',setupTitle:'策略模式 · 单人对电脑',setupText:'你只控制红队，蓝队全部由电脑控制。',chooseSize:'选择人数',start:'开始比赛',rpsTitle:'石头剪刀布决定第一轮先攻',rpsText:'你代表红队。电脑会同时随机出拳。',close:'关闭',gameOver:'比赛结束',restart:'重新开始',phase:{setup:'等待开始',rps:'石头剪刀布',choose:'选择持球者',attack:'进攻时刻',receiver:'选择接球人',defense:'防守时刻',block:'BLOCK反制',final:'最后BLITZ反制',ai:'电脑行动',touchdown:'TOUCHDOWN',gameover:'比赛结束'}},en:{home:'← Home',manual:'Rulebook',rules:'How to Play',reset:'Restart',lang:'Switch to Chinese',redRoster:'Red Players',blueRoster:'Blue AI',stadium:'Top-Down American Football Field',log:'Game Log',hand:'Your Hand',role:'Role',skill:'Skill',used:'Used',ready:'Available',none:'No active skill',pos:'Possession',round:'Round {n}',setupTitle:'Strategy Mode · Solo vs AI',setupText:'You control Red only. Blue is fully computer-controlled.',chooseSize:'Choose Team Size',start:'Start Game',rpsTitle:'Rock-Paper-Scissors Decides Round 1',rpsText:'You are Red. The computer chooses at the same time.',close:'Close',gameOver:'Game Over',restart:'Restart',phase:{setup:'Waiting',rps:'Rock-Paper-Scissors',choose:'Choose Ball Carrier',attack:'Offense',receiver:'Choose Receiver',defense:'Defense',block:'BLOCK Response',final:'Final BLITZ',ai:'Computer Turn',touchdown:'TOUCHDOWN',gameover:'Game Over'}}};
 const T=()=>TXT[lang];
@@ -73,11 +74,180 @@ function advance(t,n){const old=progress(t),next=Math.min(4,old+n);setProgress(t
 function touchdown(t){if(t==='red')G.redBalls++;else G.blueBalls++;setProgress(t,0);addLog(`🏈 ${t==='red'?'红队':'蓝队'} TOUCHDOWN！获得1个🏈。`,`🏈 ${teamName(t)} scores a TOUCHDOWN and earns 1 football.`);render();if((t==='red'?G.redBalls:G.blueBalls)>=3){G.phase='gameover';$('gameOverTitle').textContent=(t==='red'?'RED':'BLUE AI')+' WINS!';$('gameOverText').textContent=L('率先获得3个🏈，比赛结束。','First to 3 footballs wins the match.');$('gameOver').classList.add('show');render();return}setTimeout(()=>endRound('touchdown'),600)}
 function afterPlay(){hidePrompt();if(G.phase==='gameover'||G.phase==='touchdown')return;G.pending=null;if(!teamHasOff('red')&&!teamHasOff('blue')){endRound('exhausted');return}if(!teamHasOff(G.offense)){const other=G.offense==='red'?'blue':'red';addLog(`${G.offense==='red'?'红队':'蓝队'}已经没有 RUN/PASS，球权交给${other==='red'?'红队':'蓝队'}。`,`${teamName(G.offense)} has no RUN/PASS left. Possession moves to ${teamName(other)}.`);G.offense=other;G.holder=null;beginPossession();return}if(!holder()||!hasOff(holder())){G.holder=null;beginPossession();return}if(G.offense==='red'){G.phase='attack';G.currentRed=G.holder;render()}else{G.phase='ai';render();setTimeout(aiAttack,650)}}
 function endRound(reason){redealRound();G.round++;G.firstTeam=G.firstTeam==='red'?'blue':'red';G.offense=G.firstTeam;G.holder=null;G.pending=null;addLog(reason==='touchdown'?`达阵结束本轮。第${G.round}回合重新发牌，先攻方交替。`:`双方都没有 RUN/PASS，本轮结束。第${G.round}回合统一洗牌重发。`,reason==='touchdown'?`The touchdown ends the round. Round ${G.round} is redealt and first offense alternates.`:`Neither team has RUN/PASS. The round ends; all Action Cards are shuffled and redealt for Round ${G.round}.`);beginPossession()}
-function beginPossession(){if(G.offense==='red'){G.phase='choose';const ps=teamPlayers('red').filter(hasOff);if(!ps.length){afterPlay();return}G.currentRed=ps[0].id;addLog('红队进攻：可以从有 RUN/PASS 的红队队友中选择任意一人持有 FOOTBALL CARD。','Red offense: choose any Red teammate with RUN/PASS to hold the FOOTBALL CARD.');render()}else{G.phase='ai';const ps=teamPlayers('blue').filter(hasOff);if(!ps.length){afterPlay();return}const h=ps[Math.floor(Math.random()*ps.length)];G.holder=h.id;addLog(`蓝队电脑选择 ${h.id} 持有 FOOTBALL CARD。`,`Blue AI chooses ${h.id} to hold the FOOTBALL CARD.`);render();setTimeout(aiAttack,650)}}
+function beginPossession(){
+
+  hidePrompt();
+
+  G.pending=null;
+
+
+  /* RED possession */
+  if(G.offense==='red'){
+
+    G.phase='choose';
+
+    G.holder=null;
+
+    const ps=
+      teamPlayers('red').filter(hasOff);
+
+
+    if(!ps.length){
+
+      afterPlay();
+
+      return;
+    }
+
+
+    G.currentRed=ps[0].id;
+
+
+    addLog(
+      '红队进攻：可以从有 RUN/PASS 的红队队友中选择任意一人持有 FOOTBALL CARD。',
+      'Red offense: choose any Red teammate with RUN/PASS to hold the FOOTBALL CARD.'
+    );
+
+
+    render();
+
+    return;
+  }
+
+
+  /* BLUE AI possession */
+  if(G.offense==='blue'){
+
+    G.phase='ai';
+
+    const ps=
+      teamPlayers('blue').filter(hasOff);
+
+
+    if(!ps.length){
+
+      G.holder=null;
+
+      afterPlay();
+
+      return;
+    }
+
+
+    const h=
+      ps[
+        Math.floor(
+          Math.random()*ps.length
+        )
+      ];
+
+
+    G.holder=h.id;
+
+
+    addLog(
+      `蓝队电脑选择 ${h.id} 持有 FOOTBALL CARD。`,
+      `Blue AI chooses ${h.id} to hold the FOOTBALL CARD.`
+    );
+
+
+    render();
+
+
+    /* AI must continue automatically */
+    setTimeout(()=>{
+
+      if(
+        G.offense==='blue' &&
+        G.phase==='ai' &&
+        G.holder===h.id
+      ){
+        aiAttack();
+      }
+
+    },700);
+  }
+}if(G.offense==='red'){G.phase='choose';const ps=teamPlayers('red').filter(hasOff);if(!ps.length){afterPlay();return}G.currentRed=ps[0].id;addLog('红队进攻：可以从有 RUN/PASS 的红队队友中选择任意一人持有 FOOTBALL CARD。','Red offense: choose any Red teammate with RUN/PASS to hold the FOOTBALL CARD.');render()}else{G.phase='ai';const ps=teamPlayers('blue').filter(hasOff);if(!ps.length){afterPlay();return}const h=ps[Math.floor(Math.random()*ps.length)];G.holder=h.id;addLog(`蓝队电脑选择 ${h.id} 持有 FOOTBALL CARD。`,`Blue AI chooses ${h.id} to hold the FOOTBALL CARD.`);render();setTimeout(aiAttack,650)}}
 function aiAttack(){const p=holder();if(!p||p.team!=='blue'||!hasOff(p)){beginPossession();return}const opts=p.hand.filter(c=>c==='RUN'||c==='PASS'),c=opts[Math.floor(Math.random()*opts.length)];consume(p,c);window.showAiPlayedCard?.(c);G.pending={action:c,attacker:p.id,team:'blue',receiver:null,qbBoost:false};if(c==='PASS'){const rec=teamPlayers('blue').filter(x=>x.id!==p.id);G.pending.receiver=rec[Math.floor(Math.random()*rec.length)].id;if(p.role==='QB'&&!p.skill&&Math.random()<.45){p.skill=true;G.pending.qbBoost=true;addLog('蓝队 QB 使用身份技能。','Blue QB uses the role skill.')}}flash(c+'!');addLog(`蓝队电脑 ${p.id} 打出 ${c}。`,`Blue AI ${p.id} plays ${c}.`);G.phase='defense';const need=c==='RUN'?'TACKLE':'INTERCEPTION',eligible=teamPlayers('red').filter(x=>x.hand.includes(need)||x.hand.includes('BLITZ'));if(!eligible.length){addLog('红队没有可用防守牌，电脑进攻自动成功。','Red has no valid defensive card; Blue succeeds automatically.');setTimeout(resolveSuccess,500);return}G.currentRed=eligible[0].id;showPrompt(L(`电脑打出 ${c}。可使用 ${need} / BLITZ，或不防守。`,`Blue plays ${c}. Use ${need} / BLITZ, or choose no defense.`),[{label:L('不防守','No Defense'),fn:()=>resolveSuccess()}]);render()}
 function aiBlockDecision(){const p=teamPlayers('blue').find(x=>x.hand.includes('BLOCK'));if(p&&Math.random()<.75){consume(p,'BLOCK');window.showAiPlayedCard?.('BLOCK');
 flash('BLOCK!');addLog('蓝队电脑使用 BLOCK，取消你的防守。','Blue AI uses BLOCK and cancels your defense.');const blitzer=teamPlayers('red').find(x=>x.hand.includes('BLITZ'));if(blitzer){G.currentRed=blitzer.id;G.phase='final';showPrompt(L('电脑用 BLOCK 取消了你的防守。是否使用最后 BLITZ？','Blue canceled your defense with BLOCK. Use a final BLITZ?'),[{label:L('使用 BLITZ','Use BLITZ'),gold:true,fn:()=>{G.currentRed=blitzer.id;playHumanCard('BLITZ')}},{label:L('放弃 BLITZ','Skip BLITZ'),fn:()=>resolveSuccess()}]);render()}else resolveSuccess()}else{addLog('蓝队电脑没有使用 BLOCK。','Blue AI does not use BLOCK.');if(G.pending.defense==='INTERCEPTION'){const d=byId(G.pending.defender);G.holder=d.id;G.offense='red';addLog(`🦅 抄截成功！${d.id} 获得 FOOTBALL CARD。`,`🦅 Interception succeeds! ${d.id} gets the FOOTBALL CARD.`);G.pending=null;afterPlay()}else resolveFail(L('TACKLE 成功阻止 RUN；球仍在原进攻方。','TACKLE stops the RUN; possession stays with the offense.'))}}
-function doRps(me){const arr=['rock','paper','scissors'],ai=arr[Math.floor(Math.random()*3)],win=(me==='rock'&&ai==='scissors')||(me==='paper'&&ai==='rock')||(me==='scissors'&&ai==='paper');if(me===ai){$('rpsResult').textContent=L('平局！请再选一次。','Tie! Choose again.');return}$('rpsResult').textContent=L(`你：${me} / 电脑：${ai}。${win?'红队先攻！':'蓝队先攻！'}`,`You: ${me} / AI: ${ai}. ${win?'Red attacks first!':'Blue attacks first!'}`);G.firstTeam=win?'red':'blue';G.offense=G.firstTeam;setTimeout(()=>{$('rps').classList.remove('show');beginPossession()},700)}
+function doRps(me){
+
+  if(rpsLocked) return;
+
+  rpsLocked=true;
+
+  const buttons=document.querySelectorAll('[data-rps]');
+
+  buttons.forEach(b=>{
+    b.disabled=true;
+    b.style.pointerEvents='none';
+    b.style.opacity='.55';
+  });
+
+
+  const arr=['rock','paper','scissors'];
+
+  const ai=arr[
+    Math.floor(Math.random()*3)
+  ];
+
+  const win=
+    (me==='rock'&&ai==='scissors')||
+    (me==='paper'&&ai==='rock')||
+    (me==='scissors'&&ai==='paper');
+
+
+  /* Tie: allow another choice */
+  if(me===ai){
+
+    $('rpsResult').textContent=
+      L(
+        '平局！请再选一次。',
+        'Tie! Choose again.'
+      );
+
+    setTimeout(()=>{
+
+      rpsLocked=false;
+
+      buttons.forEach(b=>{
+        b.disabled=false;
+        b.style.pointerEvents='';
+        b.style.opacity='';
+      });
+
+    },350);
+
+    return;
+  }
+
+
+  /* Lock the result permanently for this round */
+  G.firstTeam=win ? 'red' : 'blue';
+
+  G.offense=G.firstTeam;
+
+  G.holder=null;
+
+  G.pending=null;
+
+
+  $('rpsResult').textContent=
+    L(
+      `你：${me} / 电脑：${ai}。${win?'红队先攻！':'蓝队先攻！'}`,
+      `You: ${me} / AI: ${ai}. ${win?'Red attacks first!':'Blue attacks first!'}`
+    );
+
+
+  setTimeout(()=>{
+
+    $('rps').classList.remove('show');
+
+    beginPossession();
+
+  },500);
+}
 function manualHtml(){if(lang==='zh')return `<div class="toc"><a href="#s1">开局</a><a href="#s2">FOOTBALL</a><a href="#s3">发牌</a><a href="#s4">RUN</a><a href="#s5">PASS</a><a href="#s6">回合</a><a href="#s7">TOUCHDOWN</a><a href="#s8">获胜</a></div><div class="sec" id="s1"><h3>1 开局与先攻</h3>选择2v2/3v3/4v4。你只控制红队，蓝队由AI控制。第一轮用石头剪刀布决定先攻，平局重来；之后每轮先攻方自动交替。</div><div class="sec" id="s2"><h3>2 FOOTBALL CARD</h3>整场只有1张FOOTBALL CARD，它不是普通功能牌，专门表示球权。RUN成功后仍由原持球者持有；PASS成功后转给接球人；INTERCEPTION成功后直接转给抄截球员。</div><div class="sec" id="s3"><h3>3 发牌</h3>2v2每人7张；3v3每人6张；4v4每人5张。中途不补牌。回合结束后统一收回剩余手牌、弃牌和牌库，洗牌并重新发牌。</div><div class="sec" id="s4"><h3>4 RUN完整流程</h3><div class="chain">RUN → 不防守 = ✅成功</div><div class="chain">RUN → BLITZ = ❌失败</div><div class="chain">RUN → TACKLE → 不BLOCK = ❌失败</div><div class="chain">RUN → TACKLE → BLOCK → 不BLITZ = ✅成功</div><div class="chain">RUN → TACKLE → BLOCK → BLITZ = ❌失败</div>TACKLE只阻止RUN，不抢球权。</div><div class="sec" id="s5"><h3>5 PASS完整流程</h3><div class="chain">PASS → 不防守 = ✅成功</div><div class="chain">PASS → BLITZ = ❌失败</div><div class="chain">PASS → INTERCEPTION → 不BLOCK = 🦅抄截成功并换球权</div><div class="chain">PASS → INTERCEPTION → BLOCK → 不BLITZ = ✅成功</div><div class="chain">PASS → INTERCEPTION → BLOCK → BLITZ = ❌失败</div>PASS成功后FOOTBALL CARD转给接球队友。</div><div class="sec" id="s6"><h3>6 回合什么时候结束</h3>一轮不是一次进攻。持球者没RUN/PASS但队友还有时，同队重新选择持球者；整队没RUN/PASS时球权给另一队。只有TOUCHDOWN，或者双方都没有RUN/PASS时，本轮才结束并统一重发。普通回合结束不会清除已有推进。</div><div class="sec" id="s7"><h3>7 推进与TOUCHDOWN</h3>两队都从50码开始：第1次成功50→40，第2次40→30，第3次30→20，第4次20→10，然后当前持球者自动冲入END ZONE完成TOUCHDOWN。没有第5次进攻。每次达阵获得1个🏈，只有达阵的那支队伍推进重置到50。</div><div class="sec" id="s8"><h3>8 获胜</h3>先获得3个🏈的队伍立即获胜。</div>`;return `<div class="toc"><a href="#s1">Start</a><a href="#s2">FOOTBALL</a><a href="#s3">Deal</a><a href="#s4">RUN</a><a href="#s5">PASS</a><a href="#s6">Round</a><a href="#s7">TOUCHDOWN</a><a href="#s8">Win</a></div><div class="sec" id="s1"><h3>1 Setup and First Offense</h3>Choose 2v2, 3v3, or 4v4. You control Red only; Blue is AI-controlled. Round 1 uses Rock-Paper-Scissors to decide first offense. Ties repeat. Later rounds alternate first offense automatically.</div><div class="sec" id="s2"><h3>2 FOOTBALL CARD</h3>There is exactly one FOOTBALL CARD in the match. It is not a normal Action Card; it represents possession. A successful RUN keeps it with the same carrier. A successful PASS transfers it to the receiver. A successful INTERCEPTION transfers it directly to the defender who intercepted.</div><div class="sec" id="s3"><h3>3 Deal</h3>2v2: 7 cards each. 3v3: 6 each. 4v4: 5 each. There is no mid-round refill. At round end, gather remaining hands, discard, and deck, shuffle, then redeal the exact hand size.</div><div class="sec" id="s4"><h3>4 Full RUN Chain</h3><div class="chain">RUN → No defense = ✅ success</div><div class="chain">RUN → BLITZ = ❌ fail</div><div class="chain">RUN → TACKLE → No BLOCK = ❌ fail</div><div class="chain">RUN → TACKLE → BLOCK → No BLITZ = ✅ success</div><div class="chain">RUN → TACKLE → BLOCK → BLITZ = ❌ fail</div>TACKLE stops RUN only and does not steal possession.</div><div class="sec" id="s5"><h3>5 Full PASS Chain</h3><div class="chain">PASS → No defense = ✅ success</div><div class="chain">PASS → BLITZ = ❌ fail</div><div class="chain">PASS → INTERCEPTION → No BLOCK = 🦅 interception and possession change</div><div class="chain">PASS → INTERCEPTION → BLOCK → No BLITZ = ✅ success</div><div class="chain">PASS → INTERCEPTION → BLOCK → BLITZ = ❌ fail</div>On a successful PASS, the FOOTBALL CARD moves to the receiver.</div><div class="sec" id="s6"><h3>6 When a Round Ends</h3>A round is not one play. If the carrier has no RUN/PASS but a teammate does, choose a new carrier on the same team. If the entire team has no RUN/PASS, possession moves to the other team. The round ends only on a TOUCHDOWN or when neither team can start another offense. Normal round end does not erase partial field progress.</div><div class="sec" id="s7"><h3>7 Progress and TOUCHDOWN</h3>Both teams start at the 50. Successes move 50→40→30→20→10. The 4th successful play reaches the 10, then the current carrier automatically enters the END ZONE for a TOUCHDOWN. There is no 5th offensive play. A TOUCHDOWN earns 1 football and resets only that scoring team's drive to the 50.</div><div class="sec" id="s8"><h3>8 Winning</h3>The first team to collect 3 footballs wins immediately.</div>`}
 function howHtml(){return lang==='zh'?`<div class="toc"><a href="#r1">进攻</a><a href="#r2">防守</a><a href="#r3">QB技能</a><a href="#r4">结算</a></div><div class="sec" id="r1"><h3>进攻</h3>只有当前持有FOOTBALL CARD的球员可以发动RUN或PASS。RUN成功后继续持球；PASS先选择同队接球人，最终成功后把FOOTBALL CARD交给接球人。</div><div class="sec" id="r2"><h3>防守</h3>RUN可被TACKLE或BLITZ阻止；PASS可被INTERCEPTION或BLITZ阻止。TACKLE/INTERCEPTION出现后，进攻方最多可用1张BLOCK取消；BLOCK后防守方仍可用BLITZ最终终止进攻。</div><div class="sec" id="r3"><h3>QB技能</h3>QB打出PASS并选好接球人后，可选择使用一次身份技能。使用后立即消耗；如果PASS最终成功，本次推进2格；如果最终失败，技能也不返还。</div><div class="sec" id="r4"><h3>结算</h3>成功自动推进；失败不推进；INTERCEPTION成功立即换球权。4次成功自动TOUCHDOWN，每个TOUCHDOWN获得1个🏈，先到3个获胜。</div>`:`<div class="toc"><a href="#r1">Offense</a><a href="#r2">Defense</a><a href="#r3">QB Skill</a><a href="#r4">Resolution</a></div><div class="sec" id="r1"><h3>Offense</h3>Only the current holder of the FOOTBALL CARD may start RUN or PASS. A successful RUN keeps possession with the same carrier. PASS first chooses a teammate receiver; possession transfers only if the PASS finally succeeds.</div><div class="sec" id="r2"><h3>Defense</h3>RUN can be stopped by TACKLE or BLITZ. PASS can be stopped by INTERCEPTION or BLITZ. After TACKLE/INTERCEPTION, offense may use at most one BLOCK. After BLOCK, defense may still use BLITZ as the final answer.</div><div class="sec" id="r3"><h3>QB Skill</h3>After a QB plays PASS and chooses the receiver, the QB may use the role skill once. It is consumed immediately. A successful PASS advances 2 spaces; if the play fails, the skill is still spent.</div><div class="sec" id="r4"><h3>Resolution</h3>Success advances automatically. Failure gains no progress. A successful INTERCEPTION changes possession immediately. Four successful plays score a TOUCHDOWN. Each TOUCHDOWN earns 1 football; first to 3 wins.</div>`}
 $('manualBtn').onclick=()=>{$('docTitle').textContent=T().manual;$('docBody').innerHTML=manualHtml();$('doc').classList.add('show')};
