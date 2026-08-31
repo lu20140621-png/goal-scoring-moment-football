@@ -1,5 +1,5 @@
 (()=>{
-  const CARD_IMG={
+  const CARD_PNG={
     RUN:'cards/run-card.png',
     PASS:'cards/pass-card.png',
     TACKLE:'cards/tackle-card.png',
@@ -8,14 +8,25 @@
     BLITZ:'cards/blitz-card.png'
   };
 
+  const CARD_WEBP={
+    RUN:'cards/run-card.webp',
+    PASS:'cards/pass-card.webp',
+    TACKLE:'cards/tackle-card.webp',
+    INTERCEPTION:'cards/interception-card.webp',
+    BLOCK:'cards/block-card.webp',
+    BLITZ:'cards/blitz-card.webp'
+  };
+
   let lastSignature='';
   let timer=null;
+
 
   function displayName(card){
     return card==='BLITZ'
       ? 'BREAK THROUGH'
       : card;
   }
+
 
   function createReveal(){
     let root=document.getElementById('aiCardReveal');
@@ -28,9 +39,19 @@
     root.className='aiCardReveal';
 
     root.innerHTML=`
-      <div class="aiCardRevealLabel">BLUE AI PLAYED</div>
-      <img id="aiCardRevealImg" alt="">
-      <div class="aiCardRevealName" id="aiCardRevealName"></div>
+      <div class="aiCardRevealLabel">
+        BLUE AI PLAYED
+      </div>
+
+      <img
+        id="aiCardRevealImg"
+        alt=""
+      >
+
+      <div
+        class="aiCardRevealName"
+        id="aiCardRevealName">
+      </div>
     `;
 
     document.body.appendChild(root);
@@ -38,25 +59,59 @@
     return root;
   }
 
+
+  function setImageWithFallback(img,card){
+
+    const webp=CARD_WEBP[card];
+    const png=CARD_PNG[card];
+
+    img.onerror=null;
+
+    img.onerror=()=>{
+      img.onerror=null;
+      img.src=png;
+    };
+
+    img.src=webp;
+  }
+
+
   function reveal(card){
-    if(!window.matchMedia('(max-width:560px)').matches) return;
+
+    if(!window.matchMedia('(max-width:560px)').matches){
+      return;
+    }
+
 
     if(card==='BREAK THROUGH'){
       card='BLITZ';
     }
 
-    if(!CARD_IMG[card]) return;
+
+    if(!CARD_WEBP[card]){
+      return;
+    }
+
 
     const root=createReveal();
 
-    const img=document.getElementById('aiCardRevealImg');
-    const name=document.getElementById('aiCardRevealName');
+    const img=document.getElementById(
+      'aiCardRevealImg'
+    );
 
-    img.src=CARD_IMG[card];
+    const name=document.getElementById(
+      'aiCardRevealName'
+    );
+
+
+    name.textContent=displayName(card);
 
     img.alt=displayName(card)+' card';
 
-    name.textContent=displayName(card);
+
+    /* WEBP FIRST -> PNG FALLBACK */
+    setImageWithFallback(img,card);
+
 
     root.classList.remove('show');
 
@@ -64,12 +119,14 @@
 
     root.classList.add('show');
 
+
     clearTimeout(timer);
 
     timer=setTimeout(()=>{
       root.classList.remove('show');
-    },1100);
+    },1400);
   }
+
 
   function detectCard(line){
 
@@ -83,7 +140,7 @@
 
 
     m=line.match(
-      /Blue AI\s+uses\s+(?:a\s+final\s+)?(RUN|PASS|TACKLE|INTERCEPTION|BLOCK|BLITZ|BREAK THROUGH)/i
+      /Blue AI(?:\s+B\d+)?\s+uses\s+(?:a\s+final\s+)?(RUN|PASS|TACKLE|INTERCEPTION|BLOCK|BLITZ|BREAK THROUGH)/i
     );
 
     if(m){
@@ -98,25 +155,33 @@
       return 'BLITZ';
     }
 
+
     return null;
   }
+
 
   function scanLog(){
 
     const log=document.getElementById('log');
 
-    if(!log) return;
+    if(!log){
+      return;
+    }
+
 
     const lines=log.innerText
       .split('\n')
       .map(x=>x.trim())
       .filter(Boolean);
 
-    if(!lines.length) return;
+
+    if(!lines.length){
+      return;
+    }
 
 
     for(
-      let i=Math.max(0,lines.length-4);
+      let i=Math.max(0,lines.length-5);
       i<lines.length;
       i++
     ){
@@ -125,17 +190,26 @@
 
       const card=detectCard(line);
 
-      if(!card) continue;
+      if(!card){
+        continue;
+      }
 
-      const signature=lines.length+'|'+line;
 
-      if(signature===lastSignature) continue;
+      const signature=
+        lines.length+'|'+line;
+
+
+      if(signature===lastSignature){
+        continue;
+      }
+
 
       lastSignature=signature;
 
       reveal(card);
     }
   }
+
 
   function start(){
 
@@ -146,22 +220,36 @@
       return;
     }
 
-    const observer=new MutationObserver(()=>{
-      scanLog();
-    });
 
-    observer.observe(log,{
-      childList:true,
-      subtree:true,
-      characterData:true
-    });
+    const observer=
+      new MutationObserver(()=>{
+        scanLog();
+      });
+
+
+    observer.observe(
+      log,
+      {
+        childList:true,
+        subtree:true,
+        characterData:true
+      }
+    );
+
 
     scanLog();
   }
 
+
   if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',start);
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      start
+    );
+
   }else{
+
     start();
   }
 
