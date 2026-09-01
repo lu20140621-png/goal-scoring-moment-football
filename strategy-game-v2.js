@@ -25,6 +25,15 @@ function cardImageHtml(card,className='',altText=''){
     onerror="this.onerror=null;this.src=this.dataset.png"
   >`;
 }
+function safeAiReveal(card){
+  try{
+    if(typeof window.showAiPlayedCard==='function'){
+      window.showAiPlayedCard(card);
+    }
+  }catch(err){
+    console.warn('AI card visual failed:',err);
+  }
+}
 let lang='zh';
 let rpsLocked=false;
 let G={size:2,players:[],deck:[],discard:[],round:1,firstTeam:null,offense:null,holder:null,redProgress:0,blueProgress:0,redBalls:0,blueBalls:0,phase:'setup',pending:null,currentRed:'R1',logs:[]};
@@ -65,8 +74,8 @@ function hidePrompt(){$('prompt').classList.remove('show')}
 function fieldPlayerClick(id){const p=byId(id);if(G.phase==='choose'&&G.offense==='red'&&p.team==='red'&&hasOff(p)){G.holder=id;G.currentRed=id;G.phase='attack';addLog(`红队选择 ${id} 持有 FOOTBALL CARD。`,`Red chooses ${id} to hold the FOOTBALL CARD.`);render();return}if(G.phase==='receiver'&&G.offense==='red'&&p.team==='red'&&id!==G.holder){G.pending.receiver=id;afterHumanPassReceiver();return}if(p.team==='red'){G.currentRed=id;render()}}
 function playHumanCard(c){const p=byId(G.currentRed);if(G.phase==='attack'){if(!consume(p,c))return;if(c==='RUN'){G.pending={action:'RUN',attacker:p.id,team:'red',qbBoost:false};flash('RUN!');addLog(`${p.id} 打出 RUN。`,`${p.id} plays RUN.`);aiDefend()}else{G.pending={action:'PASS',attacker:p.id,team:'red',receiver:null,qbBoost:false};G.phase='receiver';addLog(`${p.id} 打出 PASS，请选择接球队友。`,`${p.id} plays PASS. Choose a teammate as receiver.`);showPrompt(L('PASS：点击场上的一名红队队友作为接球人。','PASS: tap a Red teammate on the field as the receiver.'),[]);render()}}else if(G.phase==='defense'&&G.offense==='blue'){if(!consume(p,c))return;G.pending.defender=p.id;G.pending.defense=c;flash(c+'!');addLog(`${p.id} 使用 ${c}。`,`${p.id} plays ${c}.`);if(c==='BLITZ'){resolveFail(L('BLITZ 终止进攻。','BLITZ stops the play.'));return}setTimeout(aiBlockDecision,500)}else if(G.phase==='block'&&G.offense==='red'&&c==='BLOCK'){if(!consume(p,c))return;flash('BLOCK!');addLog(`${p.id} 使用 BLOCK，取消 ${G.pending.defense}。`,`${p.id} plays BLOCK and cancels ${G.pending.defense}.`);G.phase='ai';render();setTimeout(aiFinalBlitz,500)}else if(G.phase==='final'&&G.offense==='blue'&&c==='BLITZ'){if(!consume(p,c))return;flash('BLITZ!');addLog(`${p.id} 使用最后 BLITZ。`,`${p.id} plays the final BLITZ.`);resolveFail(L('最后的 BLITZ 终止进攻。','The final BLITZ stops the play.'))}}
 function afterHumanPassReceiver(){hidePrompt();const passer=byId(G.pending.attacker);if(passer.role==='QB'&&!passer.skill){showPrompt(L('是否使用 QB 身份技能？成功时本次推进2格；如果失败，技能也消耗。','Use the QB skill? A successful PASS advances 2 spaces; the skill is still spent if the play fails.'),[{label:L('使用 QB 技能','Use QB Skill'),gold:true,fn:()=>{passer.skill=true;G.pending.qbBoost=true;addLog('QB 技能已使用。','QB skill used.');aiDefend()}},{label:L('暂不使用','Skip Skill'),fn:()=>aiDefend()}])}else aiDefend();render()}
-function aiDefend(){G.phase='ai';render();setTimeout(()=>{const pool=teamPlayers('blue'),target=G.pending.action==='RUN'?'TACKLE':'INTERCEPTION',blitz=pool.find(p=>p.hand.includes('BLITZ')),normal=pool.find(p=>p.hand.includes(target)),roll=Math.random();if(blitz&&roll<.42){consume(blitz,'BLITZ');window.showAiPlayedCard?.('BLITZ');flash('BLITZ!');addLog('蓝队电脑使用 BLITZ。','Blue AI plays BLITZ.');resolveFail(L('BLITZ 直接终止本次进攻。','BLITZ immediately stops the play.'));return}if(normal&&roll<.88){consume(normal,target);window.showAiPlayedCard?.(target);G.pending.defender=normal.id;G.pending.defense=target;flash(target+'!');addLog(`蓝队电脑使用 ${target}。`,`Blue AI plays ${target}.`);const blocker=teamPlayers('red').find(p=>p.hand.includes('BLOCK'));if(blocker){G.currentRed=blocker.id;G.phase='block';showPrompt(L(`${target} 正在阻止你。是否使用 BLOCK？`,`${target} is stopping the play. Use BLOCK?`),[{label:L('使用 BLOCK','Use BLOCK'),gold:true,fn:()=>{G.currentRed=blocker.id;playHumanCard('BLOCK')}},{label:L('不用 BLOCK','No BLOCK'),fn:()=>resolveDefenseSuccess()}]);render()}else resolveDefenseSuccess();return}addLog('蓝队电脑选择不防守。','Blue AI chooses no defense.');resolveSuccess()},650)}
-function aiFinalBlitz(){const p=teamPlayers('blue').find(x=>x.hand.includes('BLITZ'));if(p&&Math.random()<.5){consume(p,'BLITZ');window.showAiPlayedCard?.('BLITZ');flash('BLITZ!');addLog('蓝队电脑在 BLOCK 后使用最后 BLITZ。','Blue AI uses a final BLITZ after BLOCK.');resolveFail(L('最后 BLITZ 终止进攻。','The final BLITZ stops the play.'))}else{addLog('蓝队电脑放弃最后 BLITZ。','Blue AI skips the final BLITZ.');resolveSuccess()}}
+function aiDefend(){G.phase='ai';render();setTimeout(()=>{const pool=teamPlayers('blue'),target=G.pending.action==='RUN'?'TACKLE':'INTERCEPTION',blitz=pool.find(p=>p.hand.includes('BLITZ')),normal=pool.find(p=>p.hand.includes(target)),roll=Math.random();if(blitz&&roll<.42){consume(blitz,'BLITZ');safeAiReveal('BLITZ');flash('BLITZ!');addLog('蓝队电脑使用 BLITZ。','Blue AI plays BLITZ.');resolveFail(L('BLITZ 直接终止本次进攻。','BLITZ immediately stops the play.'));return}if(normal&&roll<.88){consume(normal,target);safeAiReveal(target);G.pending.defender=normal.id;G.pending.defense=target;flash(target+'!');addLog(`蓝队电脑使用 ${target}。`,`Blue AI plays ${target}.`);const blocker=teamPlayers('red').find(p=>p.hand.includes('BLOCK'));if(blocker){G.currentRed=blocker.id;G.phase='block';showPrompt(L(`${target} 正在阻止你。是否使用 BLOCK？`,`${target} is stopping the play. Use BLOCK?`),[{label:L('使用 BLOCK','Use BLOCK'),gold:true,fn:()=>{G.currentRed=blocker.id;playHumanCard('BLOCK')}},{label:L('不用 BLOCK','No BLOCK'),fn:()=>resolveDefenseSuccess()}]);render()}else resolveDefenseSuccess();return}addLog('蓝队电脑选择不防守。','Blue AI chooses no defense.');resolveSuccess()},650)}
+function aiFinalBlitz(){const p=teamPlayers('blue').find(x=>x.hand.includes('BLITZ'));if(p&&Math.random()<.5){consume(p,'BLITZ');safeAiReveal('BLITZ');flash('BLITZ!');addLog('蓝队电脑在 BLOCK 后使用最后 BLITZ。','Blue AI uses a final BLITZ after BLOCK.');resolveFail(L('最后 BLITZ 终止进攻。','The final BLITZ stops the play.'))}else{addLog('蓝队电脑放弃最后 BLITZ。','Blue AI skips the final BLITZ.');resolveSuccess()}}
 function resolveDefenseSuccess(){if(G.pending.defense==='INTERCEPTION'){const d=byId(G.pending.defender);G.holder=d.id;G.offense=d.team;flash('INTERCEPTION!');addLog(`INTERCEPTION 成功！FOOTBALL CARD 转移给 ${d.id}。`,`INTERCEPTION succeeds! The FOOTBALL CARD moves to ${d.id}.`);G.pending=null;afterPlay()}else resolveFail(L('TACKLE 成功阻止 RUN；球权不变。','TACKLE stops the RUN; possession does not change.'))}
 function resolveSuccess(){const x=G.pending;let gain=x&&x.qbBoost?2:1;if(x.action==='PASS'&&x.receiver)G.holder=x.receiver;else G.holder=x.attacker;advance(G.offense,gain);if(G.phase!=='gameover'&&G.phase!=='touchdown')afterPlay()}
 function resolveFail(reason){const x=G.pending;if(x&&x.attacker)G.holder=x.attacker;addLog(`❌ 本次进攻失败，不推进。${reason?` ${reason}`:''}`,`❌ The play fails. No advance.${reason?` ${reason}`:''}`);G.pending=null;afterPlay()}
@@ -248,21 +257,7 @@ function aiAttack(){
     Even if image/reveal code fails,
     the game must continue.
   */
-  try{
-
-    if(
-      typeof window.showAiPlayedCard==='function'
-    ){
-      window.showAiPlayedCard(c);
-    }
-
-  }catch(err){
-
-    console.warn(
-      'AI card reveal failed:',
-      err
-    );
-  }
+safeAiReveal(c);
 
 
   const need=
@@ -322,7 +317,7 @@ function aiAttack(){
 
   render();
 }
-function aiBlockDecision(){const p=teamPlayers('blue').find(x=>x.hand.includes('BLOCK'));if(p&&Math.random()<.75){consume(p,'BLOCK');window.showAiPlayedCard?.('BLOCK');
+function aiBlockDecision(){const p=teamPlayers('blue').find(x=>x.hand.includes('BLOCK'));if(p&&Math.random()<.75){consume(p,'BLOCK');safeAiReveal('BLOCK');
 flash('BLOCK!');addLog('蓝队电脑使用 BLOCK，取消你的防守。','Blue AI uses BLOCK and cancels your defense.');const blitzer=teamPlayers('red').find(x=>x.hand.includes('BLITZ'));if(blitzer){G.currentRed=blitzer.id;G.phase='final';showPrompt(L('电脑用 BLOCK 取消了你的防守。是否使用最后 BLITZ？','Blue canceled your defense with BLOCK. Use a final BLITZ?'),[{label:L('使用 BLITZ','Use BLITZ'),gold:true,fn:()=>{G.currentRed=blitzer.id;playHumanCard('BLITZ')}},{label:L('放弃 BLITZ','Skip BLITZ'),fn:()=>resolveSuccess()}]);render()}else resolveSuccess()}else{addLog('蓝队电脑没有使用 BLOCK。','Blue AI does not use BLOCK.');if(G.pending.defense==='INTERCEPTION'){const d=byId(G.pending.defender);G.holder=d.id;G.offense='red';addLog(`🦅 抄截成功！${d.id} 获得 FOOTBALL CARD。`,`🦅 Interception succeeds! ${d.id} gets the FOOTBALL CARD.`);G.pending=null;afterPlay()}else resolveFail(L('TACKLE 成功阻止 RUN；球仍在原进攻方。','TACKLE stops the RUN; possession stays with the offense.'))}}
 function doRps(me){
 
