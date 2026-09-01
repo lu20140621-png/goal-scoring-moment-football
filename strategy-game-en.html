@@ -6,7 +6,6 @@
 <title>Goal-Scoring Moment Football — Strategy Solo</title>
 <link rel="stylesheet" href="strategy-game-v2.css?v=20260825-cards1">
 <link rel="stylesheet" href="strategy-game-mobile.css?v=20260831-mobile4">
-<link rel="stylesheet" href="strategy-game-mobile.css?v=20260831-mobile1">
 </head>
 <body>
 <div class="app">
@@ -22,8 +21,11 @@
       <div class="footballPitchCleanV3" id="pitch">
         <div class="pitchBorder"></div><div class="midline"></div><div class="endzone left">RED END ZONE</div><div class="endzone right">BLUE END ZONE</div><div id="yardLayer"></div><div class="los" id="los" style="left:50%"></div><div class="ballBadge" id="ballBadge" style="left:50%">BALL ON 50</div><div class="drive">4 SUCCESSFUL PLAYS = TOUCHDOWN</div><div id="playersLayer"></div><div class="flash" id="flash"></div>
       </div>
-      <div class="aiCardReveal" id="aiCardReveal"><img id="aiCardImg" alt=""><div class="aiCardRevealText"><span id="aiCardWho">BLUE AI PLAYS</span><b id="aiCardName"></b></div></div>
-    </main>
+     <div class="aiCardReveal" id="aiCardReveal">
+  <div class="aiCardRevealLabel" id="aiCardWho">BLUE AI PLAYED</div>
+  <img id="aiCardRevealImg" alt="">
+  <div class="aiCardRevealName" id="aiCardRevealName"></div>
+</div>
     <aside class="panel roster"><h3 id="blueRosterTitle">Blue AI</h3><div id="blueRoster"></div></aside>
   </div>
   <div class="lower">
@@ -35,10 +37,9 @@
 <div class="overlay" id="rps"><div class="dialog" style="max-width:600px;text-align:center"><h2 id="rpsTitle">Rock-Paper-Scissors Decides Round 1</h2><p id="rpsText">You are Red. The computer chooses at the same time.</p><div class="rps"><button class="choice" data-rps="rock">✊</button><button class="choice" data-rps="paper">🖐️</button><button class="choice" data-rps="scissors">✌️</button></div><p id="rpsResult"></p></div></div>
 <div class="overlay" id="doc"><div class="dialog"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2 id="docTitle">Rulebook</h2><button class="btn" id="closeDoc">Close</button></div><div id="docBody"></div></div></div>
 <div class="overlay" id="gameOver"><div class="dialog" style="text-align:center"><h2 id="gameOverTitle">Game Over</h2><p id="gameOverText"></p><a class="btn gold" id="restartGameBtn" href="strategy-game-en.html">Restart</a></div></div>
-<script src="strategy-game-v2.js?v=20260831-aifix1"></script>
+<script src="strategy-game-v2.js?v=20260831-aifix2"></script>
 <script src="strategy-doc-card-gallery.js?v=20260825-doccards1"></script>
-<script src="strategy-ai-reveal.js?v=20260831-ai4"></script>
+<script src="strategy-ai-reveal.js?v=20260831-ai5"></script>
 <script src="english-only.js?v=20260831-break-through"></script>
-<script src="strategy-mobile-ai-reveal.js?v=20260831-mobile1"></script>
 </body>
 </html>
