@@ -77,98 +77,251 @@ function endRound(reason){redealRound();G.round++;G.firstTeam=G.firstTeam==='red
 function beginPossession(){
 
   hidePrompt();
-
   G.pending=null;
 
-
-  /* RED possession */
+  /* RED TURN */
   if(G.offense==='red'){
 
     G.phase='choose';
-
     G.holder=null;
 
-    const ps=
-      teamPlayers('red').filter(hasOff);
-
+    const ps=teamPlayers('red').filter(hasOff);
 
     if(!ps.length){
-
       afterPlay();
-
       return;
     }
 
-
     G.currentRed=ps[0].id;
 
-
     addLog(
-      '红队进攻：可以从有 RUN/PASS 的红队队友中选择任意一人持有 FOOTBALL CARD。',
+      '红队进攻：请选择一名有 RUN/PASS 的球员持球。',
       'Red offense: choose any Red teammate with RUN/PASS to hold the FOOTBALL CARD.'
     );
 
-
     render();
-
     return;
   }
 
 
-  /* BLUE AI possession */
+  /* BLUE AI TURN */
   if(G.offense==='blue'){
 
-    G.phase='ai';
-
-    const ps=
-      teamPlayers('blue').filter(hasOff);
-
+    const ps=teamPlayers('blue').filter(hasOff);
 
     if(!ps.length){
-
       G.holder=null;
-
       afterPlay();
-
       return;
     }
 
-
-    const h=
-      ps[
-        Math.floor(
-          Math.random()*ps.length
-        )
-      ];
-
+    const h=ps[
+      Math.floor(Math.random()*ps.length)
+    ];
 
     G.holder=h.id;
-
+    G.phase='ai';
 
     addLog(
       `蓝队电脑选择 ${h.id} 持有 FOOTBALL CARD。`,
       `Blue AI chooses ${h.id} to hold the FOOTBALL CARD.`
     );
 
+    render();
+
+    /*
+      AI already has a valid offensive card.
+      Do not add another state guard here.
+    */
+    setTimeout(()=>{
+      aiAttack();
+    },650);
+
+    return;
+  }
+}
+function aiAttack(){
+
+  /* Safety: AI can only act on Blue possession */
+  if(G.offense!=='blue'){
+    return;
+  }
+
+  const p=holder();
+
+  /* Current holder became invalid */
+  if(
+    !p ||
+    p.team!=='blue' ||
+    !hasOff(p)
+  ){
+    G.holder=null;
+    beginPossession();
+    return;
+  }
+
+
+  const opts=p.hand.filter(
+    c=>c==='RUN'||c==='PASS'
+  );
+
+  if(!opts.length){
+    G.holder=null;
+    beginPossession();
+    return;
+  }
+
+
+  const c=opts[
+    Math.floor(Math.random()*opts.length)
+  ];
+
+
+  /* Actually spend the card */
+  if(!consume(p,c)){
+    G.holder=null;
+    beginPossession();
+    return;
+  }
+
+
+  /*
+    IMPORTANT:
+    Establish the game state FIRST.
+    Visual card reveal must never control game logic.
+  */
+  G.pending={
+    action:c,
+    attacker:p.id,
+    team:'blue',
+    receiver:null,
+    qbBoost:false
+  };
+
+
+  /* PASS receiver */
+  if(c==='PASS'){
+
+    const rec=teamPlayers('blue').filter(
+      x=>x.id!==p.id
+    );
+
+    if(rec.length){
+      G.pending.receiver=
+        rec[
+          Math.floor(Math.random()*rec.length)
+        ].id;
+    }
+
+
+    /* QB role skill */
+    if(
+      p.role==='QB' &&
+      !p.skill &&
+      Math.random()<.45
+    ){
+      p.skill=true;
+      G.pending.qbBoost=true;
+
+      addLog(
+        '蓝队 QB 使用身份技能。',
+        'Blue QB uses the role skill.'
+      );
+    }
+  }
+
+
+  /* Set gameplay state BEFORE showing animation */
+  G.phase='defense';
+
+
+  flash(c+'!');
+
+  addLog(
+    `蓝队电脑 ${p.id} 打出 ${c}。`,
+    `Blue AI ${p.id} plays ${c}.`
+  );
+
+
+  /*
+    Card reveal is VISUAL ONLY.
+    Even if image/reveal code fails,
+    the game must continue.
+  */
+  try{
+
+    if(
+      typeof window.showAiPlayedCard==='function'
+    ){
+      window.showAiPlayedCard(c);
+    }
+
+  }catch(err){
+
+    console.warn(
+      'AI card reveal failed:',
+      err
+    );
+  }
+
+
+  const need=
+    c==='RUN'
+      ? 'TACKLE'
+      : 'INTERCEPTION';
+
+
+  const eligible=
+    teamPlayers('red').filter(
+      x=>
+        x.hand.includes(need) ||
+        x.hand.includes('BLITZ')
+    );
+
+
+  /* Human has no defense */
+  if(!eligible.length){
+
+    addLog(
+      '红队没有可用防守牌，电脑进攻自动成功。',
+      'Red has no valid defensive card; Blue succeeds automatically.'
+    );
 
     render();
 
-
-    /* AI must continue automatically */
     setTimeout(()=>{
+      resolveSuccess();
+    },500);
 
-      if(
-        G.offense==='blue' &&
-        G.phase==='ai' &&
-        G.holder===h.id
-      ){
-        aiAttack();
-      }
-
-    },700);
+    return;
   }
+
+
+  /* Human can defend */
+  G.currentRed=eligible[0].id;
+
+
+  showPrompt(
+    L(
+      `电脑打出 ${c}。可使用 ${need} / BREAK THROUGH，或不防守。`,
+      `Blue plays ${c}. Use ${need} / BREAK THROUGH, or choose No Defense.`
+    ),
+    [
+      {
+        label:L(
+          '不防守',
+          'No Defense'
+        ),
+        fn:()=>{
+          resolveSuccess();
+        }
+      }
+    ]
+  );
+
+
+  render();
 }
-function aiAttack(){const p=holder();if(!p||p.team!=='blue'||!hasOff(p)){beginPossession();return}const opts=p.hand.filter(c=>c==='RUN'||c==='PASS'),c=opts[Math.floor(Math.random()*opts.length)];consume(p,c);window.showAiPlayedCard?.(c);G.pending={action:c,attacker:p.id,team:'blue',receiver:null,qbBoost:false};if(c==='PASS'){const rec=teamPlayers('blue').filter(x=>x.id!==p.id);G.pending.receiver=rec[Math.floor(Math.random()*rec.length)].id;if(p.role==='QB'&&!p.skill&&Math.random()<.45){p.skill=true;G.pending.qbBoost=true;addLog('蓝队 QB 使用身份技能。','Blue QB uses the role skill.')}}flash(c+'!');addLog(`蓝队电脑 ${p.id} 打出 ${c}。`,`Blue AI ${p.id} plays ${c}.`);G.phase='defense';const need=c==='RUN'?'TACKLE':'INTERCEPTION',eligible=teamPlayers('red').filter(x=>x.hand.includes(need)||x.hand.includes('BLITZ'));if(!eligible.length){addLog('红队没有可用防守牌，电脑进攻自动成功。','Red has no valid defensive card; Blue succeeds automatically.');setTimeout(resolveSuccess,500);return}G.currentRed=eligible[0].id;showPrompt(L(`电脑打出 ${c}。可使用 ${need} / BLITZ，或不防守。`,`Blue plays ${c}. Use ${need} / BLITZ, or choose no defense.`),[{label:L('不防守','No Defense'),fn:()=>resolveSuccess()}]);render()}
 function aiBlockDecision(){const p=teamPlayers('blue').find(x=>x.hand.includes('BLOCK'));if(p&&Math.random()<.75){consume(p,'BLOCK');window.showAiPlayedCard?.('BLOCK');
 flash('BLOCK!');addLog('蓝队电脑使用 BLOCK，取消你的防守。','Blue AI uses BLOCK and cancels your defense.');const blitzer=teamPlayers('red').find(x=>x.hand.includes('BLITZ'));if(blitzer){G.currentRed=blitzer.id;G.phase='final';showPrompt(L('电脑用 BLOCK 取消了你的防守。是否使用最后 BLITZ？','Blue canceled your defense with BLOCK. Use a final BLITZ?'),[{label:L('使用 BLITZ','Use BLITZ'),gold:true,fn:()=>{G.currentRed=blitzer.id;playHumanCard('BLITZ')}},{label:L('放弃 BLITZ','Skip BLITZ'),fn:()=>resolveSuccess()}]);render()}else resolveSuccess()}else{addLog('蓝队电脑没有使用 BLOCK。','Blue AI does not use BLOCK.');if(G.pending.defense==='INTERCEPTION'){const d=byId(G.pending.defender);G.holder=d.id;G.offense='red';addLog(`🦅 抄截成功！${d.id} 获得 FOOTBALL CARD。`,`🦅 Interception succeeds! ${d.id} gets the FOOTBALL CARD.`);G.pending=null;afterPlay()}else resolveFail(L('TACKLE 成功阻止 RUN；球仍在原进攻方。','TACKLE stops the RUN; possession stays with the offense.'))}}
 function doRps(me){
