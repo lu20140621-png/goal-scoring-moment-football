@@ -1,5 +1,5 @@
 (()=>{
-  const CARD_WEBP={
+  const WEBP={
     RUN:'cards/run-card.webp',
     PASS:'cards/pass-card.webp',
     TACKLE:'cards/tackle-card.webp',
@@ -8,7 +8,7 @@
     BLITZ:'cards/blitz-card.webp'
   };
 
-  const CARD_PNG={
+  const PNG={
     RUN:'cards/run-card.png',
     PASS:'cards/pass-card.png',
     TACKLE:'cards/tackle-card.png',
@@ -25,129 +25,74 @@
       : card;
   }
 
-  function isMobile(){
-    return window.matchMedia('(max-width:560px)').matches;
-  }
-
-  function removeReveal(){
-    const old=document.getElementById('aiCardReveal');
-
-    if(old){
-      old.remove();
-    }
-  }
-
-  function createReveal(){
-
-    let root=document.getElementById('aiCardReveal');
-
-    if(root){
-      return root;
-    }
-
-    root=document.createElement('div');
-
-    root.id='aiCardReveal';
-    root.className='aiCardReveal';
-
-    root.innerHTML=`
-      <div class="aiCardRevealLabel">
-        BLUE AI PLAYED
-      </div>
-
-      <img id="aiCardRevealImg" alt="">
-
-      <div
-        class="aiCardRevealName"
-        id="aiCardRevealName">
-      </div>
-    `;
-
-    document.body.appendChild(root);
-
-    return root;
-  }
-
-  function loadImage(img,card){
-
-    img.onload=null;
-    img.onerror=null;
-
-    img.onerror=()=>{
-      img.onerror=null;
-      img.src=CARD_PNG[card];
-    };
-
-    /* WebP first */
-    img.src=CARD_WEBP[card];
-  }
-
   window.showAiPlayedCard=function(card){
 
-    /*
-      IMPORTANT:
-      Only call this when Blue AI really spends/plays a card.
-    */
+    try{
 
-    if(card==='BREAK THROUGH'){
-      card='BLITZ';
+      if(card==='BREAK THROUGH'){
+        card='BLITZ';
+      }
+
+      if(!WEBP[card]){
+        return;
+      }
+
+      const box=document.getElementById('aiCardReveal');
+      const img=document.getElementById('aiCardRevealImg');
+      const who=document.getElementById('aiCardWho');
+      const name=document.getElementById('aiCardRevealName');
+
+      /*
+       * Missing visual elements must NEVER stop gameplay.
+       */
+      if(!box || !img || !who || !name){
+        console.warn('AI reveal elements missing.');
+        return;
+      }
+
+      /*
+       * Desktop: never show the mobile popup.
+       */
+      if(!window.matchMedia('(max-width:560px)').matches){
+        box.classList.remove('show');
+        return;
+      }
+
+      who.textContent='BLUE AI PLAYED';
+      name.textContent=displayName(card);
+      img.alt=displayName(card)+' card';
+
+      /*
+       * WebP first.
+       * PNG only if WebP fails.
+       */
+      img.onerror=()=>{
+        img.onerror=null;
+        img.src=PNG[card];
+      };
+
+      img.src=WEBP[card];
+
+      box.classList.remove('show');
+
+      void box.offsetWidth;
+
+      box.classList.add('show');
+
+      clearTimeout(timer);
+
+      timer=setTimeout(()=>{
+        box.classList.remove('show');
+      },1400);
+
+    }catch(err){
+
+      /*
+       * Image/UI errors are never allowed
+       * to stop the actual game.
+       */
+      console.warn('AI reveal failed:',err);
     }
-
-    if(!CARD_WEBP[card]){
-      return;
-    }
-
-    /*
-      Desktop:
-      Never create/show the reveal card.
-      This fixes the giant card staying under the field.
-    */
-    if(!isMobile()){
-      removeReveal();
-      return;
-    }
-
-    const root=createReveal();
-
-    const img=document.getElementById(
-      'aiCardRevealImg'
-    );
-
-    const name=document.getElementById(
-      'aiCardRevealName'
-    );
-
-    name.textContent=displayName(card);
-
-    img.alt=displayName(card)+' card';
-
-    loadImage(img,card);
-
-    root.classList.remove('show');
-
-    void root.offsetWidth;
-
-    root.classList.add('show');
-
-    clearTimeout(timer);
-
-    timer=setTimeout(()=>{
-      root.classList.remove('show');
-    },1400);
   };
-
-  /*
-    If page changes from mobile width to desktop width,
-    remove any existing reveal immediately.
-  */
-  window.addEventListener('resize',()=>{
-    if(!isMobile()){
-      removeReveal();
-    }
-  });
-
-  if(!isMobile()){
-    removeReveal();
-  }
 
 })();
