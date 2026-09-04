@@ -3,29 +3,808 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Goal-Scoring Moment Football — Choose a Mode</title>
+<meta name="theme-color" content="#070d0a">
+<title>Goal-Scoring Moment — Football</title>
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 8%,#315d3d 0,#173523 36%,#0a1c14 66%,#07110d 100%);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;padding:18px}.wrap{max-width:920px;margin:0 auto}.logoWrap{text-align:center;padding:8px 8px 4px}.kicker{font-size:10px;font-weight:950;letter-spacing:.22em;color:#e6bd6a;margin-bottom:8px}.logoBox{position:relative;display:inline-block;padding:20px 38px 18px;border:4px solid #ffffff2d;border-bottom:0;border-radius:9px 9px 0 0;min-width:min(700px,92vw);background:repeating-linear-gradient(90deg,#ffffff08 0 2px,transparent 2px 38px),repeating-linear-gradient(0deg,#ffffff06 0 2px,transparent 2px 28px)}.titleTop{font:900 clamp(32px,7vw,56px)/.9 Impact,Haettenschweiler,"Arial Narrow Bold",Arial,sans-serif;letter-spacing:1px;color:#f5fbff;text-shadow:3px 3px 0 #123225,6px 6px 0 #05100b}.titleMain{margin-top:8px;font:950 clamp(56px,12vw,104px)/.82 Impact,Haettenschweiler,"Arial Narrow Bold",Arial,sans-serif;background:linear-gradient(180deg,#fff7c9,#f0c966 28%,#ca8f25 68%,#80500e);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:2px #4a2d08;text-shadow:0 8px 18px #0008}.ball{position:absolute;right:25px;bottom:12px;font-size:48px;filter:drop-shadow(0 8px 8px #0008);transform:rotate(-18deg)}.under{width:min(420px,82vw);height:7px;margin:14px auto;background:linear-gradient(90deg,transparent,#c8922f 15%,#f3d57f 50%,#c8922f 85%,transparent);border-radius:999px}.hero{text-align:center;margin:12px auto 22px;max-width:700px}.heroMain{font-size:17px;font-weight:950}.heroSub{font-size:13px;line-height:1.55;color:#c8d7cf;margin-top:7px}.chips{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:10px}.chip{font-size:10px;font-weight:900;border:1px solid #ffffff20;background:#ffffff0d;border-radius:999px;padding:6px 9px}.sectionLabel{font-size:11px;letter-spacing:.12em;color:#efc96f;font-weight:950;margin:18px 2px 8px}.sectionNote{font-size:12px;color:#b9c8c0;margin:-2px 2px 12px}.modes{display:grid;gap:14px}.mode{display:flex;flex-direction:column;text-decoration:none;color:#fff;border:2px solid;border-radius:20px;padding:18px;background:linear-gradient(180deg,#13281c,#0b1912);box-shadow:0 16px 36px #0005;transition:.18s;cursor:pointer}.mode:active{transform:scale(.985)}.strategy{border-color:#e7bc61}.casual{border-color:#58ce86}.badge{align-self:flex-start;border-radius:999px;padding:6px 9px;font-size:10px;font-weight:950;letter-spacing:.05em;margin-bottom:9px}.strategy .badge{background:linear-gradient(180deg,#ffe58a,#d7aa45);color:#332300}.casual .badge{background:#163824;color:#8ef1b4;border:1px solid #59d98c66}.tag{font-size:10px;letter-spacing:.1em;font-weight:850}.strategy .tag{color:#f2d88c}.casual .tag{color:#9be9b8}.modeTitle{font-size:25px;font-weight:950;margin:7px 0}.desc{font-size:13px;line-height:1.5;color:#d3dfd8}.fit{margin-top:10px;font-size:11px;font-weight:900}.strategy .fit{color:#edce7c}.casual .fit{color:#8ee8af}.go{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:14px 16px;border-radius:14px;font-size:12px;font-weight:950;text-transform:uppercase}.strategy .go{background:#e6bd63;color:#2c2109}.casual .go{background:#58ce86;color:#082718}.arrow{font-size:27px}.footer{text-align:center;color:#95a99e;font-size:11px;line-height:1.5;margin:20px 4px 6px}.choiceModal{position:fixed;inset:0;background:#020906d9;backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.choiceModal.show{display:flex}.choiceBox{width:min(720px,100%);background:linear-gradient(180deg,#142a1c,#0a1710);border:2px solid #d6ad55;border-radius:22px;padding:18px;box-shadow:0 24px 60px #000b}.choiceHead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.choiceTitle{font-size:24px;font-weight:950}.choiceSub{margin-top:5px;color:#bfcfc5;font-size:13px;line-height:1.5}.close{border:1px solid #ffffff2b;background:#102219;color:#fff;border-radius:10px;padding:8px 11px;font-weight:900}.choiceGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.choiceCard{display:flex;flex-direction:column;text-decoration:none;color:#fff;border:2px solid #315a3e;border-radius:18px;padding:16px;background:#0c1b12;min-height:230px}.choiceCard.tutorial{border-color:#e2bb61}.choiceIcon{font-size:36px}.choiceName{font-size:21px;font-weight:950;margin-top:8px}.choiceDesc{font-size:12px;color:#c8d5cc;line-height:1.55;margin-top:7px;flex:1}.choiceBtn{margin-top:13px;border-radius:12px;padding:12px;text-align:center;font-size:12px;font-weight:950}.tutorial .choiceBtn{background:#e7bd61;color:#281e08}.single .choiceBtn{background:#2d7145;color:#fff}.mini{font-size:10px;color:#e6c979;font-weight:900;margin-top:7px}@media(min-width:700px){body{display:grid;place-items:center}.wrap{width:100%}.modes{grid-template-columns:repeat(2,1fr)}.mode{min-height:290px}.mode:hover{transform:translateY(-4px)}.choiceCard:hover{transform:translateY(-3px)}}@media(max-width:699px){body{padding:13px}.logoBox{padding:17px 20px 15px;min-width:92vw}.titleTop{font-size:31px}.titleMain{font-size:62px}.ball{font-size:34px;right:12px;bottom:8px}.heroMain{font-size:15px}.modes{gap:16px}.mode{padding:18px 17px}.modeTitle{font-size:23px}.go{min-height:56px}.choiceGrid{grid-template-columns:1fr}.choiceBox{max-height:90svh;overflow:auto}.choiceCard{min-height:190px}.choiceTitle{font-size:21px}}
+:root{
+  --bg:#070d0a;
+  --panel:#0d1510;
+  --panel2:#121d17;
+  --line:#2b3f34;
+  --text:#f7fbf8;
+  --muted:#a7b7ad;
+  --gold:#e4b85d;
+  --gold2:#f2d38d;
+  --green:#56d88a;
+  --red:#c94a4a;
+  --shadow:0 28px 70px rgba(0,0,0,.34);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+button,a{font:inherit;color:inherit}
+body{
+  background:
+    radial-gradient(circle at 50% 8%,rgba(228,184,93,.13),transparent 26%),
+    radial-gradient(circle at 14% 70%,rgba(86,216,138,.08),transparent 28%),
+    linear-gradient(180deg,#08110c 0%,#060c08 58%,#040806 100%);
+}
+.page{
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+.page::before{
+  content:"";
+  position:absolute;
+  inset:-8%;
+  pointer-events:none;
+  opacity:.11;
+  background:
+    linear-gradient(90deg,transparent 49.85%,#fff 49.95% 50.05%,transparent 50.15%),
+    repeating-linear-gradient(0deg,transparent 0 58px,rgba(255,255,255,.9) 58px 60px),
+    linear-gradient(0deg,transparent 12%,rgba(255,255,255,.85) 12.1% 12.25%,transparent 12.35%),
+    linear-gradient(0deg,transparent 88%,rgba(255,255,255,.85) 88.1% 88.25%,transparent 88.35%);
+  transform:perspective(1000px) rotateX(68deg) translateY(38%);
+  transform-origin:center bottom;
+}
+.shell{
+  position:relative;
+  z-index:2;
+  width:min(1380px,100%);
+  margin:auto;
+  padding:24px 28px 40px;
+}
+
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.footballMark{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  position:relative;
+  background:radial-gradient(circle at 35% 28%,#ffc97f 0,#dc8a2c 34%,#9f5114 76%,#5e2b08 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.14),0 12px 28px rgba(228,184,93,.16);
+}
+.footballMark::before,
+.footballMark::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:2px solid rgba(33,18,7,.76);
+}
+.footballMark::before{inset:5px}
+.footballMark::after{inset:3px 14px;transform:rotate(26deg)}
+.brandText b{
+  display:block;
+  font-size:13px;
+  letter-spacing:.17em;
+}
+.brandText span{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:.16em;
+}
+.navPill{
+  border:1px solid var(--line);
+  background:rgba(12,20,15,.68);
+  color:#d8e2dc;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:850;
+}
+
+.hero{
+  text-align:center;
+  padding:52px 0 22px;
+}
+.eyebrow{
+  font-size:11px;
+  letter-spacing:.32em;
+  color:#efc36f;
+  font-weight:950;
+}
+.hero h1{
+  margin:14px auto 10px;
+  max-width:1000px;
+  font-size:clamp(52px,8.6vw,116px);
+  line-height:.84;
+  letter-spacing:-.065em;
+  text-transform:uppercase;
+}
+.hero p{
+  margin:0 auto;
+  max-width:720px;
+  color:var(--muted);
+  font-size:clamp(14px,2vw,18px);
+  line-height:1.6;
+}
+.heroChips{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.heroChip{
+  padding:7px 11px;
+  border-radius:999px;
+  border:1px solid #314339;
+  background:rgba(9,15,11,.76);
+  color:#dbe4de;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+
+.modeGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-top:28px;
+}
+
+.modeCard{
+  position:relative;
+  min-height:500px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  padding:0;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+  transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease;
+}
+.modeCard:hover{
+  transform:translateY(-5px);
+  border-color:#4d6859;
+  box-shadow:0 34px 78px rgba(0,0,0,.43);
+}
+.modeCard:focus-visible{
+  outline:3px solid #fff;
+  outline-offset:3px;
+}
+
+.modeCard.strategy{
+  background:
+    radial-gradient(circle at 84% 20%,rgba(228,184,93,.16),transparent 34%),
+    linear-gradient(145deg,#131d18,#0b120e 62%);
+}
+.modeCard.casual{
+  background:
+    radial-gradient(circle at 84% 20%,rgba(86,216,138,.16),transparent 34%),
+    linear-gradient(145deg,#132118,#0b120e 62%);
+}
+
+.modeCopy{
+  position:relative;
+  z-index:4;
+  padding:28px;
+  max-width:58%;
+}
+.modeNo{
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.2em;
+  color:#93aa9b;
+}
+.modeCopy h2{
+  margin:10px 0 10px;
+  font-size:clamp(34px,4.2vw,66px);
+  line-height:.9;
+  letter-spacing:-.05em;
+}
+.modeCopy p{
+  margin:0 0 18px;
+  color:#aebdb4;
+  font-size:13px;
+  line-height:1.62;
+}
+.featureRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+}
+.feature{
+  padding:6px 9px;
+  border-radius:999px;
+  border:1px solid #314339;
+  background:rgba(7,12,9,.72);
+  color:#dce4df;
+  font-size:10px;
+  font-weight:850;
+}
+.enter{
+  position:absolute;
+  left:28px;
+  bottom:26px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.08em;
+}
+.enterArrow{
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#fff;
+  color:#070d0a;
+  font-size:17px;
+}
+
+.fan{
+  position:absolute;
+  right:-18px;
+  top:34px;
+  width:52%;
+  height:400px;
+}
+.fan img{
+  position:absolute;
+  width:174px;
+  height:261px;
+  object-fit:cover;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 24px 56px rgba(0,0,0,.5);
+  transition:transform .25s ease;
+  background:#08110c;
+}
+.fan img:nth-child(1){right:190px;top:74px;transform:rotate(-13deg)}
+.fan img:nth-child(2){right:90px;top:18px;z-index:2;transform:rotate(-1deg)}
+.fan img:nth-child(3){right:-8px;top:86px;transform:rotate(12deg)}
+.modeCard:hover .fan img:nth-child(1){transform:rotate(-17deg) translateX(-6px)}
+.modeCard:hover .fan img:nth-child(2){transform:rotate(-1deg) translateY(-7px)}
+.modeCard:hover .fan img:nth-child(3){transform:rotate(16deg) translateX(6px)}
+
+.footer{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-top:24px;
+  color:#75867c;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+
+.choiceModal{
+  position:fixed;
+  inset:0;
+  z-index:60;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(2,8,5,.82);
+  backdrop-filter:blur(8px);
+}
+.choiceModal.show{display:flex}
+.choiceBox{
+  width:min(760px,100%);
+  background:linear-gradient(180deg,#141f19,#0a120d);
+  border:1px solid #2e4035;
+  border-radius:24px;
+  padding:18px;
+  box-shadow:0 24px 60px rgba(0,0,0,.56);
+}
+.choiceHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+}
+.choiceTitle{
+  font-size:28px;
+  font-weight:950;
+  letter-spacing:-.03em;
+}
+.choiceSub{
+  margin-top:7px;
+  color:#b7c4bc;
+  font-size:13px;
+  line-height:1.55;
+}
+.close{
+  border:1px solid #32453a;
+  background:#101913;
+  color:#fff;
+  border-radius:12px;
+  padding:8px 12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.choiceGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:18px;
+}
+.choiceCard{
+  display:flex;
+  flex-direction:column;
+  text-decoration:none;
+  color:#fff;
+  border:1px solid #2c4034;
+  border-radius:20px;
+  padding:18px;
+  background:linear-gradient(180deg,#0f1813,#0b110d);
+  min-height:236px;
+  transition:transform .2s ease,border-color .2s ease;
+}
+.choiceCard:hover{
+  transform:translateY(-3px);
+  border-color:#527160;
+}
+.choiceCard.tutorial{border-color:#735c26}
+.choiceIcon{
+  font-size:36px;
+}
+.choiceName{
+  font-size:23px;
+  font-weight:950;
+  margin-top:8px;
+}
+.choiceDesc{
+  margin-top:8px;
+  color:#c9d4ce;
+  font-size:12px;
+  line-height:1.58;
+  flex:1;
+}
+.choiceBtn{
+  margin-top:14px;
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+  font-size:12px;
+  font-weight:950;
+}
+.tutorial .choiceBtn{
+  background:#e4b85d;
+  color:#2a1d07;
+}
+.single .choiceBtn{
+  background:#2f7546;
+  color:#fff;
+}
+.mini{
+  margin-top:8px;
+  font-size:10px;
+  color:#e5ca83;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:none;
+  place-items:center;
+  padding:22px;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(228,184,93,.13),transparent 30%),
+    #050a07;
+}
+.loader.show{display:grid}
+.loadBox{
+  width:min(500px,100%);
+  text-align:center;
+}
+.spinFootball{
+  width:84px;
+  height:84px;
+  border-radius:50%;
+  margin:0 auto 24px;
+  position:relative;
+  background:radial-gradient(circle at 35% 28%,#ffc97f 0,#dc8a2c 34%,#9f5114 76%,#5e2b08 100%);
+  box-shadow:0 0 52px rgba(228,184,93,.18);
+  animation:bounce 1s ease-in-out infinite;
+}
+.spinFootball::before,
+.spinFootball::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:3px solid rgba(26,14,4,.84);
+}
+.spinFootball::before{inset:8px}
+.spinFootball::after{inset:4px 26px;transform:rotate(28deg)}
+@keyframes bounce{
+  0%,100%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-12px) rotate(34deg)}
+}
+.loadLabel{
+  font-size:11px;
+  letter-spacing:.25em;
+  color:#efc46f;
+  font-weight:950;
+}
+.loadTitle{
+  margin:8px 0 22px;
+  font-size:clamp(28px,6vw,46px);
+  letter-spacing:-.04em;
+}
+.track{
+  height:7px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#18221c;
+  border:1px solid #29372f;
+}
+.bar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#d89d37,#f5d690);
+  transition:width .18s ease;
+}
+.loadMeta{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:9px;
+  color:#8d9d93;
+  font-size:11px;
+}
+.loadError{
+  display:none;
+  margin-top:20px;
+  padding:13px;
+  border-radius:12px;
+  border:1px solid #673a3a;
+  background:#251315;
+  color:#ffc8c8;
+  font-size:12px;
+  line-height:1.5;
+}
+.loadError.show{display:block}
+.retry{
+  display:none;
+  margin:14px auto 0;
+  border:0;
+  border-radius:12px;
+  padding:10px 16px;
+  background:#fff;
+  color:#070d0a;
+  font-weight:950;
+  cursor:pointer;
+}
+.retry.show{display:block}
+
+@media (max-width:980px){
+  .modeGrid{grid-template-columns:1fr}
+  .modeCard{min-height:448px}
+  .fan{width:48%}
+  .modeCopy{max-width:56%}
+}
+@media (max-width:650px){
+  .shell{padding:18px 14px 30px}
+  .navPill{display:none}
+  .hero{padding:40px 0 18px}
+  .hero h1{font-size:58px}
+  .hero p{font-size:14px}
+  .modeGrid{gap:16px}
+  .modeCard{min-height:525px}
+  .modeCopy{
+    max-width:none;
+    padding:22px;
+    padding-right:18px;
+  }
+  .modeCopy p{max-width:70%}
+  .fan{
+    top:212px;
+    right:-18px;
+    width:100%;
+    height:272px;
+  }
+  .fan img{
+    width:124px;
+    height:186px;
+  }
+  .fan img:nth-child(1){right:220px;top:56px}
+  .fan img:nth-child(2){right:116px;top:15px}
+  .fan img:nth-child(3){right:16px;top:56px}
+  .enter{left:22px;bottom:20px}
+  .choiceGrid{grid-template-columns:1fr}
+  .choiceBox{max-height:90svh;overflow:auto}
+  .choiceCard{min-height:196px}
+  .choiceTitle{font-size:22px}
+  .footer{margin-top:18px}
+}
 </style>
 </head>
 <body>
-<main class="wrap">
-  <div class="logoWrap"><div class="kicker">AMERICAN FOOTBALL CARD GAME</div><div class="logoBox"><div class="titleTop">GOAL-SCORING</div><div class="titleMain">MOMENT</div><div class="ball">🏈</div></div><div class="under"></div></div>
-  <div class="hero"><div class="heroMain">1 BOX. MULTIPLE WAYS TO PLAY.</div><div class="heroSub"><strong>New to the game? Start with Strategy Mode.</strong><br>The same physical card set supports two different football experiences.</div><div class="chips"><span class="chip">2v2 / 3v3 / 4v4</span><span class="chip">SOLO VS AI</span><span class="chip">4 SUCCESSFUL PLAYS = TOUCHDOWN</span></div></div>
-  <div class="sectionLabel">CHOOSE A GAME MODE</div><div class="sectionNote">Pick Strategy Mode for full tactical play or Casual Mode for a faster party game.</div>
-  <section class="modes">
-    <div class="mode strategy" id="strategyCard"><div class="badge">★ START HERE</div><div class="tag">TEAM STRATEGY • DRIVE • DEFENSE</div><div class="modeTitle">Strategy Mode</div><div class="desc"><strong>The full American-football ruleset.</strong> Start at the 50, attack with RUN or PASS, and answer with TACKLE, INTERCEPTION, BLOCK, or BREAK THROUGH. Four successful plays score a TOUCHDOWN.</div><div class="fit">Best for: tactical offense, defense, and a complete match against AI</div><div class="go"><span>ENTER STRATEGY MODE</span><span class="arrow">›</span></div></div>
-    <a class="mode casual" href="casual-en.html"><div class="badge">FAST PLAY</div><div class="tag">FAST • SIMPLE • PARTY</div><div class="modeTitle">Casual Mode</div><div class="desc">A lighter, faster game using the same football cards. Draw the FOOTBALL CARD to score, use Action Cards to manipulate draws and opponents, and race to 3 footballs.</div><div class="fit">Best for: quick games, friends, and first-time players</div><div class="go"><span>ENTER CASUAL MODE</span><span class="arrow">›</span></div></a>
-  </section>
-  <div class="footer">One card set. Two ways to play.</div>
-</main>
-<div class="choiceModal" id="strategyModal"><div class="choiceBox"><div class="choiceHead"><div><div class="choiceTitle">Choose Strategy Mode</div><div class="choiceSub">Learn the rules step by step, or go straight into a solo match against the computer.</div></div><button class="close" id="closeChoice">×</button></div><div class="choiceGrid"><a class="choiceCard tutorial" href="strategy-tutorial-en.html"><div class="choiceIcon">🎓🏈</div><div class="choiceName">Tutorial</div><div class="choiceDesc">Learn ball-carrier selection, RUN, PASS, TACKLE, INTERCEPTION, BLOCK, BREAK THROUGH, possession changes, QB skill timing, and scoring through guided interactive lessons.</div><div class="mini">Recommended for your first game</div><div class="choiceBtn">START TUTORIAL</div></a><a class="choiceCard single" href="strategy-game-en.html"><div class="choiceIcon">🎮🏈</div><div class="choiceName">Solo Game</div><div class="choiceDesc">Choose 2v2, 3v3, or 4v4. You control Red and the computer controls Blue.</div><div class="mini">For players who already know the rules</div><div class="choiceBtn">START SOLO GAME</div></a></div></div></div>
+<div class="page">
+  <main class="shell">
+    <nav class="nav">
+      <div class="brand">
+        <div class="footballMark" aria-hidden="true"></div>
+        <div class="brandText">
+          <b>GOAL-SCORING MOMENT</b>
+          <span>FOOTBALL EDITION</span>
+        </div>
+      </div>
+      <div class="navPill">2v2 · 3v3 · 4v4 · SOLO VS AI</div>
+    </nav>
+
+    <header class="hero">
+      <div class="eyebrow">CHOOSE YOUR GAME</div>
+      <h1>CALL THE<br>PLAY.</h1>
+      <p>Pick your pace. Learn the football card system, drive the field, counter the defense, and turn one box into two completely different game experiences.</p>
+      <div class="heroChips">
+        <span class="heroChip">1 FOOTBALL CARD</span>
+        <span class="heroChip">4 SUCCESSFUL PLAYS = TOUCHDOWN</span>
+        <span class="heroChip">PURE ENGLISH VERSION</span>
+      </div>
+    </header>
+
+    <section class="modeGrid" aria-label="Game modes">
+      <button class="modeCard strategy" id="strategyCard" type="button">
+        <div class="modeCopy">
+          <div class="modeNo">MODE 01</div>
+          <h2>STRATEGY<br>MODE</h2>
+          <p>Full tactical football. Choose the ball carrier, attack with RUN or PASS, and answer with TACKLE, INTERCEPTION, BLOCK, or BREAK THROUGH. Four successful plays score a TOUCHDOWN.</p>
+          <div class="featureRow">
+            <span class="feature">TACTICAL</span>
+            <span class="feature">TUTORIAL + SOLO GAME</span>
+            <span class="feature">QB SKILL</span>
+          </div>
+        </div>
+        <div class="fan" aria-hidden="true">
+          <img class="cardArt" data-webp="cards/run-card.webp" data-png="cards/run-card.png" src="cards/run-card.webp" alt="">
+          <img class="cardArt" data-webp="cards/pass-card.webp" data-png="cards/pass-card.png" src="cards/pass-card.webp" alt="">
+          <img class="cardArt" data-webp="cards/blitz-card.webp" data-png="cards/blitz-card.png" src="cards/blitz-card.webp" alt="">
+        </div>
+        <div class="enter">ENTER STRATEGY <span class="enterArrow">→</span></div>
+      </button>
+
+      <button class="modeCard casual" id="casualCard" type="button">
+        <div class="modeCopy">
+          <div class="modeNo">MODE 02</div>
+          <h2>CASUAL<br>MODE</h2>
+          <p>A faster party version using the same football cards. Draw FOOTBALL CARDs to score, use action cards to manipulate turns and draws, and race to collect 3 footballs first.</p>
+          <div class="featureRow">
+            <span class="feature">FAST</span>
+            <span class="feature">PARTY GAME</span>
+            <span class="feature">EASY TO LEARN</span>
+          </div>
+        </div>
+        <div class="fan" aria-hidden="true">
+          <img class="cardArt" data-webp="cards/football-card.webp" data-png="cards/football-card.png" src="cards/football-card.webp" alt="">
+          <img class="cardArt" data-webp="cards/interception-card.webp" data-png="cards/interception-card.png" src="cards/interception-card.webp" alt="">
+          <img class="cardArt" data-webp="cards/block-card.webp" data-png="cards/block-card.png" src="cards/block-card.webp" alt="">
+        </div>
+        <div class="enter">ENTER CASUAL <span class="enterArrow">→</span></div>
+      </button>
+    </section>
+
+    <footer class="footer">
+      <span>1 CARD SET</span>
+      <span>2 MODES</span>
+      <span>REAL CARD ART</span>
+      <span>LEARN FIRST · PLAY FAST</span>
+    </footer>
+  </main>
+</div>
+
+<div class="choiceModal" id="strategyModal">
+  <div class="choiceBox">
+    <div class="choiceHead">
+      <div>
+        <div class="choiceTitle">Choose Strategy Mode</div>
+        <div class="choiceSub">Start with the guided tutorial, or jump directly into a solo match against the computer.</div>
+      </div>
+      <button class="close" id="closeChoice" type="button">×</button>
+    </div>
+
+    <div class="choiceGrid">
+      <button class="choiceCard tutorial" type="button" data-target="strategy-tutorial-en.html" data-title="STRATEGY TUTORIAL">
+        <div class="choiceIcon">🎓🏈</div>
+        <div class="choiceName">Tutorial</div>
+        <div class="choiceDesc">Learn ball-carrier selection, RUN, PASS, TACKLE, INTERCEPTION, BLOCK, BREAK THROUGH, possession changes, QB timing, and scoring through guided interactive lessons.</div>
+        <div class="mini">Recommended for your first game</div>
+        <div class="choiceBtn">START TUTORIAL</div>
+      </button>
+
+      <button class="choiceCard single" type="button" data-target="strategy-game-en.html" data-title="STRATEGY SOLO GAME">
+        <div class="choiceIcon">🎮🏈</div>
+        <div class="choiceName">Solo Game</div>
+        <div class="choiceDesc">Choose 2v2, 3v3, or 4v4. You control Red. The computer controls Blue.</div>
+        <div class="mini">For players who already know the rules</div>
+        <div class="choiceBtn">START SOLO GAME</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="loader" id="loader" role="dialog" aria-modal="true" aria-live="polite">
+  <div class="loadBox">
+    <div class="spinFootball" aria-hidden="true"></div>
+    <div class="loadLabel">LOADING ASSETS</div>
+    <div class="loadTitle" id="loadTitle">FOOTBALL MODE</div>
+    <div class="track"><div class="bar" id="bar"></div></div>
+    <div class="loadMeta">
+      <span id="assetText">Preparing images…</span>
+      <span id="percent">0%</span>
+    </div>
+    <div class="loadError" id="loadError">Some required assets could not be loaded. Please try again.</div>
+    <button class="retry" id="retry" type="button">RETRY LOADING</button>
+  </div>
+</div>
+
 <script>
-const modal=document.getElementById('strategyModal');
-document.getElementById('strategyCard').onclick=()=>modal.classList.add('show');
-document.getElementById('closeChoice').onclick=()=>modal.classList.remove('show');
-modal.onclick=e=>{if(e.target===modal)modal.classList.remove('show')};
+(() => {
+  'use strict';
+
+  const $ = s => document.querySelector(s);
+
+  const cardImages = [
+    ['cards/run-card.webp','cards/run-card.png'],
+    ['cards/pass-card.webp','cards/pass-card.png'],
+    ['cards/tackle-card.webp','cards/tackle-card.png'],
+    ['cards/interception-card.webp','cards/interception-card.png'],
+    ['cards/block-card.webp','cards/block-card.png'],
+    ['cards/blitz-card.webp','cards/blitz-card.png'],
+    ['cards/football-card.webp','cards/football-card.png']
+  ];
+
+  const modal = $('#strategyModal');
+  const loader = $('#loader');
+  const loadTitle = $('#loadTitle');
+  const bar = $('#bar');
+  const percent = $('#percent');
+  const assetText = $('#assetText');
+  const loadError = $('#loadError');
+  const retry = $('#retry');
+
+  let activeTarget = null;
+  let activeTitle = null;
+  let loading = false;
+
+  function attachFallbacks(){
+    document.querySelectorAll('.cardArt').forEach(img => {
+      img.onerror = function(){
+        if(this.dataset.fallbackDone) return;
+        this.dataset.fallbackDone = '1';
+        this.src = this.dataset.png;
+      };
+    });
+  }
+
+  function loadImagePair(webp,png){
+    return new Promise((resolve,reject) => {
+      const img = new Image();
+      let triedPng = false;
+      const timer = setTimeout(() => reject(new Error('Timeout: ' + webp)), 15000);
+
+      img.onload = async () => {
+        clearTimeout(timer);
+        try{ if(img.decode) await img.decode(); }catch(e){}
+        resolve();
+      };
+
+      img.onerror = () => {
+        if(!triedPng){
+          triedPng = true;
+          img.src = png;
+        }else{
+          clearTimeout(timer);
+          reject(new Error('Failed: ' + webp + ' and ' + png));
+        }
+      };
+
+      img.src = webp;
+    });
+  }
+
+  async function preloadPage(url){
+    const res = await fetch(url,{cache:'force-cache'});
+    if(!res.ok) throw new Error('Page ' + res.status);
+  }
+
+  async function openWithLoader(target,title){
+    if(loading) return;
+    loading = true;
+    activeTarget = target;
+    activeTitle = title;
+
+    loader.classList.add('show');
+    loadTitle.textContent = title;
+    loadError.classList.remove('show');
+    retry.classList.remove('show');
+    bar.style.width = '0%';
+    percent.textContent = '0%';
+    assetText.textContent = `0 / ${cardImages.length} images`;
+
+    try{
+      let done = 0;
+      await Promise.all([
+        preloadPage(target),
+        ...cardImages.map(pair =>
+          loadImagePair(pair[0],pair[1]).then(() => {
+            done++;
+            const p = Math.round(done / cardImages.length * 100);
+            bar.style.width = p + '%';
+            percent.textContent = p + '%';
+            assetText.textContent = `${done} / ${cardImages.length} images`;
+          })
+        )
+      ]);
+
+      assetText.textContent = 'Ready!';
+      bar.style.width = '100%';
+      percent.textContent = '100%';
+
+      setTimeout(() => {
+        location.href = target;
+      }, 180);
+
+    }catch(err){
+      console.error(err);
+      loading = false;
+      loadError.classList.add('show');
+      retry.classList.add('show');
+      assetText.textContent = 'Loading failed';
+    }
+  }
+
+  $('#strategyCard').addEventListener('click', () => {
+    modal.classList.add('show');
+  });
+
+  $('#closeChoice').addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  modal.addEventListener('click', e => {
+    if(e.target === modal) modal.classList.remove('show');
+  });
+
+  document.querySelectorAll('[data-target]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.remove('show');
+      openWithLoader(btn.dataset.target, btn.dataset.title || 'LOADING MODE');
+    });
+  });
+
+  $('#casualCard').addEventListener('click', () => {
+    openWithLoader('casual-en.html','CASUAL MODE');
+  });
+
+  retry.addEventListener('click', () => {
+    if(activeTarget && activeTitle){
+      loading = false;
+      openWithLoader(activeTarget, activeTitle);
+    }
+  });
+
+  attachFallbacks();
+})();
 </script>
-<script src="preload-cards.js?v=20260831-loader1"></script>
 </body>
 </html>
