@@ -509,27 +509,46 @@ body{
   .hero h1{font-size:58px}
   .hero p{font-size:14px}
   .modeGrid{gap:16px}
-  .modeCard{min-height:525px}
+  .modeCard{
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
   .modeCopy{
     max-width:none;
     padding:22px;
     padding-right:18px;
   }
-  .modeCopy p{max-width:70%}
+  .modeCopy p{max-width:none}
   .fan{
-    top:212px;
-    right:-18px;
+    --fan-offset:clamp(84px,25vw,102px);
+    position:relative;
+    top:auto;
+    right:auto;
     width:100%;
-    height:272px;
+    height:240px;
+    flex:0 0 240px;
+    margin:-4px 0 8px;
   }
   .fan img{
-    width:124px;
-    height:186px;
+    right:auto;
+    width:clamp(104px,30vw,120px);
+    height:auto;
+    aspect-ratio:2/3;
   }
-  .fan img:nth-child(1){right:220px;top:56px}
-  .fan img:nth-child(2){right:116px;top:15px}
-  .fan img:nth-child(3){right:16px;top:56px}
-  .enter{left:22px;bottom:20px}
+  .fan img:nth-child(1){left:calc(50% - var(--fan-offset));top:48px;transform:translateX(-50%) rotate(-13deg)}
+  .fan img:nth-child(2){left:50%;top:8px;transform:translateX(-50%) rotate(-1deg)}
+  .fan img:nth-child(3){left:calc(50% + var(--fan-offset));top:48px;transform:translateX(-50%) rotate(12deg)}
+  .modeCard:hover .fan img:nth-child(1){transform:translateX(-50%) rotate(-13deg)}
+  .modeCard:hover .fan img:nth-child(2){transform:translateX(-50%) rotate(-1deg)}
+  .modeCard:hover .fan img:nth-child(3){transform:translateX(-50%) rotate(12deg)}
+  .enter{
+    position:relative;
+    left:auto;
+    bottom:auto;
+    width:max-content;
+    margin:0 22px 22px;
+  }
   .choiceGrid{grid-template-columns:1fr}
   .choiceBox{max-height:90svh;overflow:auto}
   .choiceCard{min-height:196px}
