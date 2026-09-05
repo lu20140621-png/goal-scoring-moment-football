@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07131d">
 <title>Goal-Scoring Moment Football — Strategy Tutorial</title>
-<link rel="preload" as="style" href="strategy-tutorial-coach-v4.css?v=20260905-coach4">
-<link rel="preload" as="script" href="strategy-tutorial-coach-v4.js?v=20260905-coach4">
+<link rel="preload" as="style" href="strategy-tutorial-coach-v4.css?v=20260905-field1">
+<link rel="preload" as="script" href="strategy-tutorial-coach-v4.js?v=20260905-field1">
 <link rel="preload" as="image" href="cards/football-card.webp">
 <link rel="preload" as="image" href="cards/run-card.webp">
 <link rel="preload" as="image" href="cards/pass-card.webp">
@@ -15,7 +15,28 @@
 <link rel="preload" as="image" href="cards/block-card.webp">
 <link rel="preload" as="image" href="cards/blitz-card.webp">
 <link rel="preload" as="image" href="https://raw.githubusercontent.com/lu20140621-png/goal-scoring-moment/main/images/coach-guide.webp">
-<link rel="stylesheet" href="strategy-tutorial-coach-v4.css?v=20260905-coach4">
+<link rel="stylesheet" href="strategy-tutorial-coach-v4.css?v=20260905-field1">
+<style>
+/* Restore the original football-field visual language without changing tutorial rules. */
+.board{
+  background:
+    linear-gradient(90deg,#5a3b22 0 8%,transparent 8% 92%,#163e5b 92% 100%),
+    repeating-linear-gradient(90deg,#16743d 0 9.9%,#1b8245 9.9% 19.8%);
+  box-shadow:inset 0 0 55px #00190daa,0 22px 50px #0005;
+}
+.fieldLines{left:8%;right:8%;inset-block:8px;border-radius:8px;background:
+  repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),rgba(255,255,255,.34) calc(10% - 1px) 10%),
+  repeating-linear-gradient(0deg,transparent 0 48%,rgba(255,255,255,.18) 48% 49%,transparent 49% 100%)}
+.fieldLines:before{left:50%;border-left:3px solid #fff}.fieldLines:after{left:0;right:0;top:50%;border-top:1px dashed #ffffff55}
+.endZoneLabel{position:absolute;top:50%;z-index:1;transform:translateY(-50%);writing-mode:vertical-rl;font-size:12px;font-weight:950;letter-spacing:.12em;color:#fff;opacity:.72;pointer-events:none}.endZoneLabel.red{left:2.2%}.endZoneLabel.blue{right:2.2%}
+.yardLabels{position:absolute;inset:8px 8%;z-index:1;pointer-events:none}.yardLabels span{position:absolute;top:8%;transform:translateX(-50%);font-size:18px;font-weight:950;color:#ffffff5c;text-shadow:0 2px 5px #0006}.yardLabels span.bottom{top:auto;bottom:8%}
+.runnerMarker{position:absolute;z-index:2;top:50%;left:50%;width:60px;height:52px;transform:translate(-50%,-50%);transition:left .58s cubic-bezier(.2,.8,.2,1);pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}
+.runnerPerson{position:absolute;left:4px;top:3px;font-size:39px;line-height:1;animation:runnerBob .46s ease-in-out infinite alternate;transform-origin:50% 100%}.runnerBall{position:absolute;right:1px;top:15px;font-size:18px;transform:rotate(-18deg)}
+.runnerMarker:after{content:attr(data-yard);position:absolute;left:50%;top:48px;transform:translateX(-50%);padding:3px 7px;border-radius:999px;background:#07151fdd;border:1px solid #efd06f;color:#f7dc88;font-size:7px;font-weight:950;white-space:nowrap}
+.blueDriveRunner .runnerPerson{transform:scaleX(-1)}.blueDriveRunner .runnerBall{right:auto;left:1px;transform:rotate(18deg)}
+@keyframes runnerBob{to{translate:0 -3px}}
+@media(max-width:760px){.yardLabels span{font-size:12px}.endZoneLabel{font-size:8px}.runnerMarker{width:46px;height:40px}.runnerPerson{font-size:30px}.runnerBall{font-size:14px;top:12px}.runnerMarker:after{top:38px;font-size:6px}.board{min-height:470px}}
+</style>
 </head>
 <body>
 <div class="bootLoader" id="bootLoader" role="status" aria-live="polite">
@@ -53,6 +74,13 @@
 
   <main class="board" id="board">
     <div class="fieldLines" aria-hidden="true"></div>
+    <div class="endZoneLabel red" aria-hidden="true">RED END ZONE</div>
+    <div class="endZoneLabel blue" aria-hidden="true">BLUE END ZONE</div>
+    <div class="yardLabels" aria-hidden="true">
+      <span style="left:10%">10</span><span style="left:20%">20</span><span style="left:30%">30</span><span style="left:40%">40</span><span style="left:50%">50</span><span style="left:60%">40</span><span style="left:70%">30</span><span style="left:80%">20</span><span style="left:90%">10</span>
+      <span class="bottom" style="left:10%">10</span><span class="bottom" style="left:20%">20</span><span class="bottom" style="left:30%">30</span><span class="bottom" style="left:40%">40</span><span class="bottom" style="left:50%">50</span><span class="bottom" style="left:60%">40</span><span class="bottom" style="left:70%">30</span><span class="bottom" style="left:80%">20</span><span class="bottom" style="left:90%">10</span>
+    </div>
+    <div class="runnerMarker" id="runnerMarker" data-team="RED" data-yard="50 YD" aria-hidden="true"><span class="runnerPerson">🏃‍♂️</span><span class="runnerBall">🏈</span></div>
     <div class="possessionBadge" aria-hidden="true">FOOTBALL CARD = POSSESSION</div>
     <section class="players" aria-label="Players">
       <button class="playerSeat red" data-player="r1" type="button"><span class="seatName">R1</span><span class="role">PLAYER</span></button>
@@ -119,7 +147,43 @@
   </div>
 </div>
 
-<script src="strategy-tutorial-coach-v4.js?v=20260905-coach4"></script>
+<script src="strategy-tutorial-coach-v4.js?v=20260905-field1"></script>
+<script>
+(() => {
+  'use strict';
+  const runner = document.getElementById('runnerMarker');
+  if (!runner) return;
+  const progressByYard = {'50':0,'40':1,'30':2,'20':3,'10':4};
+  const redX = [50,58,66,74,82];
+  const blueX = [50,42,34,26,18];
+
+  function readProgress(team) {
+    const el = document.getElementById(team === 'RED' ? 'redYard' : 'blueYard');
+    if (!el) return 0;
+    const text = el.textContent || '';
+    if (/TD/.test(text)) return 4;
+    const m = text.match(/(50|40|30|20|10)/);
+    return m ? (progressByYard[m[1]] ?? 0) : 0;
+  }
+
+  function updateRunner() {
+    const possession = (document.getElementById('possessionText')?.textContent || '').toUpperCase();
+    const team = /\bB[12]\b/.test(possession) ? 'BLUE' : 'RED';
+    const progress = readProgress(team);
+    runner.classList.toggle('blueDriveRunner', team === 'BLUE');
+    runner.style.left = (team === 'RED' ? redX[progress] : blueX[progress]) + '%';
+    runner.dataset.team = team;
+    runner.dataset.yard = progress === 4 ? '10 YD' : ['50 YD','40 YD','30 YD','20 YD'][progress];
+  }
+
+  const observer = new MutationObserver(updateRunner);
+  ['possessionText','redYard','blueYard'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el,{childList:true,subtree:true,characterData:true});
+  });
+  updateRunner();
+})();
+</script>
 <script src="english-only.js?v=20260831-break-through"></script>
 </body>
 </html>
