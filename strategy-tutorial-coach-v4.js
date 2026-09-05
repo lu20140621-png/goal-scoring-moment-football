@@ -364,15 +364,11 @@ function lesson6(){
         setAction('Cancel the TACKLE with BLOCK.',({kind,value,el})=>{
           if(kind!=='card'||value!=='BLOCK')return wrong('BLOCK is the card that cancels TACKLE here.',el);
           state.action=null;removeCard('BLOCK');showChain(['RUN','TACKLE','BLOCK'],'TACKLE CANCELED');
-          say('One BLOCK is allowed on this offensive play.',{next:()=>{
-            $('contextActions').innerHTML='';
-            const no=addChoice('NO BREAK THROUGH','no','gold');
-            addChoice('USE BREAK THROUGH','yes');
-            setAction('Blue has one final defense window. Choose No BREAK THROUGH.',({kind,value,el})=>{
-              if(kind!=='choice'||value!=='no')return wrong('BREAK THROUGH would directly stop the RUN. Choose No BREAK THROUGH for this success example.',el);
-              state.action=null;clearFocus();setDrive('RED',2);event('RUN SUCCESS · RED 40 → 30','good');
-              nextLesson('Right. BREAK THROUGH directly stops RUN or PASS, including after BLOCK.');
-            },{focusEl:no,callout:'NO FINAL DEFENSE'});
+          say('BLOCK cancels the TACKLE. Blue still has one final chance to use BREAK THROUGH.',{next:()=>{
+            say('Blue does not use BREAK THROUGH, so your RUN survives.',{next:()=>{
+              setDrive('RED',2);event('RUN SUCCESS · RED 40 → 30','good');
+              nextLesson('That is the full chain: RUN → TACKLE → BLOCK → no BREAK THROUGH = RUN succeeds.');
+            }});
           }});
         },{focusEl:block,callout:'PLAY BLOCK'});
       }});
@@ -415,14 +411,11 @@ function lesson8(){
           setAction('Cancel INTERCEPTION with BLOCK.',({kind,value,el})=>{
             if(kind!=='card'||value!=='BLOCK')return wrong('BLOCK cancels INTERCEPTION here.',el);
             state.action=null;removeCard('BLOCK');showChain(['PASS','INTERCEPTION','BLOCK'],'INTERCEPTION CANCELED');
-            say('Blue could still use BREAK THROUGH as the final defense.',{next:()=>{
-              $('contextActions').innerHTML='';
-              const no=addChoice('NO BREAK THROUGH','no','gold');addChoice('USE BREAK THROUGH','yes');
-              setAction('Let the PASS succeed. Choose No BREAK THROUGH.',async ({kind,value,el})=>{
-                if(kind!=='choice'||value!=='no')return wrong('BREAK THROUGH would directly stop the PASS.',el);
-                state.action=null;clearFocus();await moveFootball('r1','r2');setDrive('RED',2);event('PASS SUCCESS · RED 40 → 30','good');
-                nextLesson('Exactly. PASS → INTERCEPTION → BLOCK → no BREAK THROUGH means the PASS succeeds and R2 receives the FOOTBALL CARD.');
-              },{focusEl:no,callout:'NO FINAL DEFENSE'});
+            say('BLOCK cancels the INTERCEPTION. Blue still has one final chance to use BREAK THROUGH.',{next:()=>{
+              say('Blue does not use BREAK THROUGH, so the PASS is complete.',{next:async()=>{
+                await moveFootball('r1','r2');setDrive('RED',2);event('PASS SUCCESS · RED 40 → 30','good');
+                nextLesson('That is the full chain: PASS → INTERCEPTION → BLOCK → no BREAK THROUGH = PASS succeeds and R2 gets the FOOTBALL CARD.');
+              }});
             }});
           },{focusEl:block,callout:'PLAY BLOCK'});
         }});
