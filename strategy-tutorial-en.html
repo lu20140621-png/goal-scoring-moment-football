@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07131d">
 <title>Goal-Scoring Moment Football — Strategy Tutorial</title>
 <link rel="preload" as="style" href="strategy-tutorial-coach-v4.css?v=20260905-field1">
-<link rel="preload" as="script" href="strategy-tutorial-coach-v4.js?v=20260905-passrule1">
+<link rel="preload" as="script" href="strategy-tutorial-coach-v4.js?v=20260905-layout2">
 <link rel="preload" as="image" href="cards/football-card.webp">
 <link rel="preload" as="image" href="cards/run-card.webp">
 <link rel="preload" as="image" href="cards/pass-card.webp">
@@ -17,8 +17,9 @@
 <link rel="preload" as="image" href="https://raw.githubusercontent.com/lu20140621-png/goal-scoring-moment/main/images/coach-guide.webp">
 <link rel="stylesheet" href="strategy-tutorial-coach-v4.css?v=20260905-field1">
 <style>
-/* Football-field visual layer. Tutorial rules remain in the coach JS. */
+/* Football-field visual layer. Keep the middle lanes clear for the two team runners. */
 .board{
+  min-height:700px;
   background:
     linear-gradient(90deg,#5a3b22 0 8%,transparent 8% 92%,#163e5b 92% 100%),
     repeating-linear-gradient(90deg,#16743d 0 9.9%,#1b8245 9.9% 19.8%);
@@ -30,18 +31,51 @@
 .fieldLines:before{left:50%;border-left:3px solid #fff}.fieldLines:after{left:0;right:0;top:50%;border-top:1px dashed #ffffff55}
 .endZoneLabel{position:absolute;top:50%;z-index:1;transform:translateY(-50%);writing-mode:vertical-rl;font-size:12px;font-weight:950;letter-spacing:.12em;color:#fff;opacity:.72;pointer-events:none}.endZoneLabel.red{left:2.2%}.endZoneLabel.blue{right:2.2%}
 .yardLabels{position:absolute;inset:8px 8%;z-index:1;pointer-events:none}.yardLabels span{position:absolute;top:8%;transform:translateX(-50%);font-size:18px;font-weight:950;color:#ffffff5c;text-shadow:0 2px 5px #0006}.yardLabels span.bottom{top:auto;bottom:8%}
-.runnerMarker{position:absolute;z-index:2;left:50%;width:62px;height:54px;transform:translate(-50%,-50%);transition:left .58s cubic-bezier(.2,.8,.2,1),opacity .2s ease,filter .2s ease;pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}
-.runnerMarker.redRunner{top:41%;--runner:#e34f58}.runnerMarker.blueRunner{top:59%;--runner:#4b91e2}
+
+/* R1/B1 sit at the top, R2/B2 at the bottom. The center stays open for motion. */
+.players{
+  position:relative;
+  z-index:4;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-rows:92px 92px;
+  align-content:space-between;
+  column-gap:140px;
+  row-gap:0;
+  min-height:420px;
+  height:420px;
+  padding:18px 95px 12px;
+}
+.playerSeat{width:100%;max-width:360px;min-height:78px;height:78px;align-self:center}
+.playerSeat:nth-child(odd){justify-self:start}.playerSeat:nth-child(even){justify-self:end}
+.ballMini{right:8px;top:50%;width:44px;height:66px;z-index:4}
+
+.runnerMarker{position:absolute;z-index:3;left:50%;width:62px;height:54px;transform:translate(-50%,-50%);transition:left .58s cubic-bezier(.2,.8,.2,1),opacity .2s ease,filter .2s ease;pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}
+.runnerMarker.redRunner{top:38%;--runner:#e34f58}.runnerMarker.blueRunner{top:52%;--runner:#4b91e2}
 .runnerPerson{position:absolute;left:5px;top:3px;font-size:39px;line-height:1;animation:runnerBob .46s ease-in-out infinite alternate;transform-origin:50% 100%;text-shadow:0 0 7px var(--runner),0 3px 5px #000}
 .blueRunner .runnerPerson{transform:scaleX(-1)}
 .runnerBall{position:absolute;right:0;top:15px;font-size:18px;opacity:0;transform:rotate(-18deg) scale(.75);transition:opacity .18s ease,transform .18s ease;filter:drop-shadow(0 2px 3px #000)}
 .blueRunner .runnerBall{right:auto;left:0;transform:rotate(18deg) scale(.75)}
-.runnerMarker.active{opacity:1;filter:drop-shadow(0 8px 9px #0009) drop-shadow(0 0 10px var(--runner))}.runnerMarker:not(.active){opacity:.58;filter:grayscale(.15) drop-shadow(0 6px 7px #0008)}
+.runnerMarker.active{opacity:1;filter:drop-shadow(0 8px 9px #0009) drop-shadow(0 0 10px var(--runner))}.runnerMarker:not(.active){opacity:.55;filter:grayscale(.2) drop-shadow(0 6px 7px #0008)}
 .runnerMarker.active .runnerBall{opacity:1;transform:rotate(-18deg) scale(1.08)}.blueRunner.active .runnerBall{transform:rotate(18deg) scale(1.08)}
 .runnerMarker:after{content:attr(data-yard);position:absolute;left:50%;top:49px;transform:translateX(-50%);padding:3px 7px;border-radius:999px;background:#07151fe8;border:1px solid var(--runner);color:#fff;font-size:7px;font-weight:950;white-space:nowrap}
 .runnerTeam{position:absolute;left:50%;top:-10px;transform:translateX(-50%);font-size:7px;font-weight:950;color:#fff;background:var(--runner);border-radius:999px;padding:2px 6px;letter-spacing:.08em;box-shadow:0 2px 5px #0008}
+.driveRow{z-index:5;margin-top:10px}.tableReveal{z-index:5}.eventBanner{z-index:5}
 @keyframes runnerBob{to{translate:0 -3px}}
-@media(max-width:760px){.yardLabels span{font-size:12px}.endZoneLabel{font-size:8px}.runnerMarker{width:48px;height:42px}.runnerMarker.redRunner{top:40%}.runnerMarker.blueRunner{top:60%}.runnerPerson{font-size:30px}.runnerBall{font-size:14px;top:12px}.runnerMarker:after{top:39px;font-size:6px}.runnerTeam{top:-8px;font-size:6px}.board{min-height:470px}}
+
+@media(max-width:760px){
+  .board{min-height:560px;padding-top:40px}
+  .yardLabels span{font-size:12px}.endZoneLabel{font-size:8px}
+  .players{grid-template-rows:64px 64px;column-gap:10px;min-height:330px;height:330px;padding:14px 8px 10px}
+  .playerSeat{max-width:none;min-height:60px;height:60px;padding:6px 4px}
+  .ballMini{right:4px;width:30px;height:45px}
+  .runnerMarker{width:48px;height:42px}.runnerMarker.redRunner{top:35%}.runnerMarker.blueRunner{top:50%}
+  .runnerPerson{font-size:30px}.runnerBall{font-size:14px;top:12px}.runnerMarker:after{top:39px;font-size:6px}.runnerTeam{top:-8px;font-size:6px}
+  .driveRow{margin-top:6px}
+}
+@media(max-width:380px){
+  .players{column-gap:6px;padding-inline:5px}.playerSeat{font-size:9px}.ballMini{width:27px;height:41px;right:2px}
+}
 </style>
 </head>
 <body>
@@ -154,7 +188,7 @@
   </div>
 </div>
 
-<script src="strategy-tutorial-coach-v4.js?v=20260905-passrule1"></script>
+<script src="strategy-tutorial-coach-v4.js?v=20260905-layout2"></script>
 <script>
 (() => {
   'use strict';
