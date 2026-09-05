@@ -17,7 +17,7 @@
 <link rel="preload" as="image" href="https://raw.githubusercontent.com/lu20140621-png/goal-scoring-moment/main/images/coach-guide.webp">
 <link rel="stylesheet" href="strategy-tutorial-coach-v4.css?v=20260905-field1">
 <style>
-/* Restore the original football-field visual language without changing tutorial rules. */
+/* Football-field visual layer. Tutorial rules remain in the coach JS. */
 .board{
   background:
     linear-gradient(90deg,#5a3b22 0 8%,transparent 8% 92%,#163e5b 92% 100%),
@@ -30,12 +30,18 @@
 .fieldLines:before{left:50%;border-left:3px solid #fff}.fieldLines:after{left:0;right:0;top:50%;border-top:1px dashed #ffffff55}
 .endZoneLabel{position:absolute;top:50%;z-index:1;transform:translateY(-50%);writing-mode:vertical-rl;font-size:12px;font-weight:950;letter-spacing:.12em;color:#fff;opacity:.72;pointer-events:none}.endZoneLabel.red{left:2.2%}.endZoneLabel.blue{right:2.2%}
 .yardLabels{position:absolute;inset:8px 8%;z-index:1;pointer-events:none}.yardLabels span{position:absolute;top:8%;transform:translateX(-50%);font-size:18px;font-weight:950;color:#ffffff5c;text-shadow:0 2px 5px #0006}.yardLabels span.bottom{top:auto;bottom:8%}
-.runnerMarker{position:absolute;z-index:2;top:50%;left:50%;width:60px;height:52px;transform:translate(-50%,-50%);transition:left .58s cubic-bezier(.2,.8,.2,1);pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}
-.runnerPerson{position:absolute;left:4px;top:3px;font-size:39px;line-height:1;animation:runnerBob .46s ease-in-out infinite alternate;transform-origin:50% 100%}.runnerBall{position:absolute;right:1px;top:15px;font-size:18px;transform:rotate(-18deg)}
-.runnerMarker:after{content:attr(data-yard);position:absolute;left:50%;top:48px;transform:translateX(-50%);padding:3px 7px;border-radius:999px;background:#07151fdd;border:1px solid #efd06f;color:#f7dc88;font-size:7px;font-weight:950;white-space:nowrap}
-.blueDriveRunner .runnerPerson{transform:scaleX(-1)}.blueDriveRunner .runnerBall{right:auto;left:1px;transform:rotate(18deg)}
+.runnerMarker{position:absolute;z-index:2;left:50%;width:62px;height:54px;transform:translate(-50%,-50%);transition:left .58s cubic-bezier(.2,.8,.2,1),opacity .2s ease,filter .2s ease;pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}
+.runnerMarker.redRunner{top:41%;--runner:#e34f58}.runnerMarker.blueRunner{top:59%;--runner:#4b91e2}
+.runnerPerson{position:absolute;left:5px;top:3px;font-size:39px;line-height:1;animation:runnerBob .46s ease-in-out infinite alternate;transform-origin:50% 100%;text-shadow:0 0 7px var(--runner),0 3px 5px #000}
+.blueRunner .runnerPerson{transform:scaleX(-1)}
+.runnerBall{position:absolute;right:0;top:15px;font-size:18px;opacity:0;transform:rotate(-18deg) scale(.75);transition:opacity .18s ease,transform .18s ease;filter:drop-shadow(0 2px 3px #000)}
+.blueRunner .runnerBall{right:auto;left:0;transform:rotate(18deg) scale(.75)}
+.runnerMarker.active{opacity:1;filter:drop-shadow(0 8px 9px #0009) drop-shadow(0 0 10px var(--runner))}.runnerMarker:not(.active){opacity:.58;filter:grayscale(.15) drop-shadow(0 6px 7px #0008)}
+.runnerMarker.active .runnerBall{opacity:1;transform:rotate(-18deg) scale(1.08)}.blueRunner.active .runnerBall{transform:rotate(18deg) scale(1.08)}
+.runnerMarker:after{content:attr(data-yard);position:absolute;left:50%;top:49px;transform:translateX(-50%);padding:3px 7px;border-radius:999px;background:#07151fe8;border:1px solid var(--runner);color:#fff;font-size:7px;font-weight:950;white-space:nowrap}
+.runnerTeam{position:absolute;left:50%;top:-10px;transform:translateX(-50%);font-size:7px;font-weight:950;color:#fff;background:var(--runner);border-radius:999px;padding:2px 6px;letter-spacing:.08em;box-shadow:0 2px 5px #0008}
 @keyframes runnerBob{to{translate:0 -3px}}
-@media(max-width:760px){.yardLabels span{font-size:12px}.endZoneLabel{font-size:8px}.runnerMarker{width:46px;height:40px}.runnerPerson{font-size:30px}.runnerBall{font-size:14px;top:12px}.runnerMarker:after{top:38px;font-size:6px}.board{min-height:470px}}
+@media(max-width:760px){.yardLabels span{font-size:12px}.endZoneLabel{font-size:8px}.runnerMarker{width:48px;height:42px}.runnerMarker.redRunner{top:40%}.runnerMarker.blueRunner{top:60%}.runnerPerson{font-size:30px}.runnerBall{font-size:14px;top:12px}.runnerMarker:after{top:39px;font-size:6px}.runnerTeam{top:-8px;font-size:6px}.board{min-height:470px}}
 </style>
 </head>
 <body>
@@ -80,7 +86,8 @@
       <span style="left:10%">10</span><span style="left:20%">20</span><span style="left:30%">30</span><span style="left:40%">40</span><span style="left:50%">50</span><span style="left:60%">40</span><span style="left:70%">30</span><span style="left:80%">20</span><span style="left:90%">10</span>
       <span class="bottom" style="left:10%">10</span><span class="bottom" style="left:20%">20</span><span class="bottom" style="left:30%">30</span><span class="bottom" style="left:40%">40</span><span class="bottom" style="left:50%">50</span><span class="bottom" style="left:60%">40</span><span class="bottom" style="left:70%">30</span><span class="bottom" style="left:80%">20</span><span class="bottom" style="left:90%">10</span>
     </div>
-    <div class="runnerMarker" id="runnerMarker" data-team="RED" data-yard="50 YD" aria-hidden="true"><span class="runnerPerson">🏃‍♂️</span><span class="runnerBall">🏈</span></div>
+    <div class="runnerMarker redRunner active" id="redRunner" data-yard="RED · 50 YD" aria-hidden="true"><span class="runnerTeam">RED</span><span class="runnerPerson">🏃‍♂️</span><span class="runnerBall">🏈</span></div>
+    <div class="runnerMarker blueRunner" id="blueRunner" data-yard="BLUE · 50 YD" aria-hidden="true"><span class="runnerTeam">BLUE</span><span class="runnerPerson">🏃‍♂️</span><span class="runnerBall">🏈</span></div>
     <div class="possessionBadge" aria-hidden="true">FOOTBALL CARD = POSSESSION</div>
     <section class="players" aria-label="Players">
       <button class="playerSeat red" data-player="r1" type="button"><span class="seatName">R1</span><span class="role">PLAYER</span></button>
@@ -151,11 +158,13 @@
 <script>
 (() => {
   'use strict';
-  const runner = document.getElementById('runnerMarker');
-  if (!runner) return;
+  const redRunner = document.getElementById('redRunner');
+  const blueRunner = document.getElementById('blueRunner');
+  if (!redRunner || !blueRunner) return;
   const progressByYard = {'50':0,'40':1,'30':2,'20':3,'10':4};
   const redX = [50,58,66,74,82];
   const blueX = [50,42,34,26,18];
+  const yardText = ['50 YD','40 YD','30 YD','20 YD','10 YD'];
 
   function readProgress(team) {
     const el = document.getElementById(team === 'RED' ? 'redYard' : 'blueYard');
@@ -166,22 +175,27 @@
     return m ? (progressByYard[m[1]] ?? 0) : 0;
   }
 
-  function updateRunner() {
+  function updateRunners() {
     const possession = (document.getElementById('possessionText')?.textContent || '').toUpperCase();
-    const team = /\bB[12]\b/.test(possession) ? 'BLUE' : 'RED';
-    const progress = readProgress(team);
-    runner.classList.toggle('blueDriveRunner', team === 'BLUE');
-    runner.style.left = (team === 'RED' ? redX[progress] : blueX[progress]) + '%';
-    runner.dataset.team = team;
-    runner.dataset.yard = progress === 4 ? '10 YD' : ['50 YD','40 YD','30 YD','20 YD'][progress];
+    const activeTeam = /\bB[12]\b/.test(possession) ? 'BLUE' : 'RED';
+    const redProgress = readProgress('RED');
+    const blueProgress = readProgress('BLUE');
+
+    redRunner.style.left = redX[redProgress] + '%';
+    blueRunner.style.left = blueX[blueProgress] + '%';
+    redRunner.dataset.yard = 'RED · ' + yardText[redProgress];
+    blueRunner.dataset.yard = 'BLUE · ' + yardText[blueProgress];
+
+    redRunner.classList.toggle('active', activeTeam === 'RED');
+    blueRunner.classList.toggle('active', activeTeam === 'BLUE');
   }
 
-  const observer = new MutationObserver(updateRunner);
+  const observer = new MutationObserver(updateRunners);
   ['possessionText','redYard','blueYard'].forEach(id => {
     const el = document.getElementById(id);
     if (el) observer.observe(el,{childList:true,subtree:true,characterData:true});
   });
-  updateRunner();
+  updateRunners();
 })();
 </script>
 <script src="english-only.js?v=20260831-break-through"></script>
