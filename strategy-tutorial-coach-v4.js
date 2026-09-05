@@ -23,7 +23,7 @@ const LESSONS = [
   ['PASS Defense Chain','INTERCEPTION, BLOCK, and BREAK THROUGH.'],
   ['Interception','A successful interception changes possession immediately.'],
   ['QB Skill','Use the QB PASS skill once per game.'],
-  ['No Free Handoff','If the carrier cannot attack, you still cannot hand the FOOTBALL CARD directly to a teammate.'],
+  ['No Free Handoff','A teammate cannot become the carrier just because the current carrier runs out of offense.'],
   ['Touchdown & Rounds','Score, redeal, alternate first offense, and race to 3.'],
   ['Final Challenge','Read the field and finish a real sequence without card hints.']
 ];
@@ -288,20 +288,20 @@ function lesson2(){
   setHolder('r1');
   renderHand(['RUN','PASS','BLOCK']);
   say('There is exactly one FOOTBALL CARD in the match.',{next:()=>{
-    const seat=document.querySelector('[data-player="r1"]');
-    focusOnly(seat,'POSSESSION');
+    const r1=document.querySelector('[data-player="r1"]');
+    const r2=document.querySelector('[data-player="r2"]');
+    focusOnly(r1,'POSSESSION');
     say('R1 has it, so R1 is the ball carrier.',{next:()=>{
-      say('You cannot hand the FOOTBALL CARD straight to a teammate. Same-team carrier changes only after a successful PASS.',{next:()=>{
-        setAction('Tap R2 and see what happens if you try a free handoff.',({kind,value,el})=>{
-          if(kind!=='player'||value!=='r2')return wrong('Tap R2 for this example.',el);
-          state.action=null;clearFocus();
-          el.classList.remove('wrong');void el.offsetWidth;el.classList.add('wrong');
-          event('NO FREE HANDOFF','bad');
-          say('No. R2 cannot take the ball directly. R1 keeps possession until a PASS succeeds.',{next:()=>{
-            el.classList.remove('wrong');
-            nextLesson('Remember it: RUN keeps the same carrier. A successful PASS moves the FOOTBALL CARD to the receiver. A successful INTERCEPTION can move it to the defender.');
-          }});
-        },{targets:['r2'],callout:'TRY HANDOFF'});
+      clearFocus();
+      r2?.classList.add('wrong');
+      event('NO FREE HANDOFF','bad');
+      say('R2 cannot take the FOOTBALL CARD just because you tap R2.',{next:()=>{
+        r2?.classList.remove('wrong');
+        focusOnly(r1,'STAYS WITH R1');
+        say('R1 keeps possession until a PASS succeeds. Then the FOOTBALL CARD moves to the receiver.',{next:()=>{
+          clearFocus();event('');
+          nextLesson('Remember it: RUN keeps the same carrier. A successful PASS changes the same-team carrier. A successful INTERCEPTION can move possession to the defender.');
+        }});
       }});
     }});
   }});
@@ -473,18 +473,21 @@ function lesson11(){
   setHolder('r1');renderHand(['BLOCK','TACKLE']);setDrive('RED',2);setDrive('BLUE',1);
   say('Mid-round, nobody refills their hand.',{next:()=>{
     say('R1 has the FOOTBALL CARD but no RUN or PASS, so R1 cannot start another offensive play.',{next:()=>{
-      focusPlayers(['r2'],'NO FREE HANDOFF');
-      say('Even if R2 has an offensive card, you cannot simply move the FOOTBALL CARD to R2.',{next:()=>{
-        setAction('Tap R2 to test that move.',({kind,value,el})=>{
-          if(kind!=='player'||value!=='r2')return wrong('Tap R2 for this example.',el);
-          state.action=null;clearFocus();
-          el.classList.remove('wrong');void el.offsetWidth;el.classList.add('wrong');
-          event('ILLEGAL · NO FREE HANDOFF','bad');
-          say('That move is not allowed. Same-team carrier changes only after a successful PASS.',{next:()=>{
-            el.classList.remove('wrong');
-            nextLesson('So if the current carrier cannot play RUN or PASS, do not move the ball to a teammate for free. There is no mid-round refill.');
-          }});
-        },{targets:['r2'],callout:'TEST IT'});
+      const r2=document.querySelector('[data-player="r2"]');
+      clearFocus();
+      r2?.classList.add('wrong');
+      event('NO FREE HANDOFF','bad');
+      say('R2 still cannot receive the FOOTBALL CARD for free.',{next:()=>{
+        r2?.classList.remove('wrong');
+        $('contextActions').innerHTML='';
+        const passAnswer=addChoice('A SUCCESSFUL PASS','pass','gold');
+        addChoice('JUST TAP R2','handoff');
+        setAction('What would legally make R2 the new same-team carrier?',({kind,value,el})=>{
+          if(kind!=='choice')return wrong('Choose one answer.',el);
+          if(value!=='pass')return wrong('No free handoff. Tapping R2 never transfers same-team possession.',el);
+          state.action=null;clearFocus();event('PASS REQUIRED','good');
+          nextLesson('Correct. Same-team possession changes only when a PASS succeeds. If R1 has no RUN or PASS, do not move the ball to R2 for free.');
+        },{focusEl:passAnswer,callout:'CHOOSE'});
       }});
     }});
   }});
