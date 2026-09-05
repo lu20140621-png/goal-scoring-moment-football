@@ -14,16 +14,16 @@ const ASSETS = {
 const COACH_IMG='https://raw.githubusercontent.com/lu20140621-png/goal-scoring-moment/main/images/coach-guide.webp';
 const LESSONS = [
   ['The Goal','Learn the match goal, teams, and hand sizes.'],
-  ['Possession','See how the single FOOTBALL CARD tracks the ball carrier.'],
+  ['Possession','The FOOTBALL CARD stays with its carrier. A teammate receives it only after a successful PASS.'],
   ['Who Starts?','Use Rock-Paper-Scissors for Round 1.'],
-  ['Choose the Carrier','Give possession to an eligible teammate.'],
+  ['Who Can Act?','Only the current ball carrier may start RUN or PASS.'],
   ['RUN','Start a running play and resolve success.'],
   ['RUN Defense Chain','TACKLE, BLOCK, then the final BREAK THROUGH window.'],
   ['PASS','Choose a receiver and move possession on success.'],
   ['PASS Defense Chain','INTERCEPTION, BLOCK, and BREAK THROUGH.'],
   ['Interception','A successful interception changes possession immediately.'],
   ['QB Skill','Use the QB PASS skill once per game.'],
-  ['When Offense Runs Dry','Move the ball or end the round without refilling hands.'],
+  ['No Free Handoff','If the carrier cannot attack, you still cannot hand the FOOTBALL CARD directly to a teammate.'],
   ['Touchdown & Rounds','Score, redeal, alternate first offense, and race to 3.'],
   ['Final Challenge','Read the field and finish a real sequence without card hints.']
 ];
@@ -285,16 +285,24 @@ function lesson1(){
 }
 
 function lesson2(){
+  setHolder('r1');
   renderHand(['RUN','PASS','BLOCK']);
   say('There is exactly one FOOTBALL CARD in the match.',{next:()=>{
     const seat=document.querySelector('[data-player="r1"]');
     focusOnly(seat,'POSSESSION');
     say('R1 has it, so R1 is the ball carrier.',{next:()=>{
-      setAction('Tap R2 to move the FOOTBALL CARD and see possession change.',async ({kind,value,el})=>{
-        if(kind!=='player'||value!=='r2')return wrong('Choose R2 for this possession demo.',el);
-        state.action=null; clearFocus(); await moveFootball('r1','r2'); event('POSSESSION → R2','good');
-        nextLesson('Exactly. The FOOTBALL CARD is not an Action Card. It follows the ball carrier.');
-      },{targets:['r2'],callout:'TAP R2'});
+      say('You cannot hand the FOOTBALL CARD straight to a teammate. Same-team carrier changes only after a successful PASS.',{next:()=>{
+        setAction('Tap R2 and see what happens if you try a free handoff.',({kind,value,el})=>{
+          if(kind!=='player'||value!=='r2')return wrong('Tap R2 for this example.',el);
+          state.action=null;clearFocus();
+          el.classList.remove('wrong');void el.offsetWidth;el.classList.add('wrong');
+          event('NO FREE HANDOFF','bad');
+          say('No. R2 cannot take the ball directly. R1 keeps possession until a PASS succeeds.',{next:()=>{
+            el.classList.remove('wrong');
+            nextLesson('Remember it: RUN keeps the same carrier. A successful PASS moves the FOOTBALL CARD to the receiver. A successful INTERCEPTION can move it to the defender.');
+          }});
+        },{targets:['r2'],callout:'TRY HANDOFF'});
+      }});
     }});
   }});
 }
@@ -315,41 +323,41 @@ function lesson3(){
 
 function lesson4(){
   renderHand(['RUN','PASS','BLOCK']); setHolder('r1');
-  say('Red won first offense.',{next:()=>{
-    say('The carrier can be any Red player who has RUN or PASS.',{next:()=>{
-      setAction('Choose R2 as the ball carrier.',async ({kind,value,el})=>{
-        if(kind!=='player')return wrong('Choose a Red player.',el);
-        if(!['r1','r2'].includes(value))return wrong('Blue is the other team. Choose a Red player.',el);
-        if(value!=='r2')return wrong('R1 is legal too. For this demo, choose R2.',el);
-        state.action=null;clearFocus();await moveFootball('r1','r2');event('R2 HAS POSSESSION','good');
-        nextLesson('Good. In 2v2, R1 or R2 can carry if that player can attack.');
-      },{targets:['r1','r2'],callout:'ELIGIBLE'});
+  say('Red has first offense, and R1 has the FOOTBALL CARD.',{next:()=>{
+    say('Only the current ball carrier can start RUN or PASS.',{next:()=>{
+      setAction('Tap the player who must act with the ball.',({kind,value,el})=>{
+        if(kind!=='player')return wrong('Choose a player on the field.',el);
+        if(value==='r2')return wrong('R2 is a teammate, but R2 does not have the FOOTBALL CARD. A successful PASS is required before R2 becomes the carrier.',el);
+        if(value!=='r1')return wrong('That player does not have Red possession. Choose R1.',el);
+        state.action=null;clearFocus();event('R1 IS THE BALL CARRIER','good');
+        nextLesson('Correct. R1 stays the carrier. You cannot switch to R2 by tapping R2; use PASS to change the same-team carrier.');
+      },{targets:['r1','r2'],callout:'WHO HAS THE BALL?'});
     }});
   }});
 }
 
 function lesson5(){
-  setHolder('r2'); renderHand(['RUN','PASS','BLOCK']); setDrive('RED',0);
-  say('R2 has possession.',{next:()=>{
+  setHolder('r1'); renderHand(['RUN','PASS','BLOCK']); setDrive('RED',0);
+  say('R1 has possession.',{next:()=>{
     const run=highlightCard('RUN','OFFENSE');
     setAction('Start a running play.',async ({kind,value,el})=>{
       if(kind!=='card'||value!=='RUN')return wrong('PASS is also offense, but we are practicing RUN first.',el);
-      state.action=null;clearFocus();removeCard('RUN');showPlayed('R2','RUN');event('RUN IN PROGRESS');
+      state.action=null;clearFocus();removeCard('RUN');showPlayed('R1','RUN');event('RUN IN PROGRESS');
       say('Blue chooses not to defend this one.',{next:async()=>{
         setDrive('RED',1);event('RUN SUCCESS · RED 50 → 40','good');
-        nextLesson('A successful RUN advances 1 step. The same carrier keeps the FOOTBALL CARD.');
+        nextLesson('A successful RUN advances 1 step. R1 keeps the FOOTBALL CARD.');
       }});
     },{focusEl:run,callout:'PLAY RUN'});
   }});
 }
 
 function lesson6(){
-  setHolder('r2'); renderHand(['RUN','PASS','BLOCK']); setDrive('RED',1);
+  setHolder('r1'); renderHand(['RUN','PASS','BLOCK']); setDrive('RED',1);
   say('Against RUN, Blue can answer with TACKLE or BREAK THROUGH.',{next:()=>{
     const run=highlightCard('RUN');
     setAction('Play RUN.',({kind,value,el})=>{
       if(kind!=='card'||value!=='RUN')return wrong('Use RUN for this defense-chain lesson.',el);
-      state.action=null;removeCard('RUN');showPlayed('R2','RUN');event('RUN');
+      state.action=null;removeCard('RUN');showPlayed('R1','RUN');event('RUN');
       say('Blue plays TACKLE. TACKLE stops RUN, but it does not steal possession.',{next:()=>{
         showChain(['RUN','TACKLE'],'RUN STOPPED');
         const block=highlightCard('BLOCK','COUNTER');
@@ -385,7 +393,7 @@ function lesson7(){
         state.action=null;clearFocus();event('R2 TARGETED');
         say('Blue does not defend this PASS.',{next:async()=>{
           await moveFootball('r1','r2');setDrive('RED',1);event('PASS COMPLETE · POSSESSION → R2','good');
-          nextLesson('PASS success advances 1 step and transfers the FOOTBALL CARD to the receiver.');
+          nextLesson('That is how a teammate becomes the new carrier: the PASS succeeds, then the FOOTBALL CARD moves to R2.');
         }});
       },{targets:['r2'],callout:'RECEIVER'});
     },{focusEl:pass,callout:'PLAY PASS'});
@@ -413,7 +421,7 @@ function lesson8(){
               setAction('Let the PASS succeed. Choose No BREAK THROUGH.',async ({kind,value,el})=>{
                 if(kind!=='choice'||value!=='no')return wrong('BREAK THROUGH would directly stop the PASS.',el);
                 state.action=null;clearFocus();await moveFootball('r1','r2');setDrive('RED',2);event('PASS SUCCESS · RED 40 → 30','good');
-                nextLesson('Exactly. PASS → INTERCEPTION → BLOCK → no BREAK THROUGH means the PASS succeeds.');
+                nextLesson('Exactly. PASS → INTERCEPTION → BLOCK → no BREAK THROUGH means the PASS succeeds and R2 receives the FOOTBALL CARD.');
               },{focusEl:no,callout:'NO FINAL DEFENSE'});
             }});
           },{focusEl:block,callout:'PLAY BLOCK'});
@@ -431,7 +439,7 @@ function lesson9(){
       setAction('Tap B1 to complete the possession change.',async ({kind,value,el})=>{
         if(kind!=='player'||value!=='b1')return wrong('B1 made the interception. Move possession to B1.',el);
         state.action=null;clearFocus();await moveFootball('r1','b1');event('POSSESSION → BLUE B1','bad');
-        nextLesson('Correct. A successful INTERCEPTION changes possession immediately. Existing drive progress stays where it was.');
+        nextLesson('Correct. A successful INTERCEPTION changes possession to the defender. That is a turnover, not a same-team handoff.');
       },{targets:['b1'],callout:'INTERCEPTOR'});
     }});
   }});
@@ -440,7 +448,7 @@ function lesson9(){
 function lesson10(){
   setHolder('r2');renderHand(['PASS','RUN']);setDrive('RED',1);
   document.querySelector('[data-player="r2"]').classList.add('qbGlow');
-  say('R2 is Red’s QB.',{next:()=>{
+  say('For this example, R2 starts with the FOOTBALL CARD. R2 is Red’s QB.',{next:()=>{
     say('The QB skill can be used once per game on a PASS.',{next:()=>{
       const pass=highlightCard('PASS');
       setAction('Play PASS.',({kind,value,el})=>{
@@ -464,25 +472,19 @@ function lesson10(){
 function lesson11(){
   setHolder('r1');renderHand(['BLOCK','TACKLE']);setDrive('RED',2);setDrive('BLUE',1);
   say('Mid-round, nobody refills their hand.',{next:()=>{
-    say('R1 has no RUN or PASS, so R1 cannot start offense.',{next:()=>{
-      focusPlayers(['r2'],'CHECK TEAMMATE');
-      say('If R2 has RUN or PASS, choose R2 as the new carrier.',{next:()=>{
-        setAction('Tap R2 to move possession.',async ({kind,value,el})=>{
-          if(kind!=='player'||value!=='r2')return wrong('Choose the teammate who can still attack.',el);
-          state.action=null;clearFocus();await moveFootball('r1','r2');event('CARRIER CHANGED · ROUND CONTINUES','good');
-          say('Now imagine the whole Red team has no RUN or PASS.',{next:()=>{
-            $('contextActions').innerHTML='';
-            const transfer=addChoice('GIVE POSSESSION TO BLUE','transfer','gold');
-            addChoice('END ROUND NOW','end');
-            setAction('Blue can still attack. What happens?',({kind,value,el})=>{
-              if(kind!=='choice'||value!=='transfer')return wrong('The round does not end yet. If Blue can attack, possession transfers to Blue.',el);
-              state.action=null;clearFocus();setHolder('b1');event('POSSESSION → BLUE','bad');
-              say('The round ends only when a touchdown happens or both teams cannot continue offense.',{next:()=>{
-                nextLesson('Exactly. No mid-round refill. Keep playing while either team can still attack.');
-              }});
-            },{focusEl:transfer,callout:'KEEP ROUND GOING'});
+    say('R1 has the FOOTBALL CARD but no RUN or PASS, so R1 cannot start another offensive play.',{next:()=>{
+      focusPlayers(['r2'],'NO FREE HANDOFF');
+      say('Even if R2 has an offensive card, you cannot simply move the FOOTBALL CARD to R2.',{next:()=>{
+        setAction('Tap R2 to test that move.',({kind,value,el})=>{
+          if(kind!=='player'||value!=='r2')return wrong('Tap R2 for this example.',el);
+          state.action=null;clearFocus();
+          el.classList.remove('wrong');void el.offsetWidth;el.classList.add('wrong');
+          event('ILLEGAL · NO FREE HANDOFF','bad');
+          say('That move is not allowed. Same-team carrier changes only after a successful PASS.',{next:()=>{
+            el.classList.remove('wrong');
+            nextLesson('So if the current carrier cannot play RUN or PASS, do not move the ball to a teammate for free. There is no mid-round refill.');
           }});
-        },{targets:['r2'],callout:'NEW CARRIER'});
+        },{targets:['r2'],callout:'TEST IT'});
       }});
     }});
   }});
