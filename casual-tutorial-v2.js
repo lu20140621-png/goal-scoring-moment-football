@@ -131,7 +131,7 @@ function say(text,{next=null,label='›',wait=false}={}){
 }
 function finishTyping(){
   clearTimeout(state.timer);$('guideText').textContent=state.fullText;state.typing=false;
-  const btn=$('guideContinue');btn.hidden=!state.next || !!state.action;
+  const btn=$('guideContinue');btn.hidden=!state.next || (!!state.action && !state.wrongLocked);
 }
 function onContinue(){
   if(state.typing){finishTyping();return}
@@ -148,7 +148,21 @@ function setAction(prompt,handler,{focusEl=null,callout=''}={}){
 }
 function dispatch(kind,value,el){
   if(state.wrongLocked)return;
-  if(!state.action){wrong('Not yet. Follow the coach first.',el);return}
+  if(!state.action){
+    const resumeText=state.fullText;
+    const resumeNext=state.next;
+    state.wrongLocked=true;
+    if(el){el.classList.remove('wrong');void el.offsetWidth;el.classList.add('wrong');}
+    say('Not yet. Follow the coach first.',{
+      next:()=>{
+        state.wrongLocked=false;
+        if(el)el.classList.remove('wrong');
+        say(resumeText,{next:resumeNext});
+      },
+      label:'BACK →'
+    });
+    return;
+  }
   state.action({kind,value,el});
 }
 function wrong(message,el){
