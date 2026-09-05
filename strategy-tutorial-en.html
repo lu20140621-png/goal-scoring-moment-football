@@ -1,34 +1,125 @@
 <!doctype html>
-<html lang="en" style="visibility:hidden">
+<html lang="en" class="is-loading">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07131d">
 <title>Goal-Scoring Moment Football — Strategy Tutorial</title>
-<link rel="stylesheet" href="strategy-tutorial-v3.css?v=20260825-cards2">
+<link rel="preload" as="style" href="strategy-tutorial-coach-v4.css?v=20260905-coach4">
+<link rel="preload" as="script" href="strategy-tutorial-coach-v4.js?v=20260905-coach4">
+<link rel="preload" as="image" href="cards/football-card.webp">
+<link rel="preload" as="image" href="cards/run-card.webp">
+<link rel="preload" as="image" href="cards/pass-card.webp">
+<link rel="preload" as="image" href="cards/tackle-card.webp">
+<link rel="preload" as="image" href="cards/interception-card.webp">
+<link rel="preload" as="image" href="cards/block-card.webp">
+<link rel="preload" as="image" href="cards/blitz-card.webp">
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/lu20140621-png/goal-scoring-moment/main/images/coach-guide.webp">
+<link rel="stylesheet" href="strategy-tutorial-coach-v4.css?v=20260905-coach4">
 </head>
 <body>
-<div class="app">
-  <div class="top">
-    <div class="brand">🎓🏈 GOAL-SCORING MOMENT · STRATEGY TUTORIAL</div>
-    <div class="topBtns"><a class="btn" href="home-en.html" id="homeBtn">← Home</a><a class="btn" href="strategy-game-en.html" id="gameBtn">Solo Game</a><button class="btn gold" id="selectLessonBtn">Choose Lesson</button><button class="btn" id="restartBtn">Restart Tutorial</button><button class="btn" id="langBtn" style="display:none">Switch to English</button></div>
-  </div>
-  <div class="grid">
-    <div class="panel">
-      <div class="stepbar" id="stepbar"></div>
-      <div class="pitch" id="pitch"><div class="pitchBorder"></div><div class="end left">RED END ZONE</div><div class="end right">BLUE END ZONE</div><div id="yards"></div><div class="los" id="los"></div><div class="badge" id="badge">BALL ON 50</div>
-        <div class="player red" id="r1" style="left:42%;top:34%">R1<img class="footballCardMini" id="ball1" style="display:none" src="cards/football-card.png" alt="FOOTBALL CARD"></div>
-        <div class="player red" id="r2" style="left:42%;top:61%">R2<small>QB</small><img class="footballCardMini" id="ball2" style="display:none" src="cards/football-card.png" alt="FOOTBALL CARD"></div>
-        <div class="player blue" id="b1" style="left:58%;top:34%">B1<img class="footballCardMini" id="ball3" style="display:none" src="cards/football-card.png" alt="FOOTBALL CARD"></div>
-        <div class="player blue" id="b2" style="left:58%;top:61%">B2<small>QB</small></div><div class="flash" id="flash"></div>
-      </div>
-      <div class="scoreline"><div class="scorebox">RED<b id="rs">🏈 0 / 3</b></div><div class="scorebox"><span id="round">ROUND 1 · RED OFFENSE</span><b id="pos">50 YD</b></div><div class="scorebox">BLUE<b id="bs">🏈 0 / 3</b></div></div>
-    </div>
-    <div class="panel side"><div id="lessonNo" style="font-size:11px;color:#e6bf62;font-weight:950"></div><h2 id="title"></h2><p id="text"></p><div class="rulebox" id="rule"></div><div class="flow" id="flow"></div><div class="cards" id="cards"></div><div class="actions" id="actions"></div><div class="result" id="result"></div><div class="toast" id="toast"></div></div>
+<div class="bootLoader" id="bootLoader" role="status" aria-live="polite">
+  <div class="bootCard">
+    <div class="loaderFootball" aria-hidden="true"></div>
+    <div class="bootKicker">STRATEGY MODE</div>
+    <div class="bootTitle">LOADING TUTORIAL</div>
+    <div class="bootTrack"><div class="bootBar" id="bootBar"></div></div>
+    <div class="bootMeta"><span id="bootText">Preparing coaching session…</span><span id="bootPct">0%</span></div>
+    <button class="bootRetry" id="bootRetry" type="button" hidden>RETRY</button>
   </div>
 </div>
-<div class="overlay" id="lessonModal"><div class="dialog"><h2 id="lessonModalTitle">Choose a Lesson to Review</h2><p id="lessonModalText">Choose any lesson to jump directly to that step and study it again.</p><div class="lessonGrid" id="lessonGrid"></div><div class="dialogBtns"><button class="secondary" id="closeLessonBtn">Close</button><button class="primary" id="restartFromModalBtn">Restart from Lesson 1</button></div></div></div>
-<div class="overlay" id="finishModal"><div class="dialog"><h2 id="finishTitle">🎉 Tutorial Complete</h2><p id="finishText">You completed the full Strategy Mode tutorial. You can restart from Lesson 1 or return to the home page.</p><div class="dialogBtns"><button class="primary" id="finishRestartBtn">Restart Tutorial</button><a class="secondary" href="home-en.html" id="finishHomeBtn">Return Home</a></div></div></div>
-<script src="strategy-tutorial-v3.js?v=20260825-cards2"></script>
-<script src="strategy-tutorial-football-step.js?v=20260825-football2"></script>
+
+<div class="app" id="tutorialApp" aria-hidden="true">
+  <header class="top">
+    <div class="brand">🎓🏈 GOAL-SCORING MOMENT · STRATEGY TUTORIAL</div>
+    <div class="topBtns">
+      <a class="btn" href="home-en.html">← Home</a>
+      <a class="btn" href="strategy-game-en.html">Solo Game</a>
+      <button class="btn gold" id="chooseBtn" type="button">Choose Lesson</button>
+      <button class="btn" id="restartBtn" type="button">Restart Tutorial</button>
+    </div>
+  </header>
+
+  <div class="progressWrap">
+    <div class="lessonLine"><span id="lessonNo">LESSON 1 / 13</span><strong id="lessonTitle">The Goal</strong></div>
+    <div class="stepbar" id="stepbar"></div>
+  </div>
+
+  <div class="scoreStrip">
+    <div class="teamBox red"><span>RED TEAM</span><strong id="redScore">🏈 0 / 3</strong></div>
+    <div class="roundBox"><b id="roundInfo">ROUND 1 · RED FIRST OFFENSE</b><span id="possessionText">POSSESSION · R1</span></div>
+    <div class="teamBox blue"><span>BLUE TEAM</span><strong id="blueScore">🏈 0 / 3</strong></div>
+  </div>
+
+  <main class="board" id="board">
+    <div class="fieldLines" aria-hidden="true"></div>
+    <div class="possessionBadge" aria-hidden="true">FOOTBALL CARD = POSSESSION</div>
+    <section class="players" aria-label="Players">
+      <button class="playerSeat red" data-player="r1" type="button"><span class="seatName">R1</span><span class="role">PLAYER</span></button>
+      <button class="playerSeat blue" data-player="b1" type="button"><span class="seatName">B1</span><span class="role">PLAYER</span></button>
+      <button class="playerSeat red" data-player="r2" type="button"><span class="seatName">R2</span><span class="role">QB</span></button>
+      <button class="playerSeat blue" data-player="b2" type="button"><span class="seatName">B2</span><span class="role">QB</span></button>
+    </section>
+
+    <section class="driveRow">
+      <button class="driveBox" id="redDrive" type="button">
+        <div class="driveHead"><span>RED DRIVE</span><strong id="redYard">50 YD</strong></div>
+        <div class="driveDots" id="redDriveDots"></div>
+      </button>
+      <button class="driveBox" id="blueDrive" type="button">
+        <div class="driveHead"><span>BLUE DRIVE</span><strong id="blueYard">50 YD</strong></div>
+        <div class="driveDots" id="blueDriveDots"></div>
+      </button>
+    </section>
+
+    <div class="tableReveal" id="tableReveal" aria-live="polite"></div>
+    <div class="eventBanner" id="eventBanner" aria-live="polite"></div>
+  </main>
+
+  <section class="guideScene">
+    <div class="guidePortrait" role="img" aria-label="Strategy coach"></div>
+    <div class="guideDialogue" id="guideDialogue" tabindex="0">
+      <span class="guideSpeaker">COACH</span>
+      <p class="guideText" id="guideText" aria-live="polite"></p>
+      <button class="guideContinue" id="guideContinue" type="button" aria-label="Continue">›</button>
+    </div>
+  </section>
+
+  <section class="handPanel">
+    <div class="handHead">
+      <div><span class="handKicker">YOUR HAND / CURRENT ACTION</span><strong id="handNote">Listen to the coach.</strong></div>
+      <div class="handSizeInfo" id="handSizeInfo">2v2: 7 · 3v3: 6 · 4v4: 5</div>
+    </div>
+    <div class="handCards" id="handCards"></div>
+    <div class="contextActions" id="contextActions"></div>
+  </section>
+</div>
+
+<div class="overlay" id="lessonModal" aria-hidden="true">
+  <div class="dialog">
+    <h2>Choose a Lesson</h2>
+    <p>Jump to any lesson and practice it again.</p>
+    <div class="lessonGrid" id="lessonGrid"></div>
+    <div class="dialogBtns">
+      <button class="secondary" id="closeLessonBtn" type="button">Close</button>
+      <button class="primary" id="restartModalBtn" type="button">Restart from Lesson 1</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="done" aria-hidden="true">
+  <div class="dialog completeDialog">
+    <div class="completeBall">🏈</div>
+    <h2>Coach says you’re ready.</h2>
+    <p>You completed the Strategy Mode tutorial and won the Final Challenge.</p>
+    <div class="dialogBtns">
+      <button class="primary" id="againBtn" type="button">Restart Tutorial</button>
+      <a class="secondary" href="strategy-game-en.html">Play Solo Game</a>
+    </div>
+  </div>
+</div>
+
+<script src="strategy-tutorial-coach-v4.js?v=20260905-coach4"></script>
 <script src="english-only.js?v=20260831-break-through"></script>
 </body>
 </html>
