@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#125187">
+<meta name="description" content="The Game Day Mode card guide for Tails & Tackles: 20 one-of-a-kind Magic Cards and 10 animal Role Cards, with rules for every ability.">
+<title>Game Day Cards &amp; Rules | Tails &amp; Tackles</title>
+<style>
+:root{--ink:#102d4f;--blue:#14558e;--sky:#bce7ff;--cream:#fff4df;--yellow:#ffd15e;--paper:#fffaf0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(#c6dae7 1px,transparent 1px) 0 0/27px 27px,linear-gradient(180deg,#f9f5e8,#fffbf1);color:var(--ink);font-family:"Trebuchet MS",Verdana,Arial,sans-serif}
+a{color:inherit}
+.wrap{width:min(1160px,100%);margin:auto;padding:18px 20px 70px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border:4px solid var(--ink);border-radius:22px;background:#125187;color:white;box-shadow:0 6px 0 #183e62}
+.brand{font:950 clamp(18px,2.4vw,25px)/1.1 "Arial Black",Arial,sans-serif;letter-spacing:-.035em}
+.brand small{display:block;margin-top:6px;font:800 11px/1.3 "Trebuchet MS",Arial,sans-serif;letter-spacing:.12em;color:#d4edff}
+.back{display:inline-block;padding:11px 16px;border:2px solid #0d2949;border-radius:12px;background:#ffd15e;color:var(--ink);font-weight:950;text-decoration:none;white-space:nowrap}
+.hero{margin:25px 0 16px;padding:27px clamp(18px,4vw,39px);border:5px solid var(--ink);border-radius:28px;box-shadow:0 7px 0 #1d587a;background:linear-gradient(126deg,#bce7ff,#e1f4ff 62%,#a1d56a)}
+.pretitle{display:inline-block;padding:7px 11px;border:2px solid var(--ink);border-radius:8px;background:var(--cream);font-size:12px;font-weight:950;letter-spacing:.09em}
+h1{font:950 clamp(36px,5vw,62px)/.99 "Arial Black",Arial,sans-serif;margin:17px 0 12px;letter-spacing:-.055em}
+.hero p{max-width:750px;font-size:16px;line-height:1.6;font-weight:750}
+.stats{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.stat{padding:8px 12px;border:2px solid var(--ink);border-radius:9px;background:#fffaf0;font-weight:900;font-size:12px}
+.note{background:#fff7d4;border:2px solid #bb8621;border-left:7px solid #e0a732;border-radius:14px;padding:14px 18px;margin:17px 0;line-height:1.65;font-size:13px}
+.note strong{font-size:14px}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 30px}
+.jump a{flex:1;min-width:150px;text-align:center;text-decoration:none;padding:12px 15px;border:3px solid var(--ink);border-radius:13px;background:var(--yellow);font-weight:950;box-shadow:0 4px 0 #1e4b70}
+.section{scroll-margin-top:18px;margin-top:35px}
+.sectionHead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;border-bottom:4px solid var(--ink);padding-bottom:12px;margin-bottom:16px}
+.sectionHead h2{font:950 clamp(25px,3.4vw,38px)/1.1 "Arial Black",Arial,sans-serif;letter-spacing:-.04em;margin:0}
+.sectionHead p{margin:4px 0 0;font-size:12px;font-weight:800;color:#516a7c}
+.counter{display:inline-block;background:#155b91;color:#fff;border:3px solid var(--ink);padding:8px 12px;border-radius:9px;font-weight:950;font-size:12px;white-space:nowrap}
+.infoGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.info{padding:17px 18px;border:3px solid var(--ink);border-radius:17px;background:var(--paper);box-shadow:0 4px 0 #b4c9d7}
+.info h3{margin:0 0 8px;font-size:17px}
+.info p,.info li{font-size:13px;line-height:1.7;margin:0}
+.info ul{margin:0;padding-left:19px}
+.ruleStrong{color:#0c5d92;font-weight:950}
+.searchWrap{display:flex;align-items:center;gap:10px;border:3px solid var(--ink);border-radius:13px;padding:9px 15px;background:#fffdf8;box-shadow:0 4px 0 #b9d0df;margin-top:13px}
+.searchWrap label{font-weight:950;font-size:12px;white-space:nowrap}
+#search{width:100%;border:0;background:transparent;outline:none;font:750 15px "Trebuchet MS",Arial,sans-serif;color:var(--ink);padding:6px}
+#search:focus-visible{outline:2px solid #21649a;outline-offset:4px}
+#searchInfo{font-size:12px;color:#566a7d;margin:7px 0 0}
+.cardGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.tile{position:relative;display:flex;flex-direction:column;min-width:0;padding:17px 17px 20px;border:4px solid var(--ink);border-radius:19px;overflow:hidden;background:#fffaf0;box-shadow:0 6px 0 #b9c4ca}
+.magic-tile{background:linear-gradient(155deg,#e2d7ff 0%,#f7f2ff 42%,#fffaf0 100%)}
+.role-tile{background:linear-gradient(155deg,#c8f0d9 0%,#effbf2 42%,#fffaf0 100%)}
+.tile:before{content:"";height:7px;position:absolute;top:0;left:0;right:0;background:repeating-linear-gradient(90deg,#1e658e 0 30px,#ffd05c 30px 60px)}
+.tileTop{display:flex;justify-content:space-between;align-items:center;gap:5px;margin-top:4px}
+.num{font-size:11px;font-weight:950;letter-spacing:.06em;color:#35536a}
+.type{font-size:10px;font-weight:950;padding:5px 8px;background:#fff;border:2px solid #667895;border-radius:7px;white-space:nowrap}
+.roleTag{background:#ddfbe9;border-color:#6caa82}
+.draft{background:#fff0ba;border-color:#e3b44a}
+.symbol{display:grid;place-items:center;align-self:flex-start;width:68px;height:65px;margin:14px 0 10px;border:3px solid var(--ink);border-radius:16px;background:#ffffffb8;font-size:35px;box-shadow:3px 4px 0 #899eaf}
+.tile h3{font:950 clamp(19px,2.1vw,24px)/1.1 "Arial Black",Arial,sans-serif;letter-spacing:-.035em;margin:2px 0 7px;overflow-wrap:anywhere}
+.alias{color:#32648a;font-size:12px;font-weight:950;margin-bottom:12px}
+.tile p{font-size:13px;line-height:1.65;margin:0;color:#2e485e;flex:1}
+.hidden{display:none!important}
+.empty{padding:12px;font-size:14px;font-weight:850}
+.details{margin-top:30px;padding:22px;border:3px solid var(--ink);border-radius:20px;background:#e4f4ff}
+.details h2{margin-top:0}
+.details p,.details li{line-height:1.7;font-size:14px}
+.footer{margin-top:35px;text-align:center;font-size:12px;color:#61768b;font-weight:800}
+@media(max-width:900px){.cardGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.wrap{padding:9px 10px 40px}.top{border-width:3px;padding:11px;border-radius:17px}.brand{font-size:17px}.back{padding:8px 10px;font-size:11px}.hero{padding:20px 17px;border-width:3px;border-radius:19px;margin:18px 0}.hero p{font-size:14px}.infoGrid,.cardGrid{grid-template-columns:1fr}.tile{border-width:3px}.sectionHead h2{font-size:25px}.sectionHead{align-items:center}.stat{font-size:10px}.jump a{min-width:125px;font-size:12px}.searchWrap{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Main navigation"><div class="brand">🏈 TAILS &amp; TACKLES<small>GAME DAY MODE · CARD GUIDE</small></div><a class="back" href="home-en.html">← HOME</a></nav>
+  <header class="hero">
+    <span class="pretitle">GAME DAY MODE · FULL CARD REFERENCE</span>
+    <h1>WILD CARDS.<br>BIG GAME PLAYS.</h1>
+    <p>Meet all 20 one-of-a-kind Magic Cards and 10 animal Role Cards. Each animal has its own football ability. Each Magic Card can completely change a drive, a kick, or an entire quarter.</p>
+    <div class="stats"><span class="stat">🪄 20 UNIQUE MAGIC CARDS</span><span class="stat">🐾 10 ANIMAL ROLES</span><span class="stat">🏈 2v2 · 3v3 · 4v4</span></div>
+  </header>
+  <div class="note"><strong>About the playable demos</strong><div>This is the updated Game Day <b>rule reference</b>. The current guided tutorial and solo game still demonstrate the earlier mechanics; the new Magic Cards, animal Roles, four-quarter scoring and kicking rules are <b>not yet implemented</b> in those demos.</div></div>
+  <div class="jump"><a href="#basics">How to play</a><a href="#magic">20 Magic Cards</a><a href="#roles">10 Animal Roles</a></div>
+  <section class="section" id="basics">
+    <div class="sectionHead"><div><h2>HOW GAME DAY WORKS</h2><p>Four quarters. Two teams. One football.</p></div><span class="counter">START HERE</span></div>
+    <div class="infoGrid">
+      <div class="info"><h3>🏈 Football basics</h3><p>Play 2v2, 3v3, or 4v4. The game lasts <b>four quarters</b>, up to <b>10 minutes each</b>. Get 10 yards in four downs to earn a new first down. Successful ordinary RUN and PASS plays advance 10 yards. A touchdown scores <b>6 points</b>, an extra-point kick adds <b>1</b>, and a field goal scores <b>3</b>. You can also choose to punt.</p></div>
+      <div class="info"><h3>🪄 Deal Magic Cards</h3><p>Shuffle the <b>20 different Magic Cards</b>. Deal <b>2 face down to each player</b> at the start of the match. Put the rest aside unseen: <b>12 unused in 2v2</b>, <b>8 in 3v3</b>, <b>4 in 4v4</b>. There is only one of each spell in the deck.</p></div>
+      <div class="info"><h3>⏱️ One Magic Card per quarter</h3><p>Each player may use <b>at most one Magic Card per quarter</b>—whether offensive, defensive, a counter, or an automatic passive trigger. Each Magic Card is <b>one-use only</b> and leaves the game after use. You get no replacement Magic Cards between quarters.</p></div>
+      <div class="info"><h3>🐾 Deal Animal Roles</h3><p>Shuffle the shared deck of <b>10 unique Animal Role Cards</b>; each player draws <b>one</b> before the game. Roles have <b>no team color or team restriction</b>. Unassigned animals stay out of that match. Each animal has a special skill separate from Magic Cards.</p></div>
+      <div class="info"><h3>🎲 Role skills versus Magic</h3><p>ROLL OF FATE affects Action Cards and Animal Role skills used by other players, <b>not Magic Cards</b>. Failed Action Cards are still discarded. A failed one-use Role Skill still uses its opportunity.</p></div>
+      <div class="info"><h3>🧠 Use abilities at the right time</h3><p>Magic Cards can be played at their stated trigger. Some counter another Magic Card; others last until the end of the quarter. Role skills <b>do not use up</b> your once-per-quarter Magic Card allowance.</p></div>
+    </div>
+  </section>
+  <section class="section" id="magic">
+    <div class="sectionHead"><div><h2>20 MAGIC CARDS</h2><p>20 unique effects. One physical card of each. Every spell is a one-time use.</p></div><span class="counter">20 / 20</span></div>
+    <div class="searchWrap"><label for="search">🔎 FIND A CARD</label><input id="search" type="search" placeholder="Try FLIGHT, RUN, TRUE SIGHT, BEAR…" autocomplete="off"></div>
+    <p id="searchInfo" aria-live="polite">Showing all 30 cards.</p>
+    <div class="cardGrid" id="magicGrid"><article class="tile magic-tile" data-search="time stop control freeze the action during this play, no animal except the caster may play action cards. this includes the caster's teammates. magic cards are unaffected."><div class="tileTop"><span class="num">MAGIC 01</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">⏳</div><h3>TIME STOP</h3><div class="alias">Freeze the action</div><p>During this play, no animal except the caster may play Action Cards. This includes the caster's teammates. Magic Cards are unaffected.</p></article>
+<article class="tile magic-tile" data-search="goal shift kicking move the goalposts when an opponent attempts a field goal or extra point, move the goalposts so the kick misses."><div class="tileTop"><span class="num">MAGIC 02</span><span class="type">Kicking</span></div><div class="symbol" aria-hidden="true">🥅</div><h3>GOAL SHIFT</h3><div class="alias">Move the goalposts</div><p>When an opponent attempts a field goal or extra point, move the goalposts so the kick misses.</p></article>
+<article class="tile magic-tile" data-search="flight offense fly in for a kick fly directly to the goalposts for a field-goal attempt. you cannot score a touchdown with flight. ordinary action cards cannot stop the flight; the kick still needs a successful roll. gravity cancels it."><div class="tileTop"><span class="num">MAGIC 03</span><span class="type">Offense</span></div><div class="symbol" aria-hidden="true">🪽</div><h3>FLIGHT</h3><div class="alias">Fly in for a kick</div><p>Fly directly to the goalposts for a field-goal attempt. You cannot score a touchdown with FLIGHT. Ordinary Action Cards cannot stop the flight; the kick still needs a successful roll. GRAVITY cancels it.</p></article>
+<article class="tile magic-tile" data-search="gravity counter bring them down cancel flight. if no flight is being played, any run or pass this play requires two matching action cards to take effect."><div class="tileTop"><span class="num">MAGIC 04</span><span class="type">Counter</span></div><div class="symbol" aria-hidden="true">🪐</div><h3>GRAVITY</h3><div class="alias">Bring them down</div><p>Cancel FLIGHT. If no FLIGHT is being played, any RUN or PASS this play requires two matching Action Cards to take effect.</p></article>
+<article class="tile magic-tile" data-search="magic barrier defense shut down the play the current offensive play fails, unless shatter is used to destroy the barrier."><div class="tileTop"><span class="num">MAGIC 05</span><span class="type">Defense</span></div><div class="symbol" aria-hidden="true">🛡️</div><h3>MAGIC BARRIER</h3><div class="alias">Shut down the play</div><p>The current offensive play fails, unless SHATTER is used to destroy the barrier.</p></article>
+<article class="tile magic-tile" data-search="shatter counter break the protection destroy magic barrier or invincibility. if neither is active, cancel the effect of one opposing action card."><div class="tileTop"><span class="num">MAGIC 06</span><span class="type">Counter</span></div><div class="symbol" aria-hidden="true">💥</div><h3>SHATTER</h3><div class="alias">Break the protection</div><p>Destroy MAGIC BARRIER or INVINCIBILITY. If neither is active, cancel the effect of one opposing Action Card.</p></article>
+<article class="tile magic-tile" data-search="rewind control back to this turn's start return the current turn to its starting ball position, possession and down, even after a touchdown or field goal. scores do not change. hands and the action deck stay as they are; spent cards do not return."><div class="tileTop"><span class="num">MAGIC 07</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">↩️</div><h3>REWIND</h3><div class="alias">Back to this turn's start</div><p>Return the current turn to its starting ball position, possession and down, even after a touchdown or field goal. Scores do not change. Hands and the Action Deck stay as they are; spent cards do not return.</p></article>
+<article class="tile magic-tile" data-search="invincibility offense no ordinary defense your next offensive play cannot be defended by opponents. shatter can cancel this magic card."><div class="tileTop"><span class="num">MAGIC 08</span><span class="type">Offense</span></div><div class="symbol" aria-hidden="true">✨</div><h3>INVINCIBILITY</h3><div class="alias">No ordinary defense</div><p>Your next offensive play cannot be defended by opponents. SHATTER can cancel this Magic Card.</p></article>
+<article class="tile magic-tile" data-search="phantom pass offense a pass with two paths play pass and choose a receiver. secretly choose left or right. if the defense guesses wrong, the pass succeeds for 20 yards; if it guesses correctly, the pass fails. true sight can reveal the trick."><div class="tileTop"><span class="num">MAGIC 09</span><span class="type">Offense</span></div><div class="symbol" aria-hidden="true">👻</div><h3>PHANTOM PASS</h3><div class="alias">A pass with two paths</div><p>Play PASS and choose a receiver. Secretly choose left or right. If the defense guesses wrong, the pass succeeds for 20 yards; if it guesses correctly, the pass fails. TRUE SIGHT can reveal the trick.</p></article>
+<article class="tile magic-tile" data-search="true sight counter see through tricks counter phantom pass, or look at two cards from an opponent's hand. any player who uses true sight this quarter can also see and defend the ball carrier protected by invisibility."><div class="tileTop"><span class="num">MAGIC 10</span><span class="type">Counter</span></div><div class="symbol" aria-hidden="true">👁️</div><h3>TRUE SIGHT</h3><div class="alias">See through tricks</div><p>Counter PHANTOM PASS, or look at two cards from an opponent's hand. Any player who uses TRUE SIGHT this quarter can also see and defend the ball carrier protected by INVISIBILITY.</p></article>
+<article class="tile magic-tile" data-search="gale force kicking bring on the wind subtract 5 from an opponent's field-goal or extra-point dice total. super strength cancels this wind."><div class="tileTop"><span class="num">MAGIC 11</span><span class="type">Kicking</span></div><div class="symbol" aria-hidden="true">🌪️</div><h3>GALE FORCE</h3><div class="alias">Bring on the wind</div><p>Subtract 5 from an opponent's field-goal or extra-point dice total. SUPER STRENGTH cancels this wind.</p></article>
+<article class="tile magic-tile" data-search="super strength offense power through cancel gale force, or empower your run so opponents need two tackle cards to stop it."><div class="tileTop"><span class="num">MAGIC 12</span><span class="type">Offense</span></div><div class="symbol" aria-hidden="true">💪</div><h3>SUPER STRENGTH</h3><div class="alias">Power through</div><p>Cancel GALE FORCE, or empower your RUN so opponents need two TACKLE cards to stop it.</p></article>
+<article class="tile magic-tile" data-search="chaos control bench your own teammate choose a teammate on your team. they sit out for the rest of this quarter and pass their action cards to their remaining teammates. their unused magic cards cannot be played while they are out. guardian can prevent it."><div class="tileTop"><span class="num">MAGIC 13</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">🎭</div><h3>CHAOS</h3><div class="alias">Bench your own teammate</div><p>Choose a teammate on YOUR team. They sit out for the rest of this quarter and pass their Action Cards to their remaining teammates. Their unused Magic Cards cannot be played while they are out. GUARDIAN can prevent it.</p></article>
+<article class="tile magic-tile" data-search="pickpocket control steal from every rival steal one action card from each opposing player. magic cards and role cards cannot be stolen. guardian can prevent the theft."><div class="tileTop"><span class="num">MAGIC 14</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">🦝</div><h3>PICKPOCKET</h3><div class="alias">Steal from every rival</div><p>Steal one Action Card from each opposing player. Magic Cards and Role Cards cannot be stolen. GUARDIAN can prevent the theft.</p></article>
+<article class="tile magic-tile" data-search="guardian counter one-time passive rescue a one-time passive magic card that cancels chaos or pickpocket. triggering it uses your one magic card for this quarter and consumes guardian."><div class="tileTop"><span class="num">MAGIC 15</span><span class="type">Counter</span></div><div class="symbol" aria-hidden="true">🪽</div><h3>GUARDIAN</h3><div class="alias">One-time passive rescue</div><p>A one-time passive Magic Card that cancels CHAOS or PICKPOCKET. Triggering it uses your one Magic Card for this quarter and consumes GUARDIAN.</p></article>
+<article class="tile magic-tile" data-search="copycat control borrow another spell choose an ally or opponent and immediately copy one of that player's unused magic cards. a previously used magic card cannot be copied; the original card remains with its owner."><div class="tileTop"><span class="num">MAGIC 16</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">🪞</div><h3>COPYCAT</h3><div class="alias">Borrow another spell</div><p>Choose an ally or opponent and immediately copy one of that player's unused Magic Cards. A previously used Magic Card cannot be copied; the original card remains with its owner.</p></article>
+<article class="tile magic-tile" data-search="swap control trade hidden magic exchange one unused magic card you hold with one unused magic card held by another player, whether teammate or opponent."><div class="tileTop"><span class="num">MAGIC 17</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">🔀</div><h3>SWAP</h3><div class="alias">Trade hidden magic</div><p>Exchange one unused Magic Card you hold with one unused Magic Card held by another player, whether teammate or opponent.</p></article>
+<article class="tile magic-tile" data-search="invisibility offense invisible all quarter cast only while holding the football. you remain invisible for the rest of this quarter, and the ball is invisible with you. you may keep playing run; opponents cannot defend those runs with action cards unless they used true sight this quarter. the instant you pass, the football becomes visible for good, even if it later comes back to you. you stay invisible, but future runs no longer gain invisible-ball protection."><div class="tileTop"><span class="num">MAGIC 18</span><span class="type">Offense</span></div><div class="symbol" aria-hidden="true">🌫️</div><h3>INVISIBILITY</h3><div class="alias">Invisible all quarter</div><p>Cast only while holding the football. You remain invisible for the rest of this quarter, and the ball is invisible with you. You may keep playing RUN; opponents cannot defend those runs with Action Cards unless they used TRUE SIGHT this quarter. The instant you PASS, the football becomes visible for good, even if it later comes back to you. You stay invisible, but future runs no longer gain invisible-ball protection.</p></article>
+<article class="tile magic-tile" data-search="roll of fate control make everyone roll for the rest of this quarter, everyone except the caster must roll a six-sided die when playing any action card or activating an animal role ability: 1–3 fails and the action card or skill use is still spent; 4–6 succeeds. magic cards never need this roll."><div class="tileTop"><span class="num">MAGIC 19</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">🎲</div><h3>ROLL OF FATE</h3><div class="alias">Make everyone roll</div><p>For the rest of this quarter, everyone except the caster must roll a six-sided die when playing any Action Card or activating an Animal Role ability: 1–3 fails and the Action Card or skill use is still spent; 4–6 succeeds. Magic Cards never need this roll.</p></article>
+<article class="tile magic-tile" data-search="mystic fog control redistribute every hand every player shuffles their action cards back into the shared action deck, then draws exactly as many action cards as they held before. magic cards and role cards are unchanged."><div class="tileTop"><span class="num">MAGIC 20</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">🌁</div><h3>MYSTIC FOG</h3><div class="alias">Redistribute every hand</div><p>Every player shuffles their Action Cards back into the shared Action Deck, then draws exactly as many Action Cards as they held before. Magic Cards and Role Cards are unchanged.</p></article></div>
+  </section>
+  <section class="section" id="roles">
+    <div class="sectionHead"><div><h2>10 ANIMAL ROLES</h2><p>Any team can draw any animal. Skills are different for every character.</p></div><span class="counter">10 / 10</span></div>
+    <div class="note"><strong>Three abilities are still design proposals:</strong> EAGLE, LION and CAT are marked <b>Draft</b> because their suggested skills have not been separately confirmed yet. The other seven reflect the abilities discussed for Game Day.</div>
+    <div class="cardGrid" id="roleGrid"><article class="tile role-tile" data-search="raccoon sneaky thief once per quarter, turn any one card in your hand into a steal: take one action card from any player. you cannot steal magic cards or role cards. quarterly"><div class="tileTop"><span class="num">ROLE 01</span><span class="type roleTag">Quarterly</span></div><div class="symbol" aria-hidden="true">🦝</div><h3>RACCOON</h3><div class="alias">SNEAKY THIEF</div><p>Once per quarter, turn any one card in your hand into a steal: take one Action Card from any player. You cannot steal Magic Cards or Role Cards.</p></article>
+<article class="tile role-tile" data-search="rabbit speed burst whenever you play a successful run, advance 20 yards instead of 10. always on"><div class="tileTop"><span class="num">ROLE 02</span><span class="type roleTag">Always on</span></div><div class="symbol" aria-hidden="true">🐇</div><h3>RABBIT</h3><div class="alias">SPEED BURST</div><p>Whenever you play a successful RUN, advance 20 yards instead of 10.</p></article>
+<article class="tile role-tile" data-search="fox trick pass after you play pass, an opponent's interception must roll one die: 1–3 fails, 4–6 succeeds. activate once per turn. per turn"><div class="tileTop"><span class="num">ROLE 03</span><span class="type roleTag">Per turn</span></div><div class="symbol" aria-hidden="true">🦊</div><h3>FOX</h3><div class="alias">TRICK PASS</div><p>After you play PASS, an opponent's INTERCEPTION must roll one die: 1–3 fails, 4–6 succeeds. Activate once per turn.</p></article>
+<article class="tile role-tile" data-search="eagle eagle eye proposed skill: once per quarter when you attempt a field goal or extra point, reroll one of the two dice. keep the new result. draft"><div class="tileTop"><span class="num">ROLE 04</span><span class="type draft">Draft</span></div><div class="symbol" aria-hidden="true">🦅</div><h3>EAGLE</h3><div class="alias">EAGLE EYE</div><p>Proposed skill: Once per quarter when you attempt a field goal or extra point, reroll one of the two dice. Keep the new result.</p></article>
+<article class="tile role-tile" data-search="tiger unstoppable run once per quarter, discard one card when you play run. opponents cannot stop that run with ordinary action cards. quarterly"><div class="tileTop"><span class="num">ROLE 05</span><span class="type roleTag">Quarterly</span></div><div class="symbol" aria-hidden="true">🐯</div><h3>TIGER</h3><div class="alias">UNSTOPPABLE RUN</div><p>Once per quarter, discard one card when you play RUN. Opponents cannot stop that RUN with ordinary Action Cards.</p></article>
+<article class="tile role-tile" data-search="lion one more down proposed skill: once per quarter, after your team's fourth-down run or pass fails, keep possession and attempt fourth down one more time. spent cards stay spent. draft"><div class="tileTop"><span class="num">ROLE 06</span><span class="type draft">Draft</span></div><div class="symbol" aria-hidden="true">🦁</div><h3>LION</h3><div class="alias">ONE MORE DOWN</div><p>Proposed skill: Once per quarter, after your team's fourth-down RUN or PASS fails, keep possession and attempt fourth down one more time. Spent cards stay spent.</p></article>
+<article class="tile role-tile" data-search="bear iron defense when you personally play tackle or interception, opponents need two block cards to cancel your defense. this does not apply when a teammate plays those cards. always on"><div class="tileTop"><span class="num">ROLE 07</span><span class="type roleTag">Always on</span></div><div class="symbol" aria-hidden="true">🐻</div><h3>BEAR</h3><div class="alias">IRON DEFENSE</div><p>When YOU personally play TACKLE or INTERCEPTION, opponents need two BLOCK cards to cancel your defense. This does not apply when a teammate plays those cards.</p></article>
+<article class="tile role-tile" data-search="wolf pack tactics once per turn, give one card from your hand to a teammate, or take one card from a teammate's hand. per turn"><div class="tileTop"><span class="num">ROLE 08</span><span class="type roleTag">Per turn</span></div><div class="symbol" aria-hidden="true">🐺</div><h3>WOLF</h3><div class="alias">PACK TACTICS</div><p>Once per turn, give one card from your hand to a teammate, or take one card from a teammate's hand.</p></article>
+<article class="tile role-tile" data-search="cat nine lives proposed skill: once per quarter, turn an interception against your own pass into an incomplete pass. the down is still spent, but your team keeps possession. draft"><div class="tileTop"><span class="num">ROLE 09</span><span class="type draft">Draft</span></div><div class="symbol" aria-hidden="true">🐱</div><h3>CAT</h3><div class="alias">NINE LIVES</div><p>Proposed skill: Once per quarter, turn an INTERCEPTION against your own PASS into an incomplete pass. The down is still spent, but your team keeps possession.</p></article>
+<article class="tile role-tile" data-search="dog play switch you may play a pass card as run instead; resolve it as a run, including the normal run defense rules. always on"><div class="tileTop"><span class="num">ROLE 10</span><span class="type roleTag">Always on</span></div><div class="symbol" aria-hidden="true">🐶</div><h3>DOG</h3><div class="alias">PLAY SWITCH</div><p>You may play a PASS card as RUN instead; resolve it as a RUN, including the normal RUN defense rules.</p></article></div>
+  </section>
+  <section class="details">
+    <h2>IMPORTANT TIMING NOTES</h2>
+    <ul>
+      <li><b>INVISIBILITY:</b> The animal stays invisible for this quarter. The football remains hidden only while that animal continues carrying it without passing. Once passed, it stays visible even if returned.</li>
+      <li><b>TRUE SIGHT:</b> An opponent who used it earlier this quarter can defend an invisible RUN with the appropriate Action Card.</li>
+      <li><b>CHAOS:</b> It benches <b>one of your own teammates</b>, not an opponent.</li>
+      <li><b>REWIND:</b> It may be played after a touchdown or field goal. Awarded points remain on the scoreboard, and hands/decks do not reset.</li>
+      <li><b>ROLL OF FATE:</b> Only Action Cards and Role Skills require the die roll. All Magic Cards are exempt.</li>
+    </ul>
+    <p><b>Still to finalize:</b> precise timing for simultaneous spells, and how a rewound scoring play may score again. These open questions are intentionally not invented here.</p>
+  </section>
+  <footer class="footer">TAILS &amp; TACKLES · GAME DAY MODE · MAGIC &amp; ANIMAL ROLE REFERENCE</footer>
+</div>
+<script>
+(() => {
+  const input=document.getElementById('search');
+  const tiles=[...document.querySelectorAll('.tile')];
+  const sections=[document.getElementById('magic'),document.getElementById('roles')];
+  const count=document.getElementById('searchInfo');
+  input.addEventListener('input',()=>{
+    const term=input.value.toLowerCase().trim();
+    let shown=0;
+    tiles.forEach(card=>{
+      const matches=!term||(card.dataset.search||'').includes(term);
+      card.classList.toggle('hidden',!matches);
+      if(matches)shown++;
+    });
+    sections.forEach(section=>{
+      section.classList.toggle('hidden',!!term&&![...section.querySelectorAll('.tile')].some(card=>!card.classList.contains('hidden')));
+    });
+    count.textContent=term?shown+' matching card'+(shown===1?'':'s')+'.':'Showing all 30 cards.';
+  });
+})();
+</script>
+</body>
+</html>
