@@ -111,13 +111,6 @@ button{color:inherit}
 .choiceTitle{font:950 clamp(21px,3vw,30px) "Arial Black","Trebuchet MS",sans-serif}
 .choiceSub{margin-top:9px;color:#556c7b;font-size:13px;line-height:1.55}
 .close{flex:0 0 39px;width:39px;height:39px;border:3px solid var(--ink);background:#ffe6a1;color:var(--ink);font-weight:950;font-size:21px;border-radius:12px;cursor:pointer}
-.choiceGuide{display:flex;align-items:center;gap:16px;padding:17px 19px;margin-top:18px;border:3px solid var(--ink);border-radius:17px;background:#d6f2dc;color:var(--ink);text-decoration:none;box-shadow:0 4px 0 #26516b;transition:transform .2s}
-.choiceGuide:hover{transform:translateY(-2px)}
-.choiceGuide .guideIcon{font-size:33px;flex:none}
-.choiceGuide .guideText{flex:1;min-width:0}
-.choiceGuide .guideText strong{display:block;font:950 18px "Arial Black","Trebuchet MS",sans-serif}
-.choiceGuide .guideText small{display:block;margin-top:5px;font-size:12px;line-height:1.45;font-weight:800;color:#476474}
-.choiceGuide .guideArrow{font-size:23px;font-weight:950}
 .choiceGrid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:17px}
 .choiceCard{display:flex;flex-direction:column;min-height:253px;padding:19px;border:3px solid var(--ink);border-radius:18px;background:#e8f5ff;color:var(--ink);cursor:pointer;transition:transform .2s}
 .choiceCard:hover{transform:translateY(-3px)}
@@ -126,7 +119,8 @@ button{color:inherit}
 .choiceName{margin-top:10px;font-size:22px;font-weight:950}
 .choiceDesc{margin-top:8px;color:#405a70;font-size:12px;line-height:1.58;flex:1}
 .choiceBtn{margin-top:13px;padding:11px;border:2px solid var(--ink);border-radius:10px;background:#ffce54;color:var(--ink);text-align:center;font-weight:950;font-size:12px}
-.single .choiceBtn{background:#a9d9f3;color:var(--ink)}
+.rulebook .choiceBtn{background:#a9d9f3;color:var(--ink)}
+.choiceCard.rulebook{text-decoration:none}
 .mini{margin-top:8px;color:#6d6b4f;font-size:10px;font-weight:900}
 .loader{position:fixed;inset:0;z-index:1000;display:none;place-items:center;padding:22px;background:#b7e2fc}
 .loader.show{display:grid}
@@ -324,28 +318,27 @@ button{color:inherit}
     <div class="choiceHead">
       <div>
         <div class="choiceTitle">Choose Game Day Mode</div>
-        <div class="choiceSub">Explore the updated 20 Magic Cards and 10 animal Roles, or try the current earlier-version demos.</div>
+        <div class="choiceSub">Choose the guided tutorial or open the rulebook to explore the latest Magic Cards and animal abilities.</div>
       </div>
-      <button class="close" id="closeChoice" type="button">×</button>
+      <button class="close" id="closeChoice" type="button" aria-label="Close">×</button>
     </div>
 
-    <a class="choiceGuide" href="game-day-cards.html"><span class="guideIcon" aria-hidden="true">🪄🐾</span><span class="guideText"><strong>GAME DAY CARDS &amp; RULES</strong><small>Read all 20 Magic Cards, 10 animal abilities, and the four-quarter match rules.</small></span><span class="guideArrow" aria-hidden="true">➜</span></a>
     <div class="choiceGrid">
       <button class="choiceCard tutorial" type="button" data-target="strategy-tutorial-en.html" data-title="GAME DAY TUTORIAL">
         <div class="choiceIcon">🎓🏈</div>
         <div class="choiceName">Tutorial</div>
-        <div class="choiceDesc">Earlier demo: practice ball-carrier selection, RUN, PASS, TACKLE, INTERCEPTION, BLOCK, and BREAK THROUGH. New Magic and animal Role rules are in the Card Guide above.</div>
-        <div class="mini">Recommended for your first game</div>
+        <div class="choiceDesc">Learn RUN, PASS, and defensive plays with a step-by-step coach. The interactive lesson still uses the earlier rules.</div>
+        <div class="mini">Guided practice</div>
         <div class="choiceBtn">START TUTORIAL</div>
       </button>
 
-      <button class="choiceCard single" type="button" data-target="strategy-game-en.html" data-title="GAME DAY SOLO GAME">
-        <div class="choiceIcon">🎮🏈</div>
-        <div class="choiceName">Solo Game</div>
-        <div class="choiceDesc">Earlier solo demo: choose 2v2, 3v3, or 4v4. You control Red and the computer controls Blue. The new Magic and animal Role abilities are not playable here yet.</div>
-        <div class="mini">For players who already know the rules</div>
-        <div class="choiceBtn">START SOLO GAME</div>
-      </button>
+      <a class="choiceCard rulebook" href="game-day-cards.html">
+        <div class="choiceIcon">📖✨</div>
+        <div class="choiceName">Rulebook</div>
+        <div class="choiceDesc">Read the updated Game Day overview, all 20 one-of-a-kind Magic Cards, and the abilities of 10 animal characters.</div>
+        <div class="mini">Latest Magic &amp; Animal Role reference</div>
+        <div class="choiceBtn">OPEN RULEBOOK</div>
+      </a>
     </div>
   </div>
 </div>
