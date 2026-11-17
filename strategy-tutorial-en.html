@@ -1,251 +1,161 @@
 <!doctype html>
-<html lang="en" class="is-loading">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07131d">
-<title>Tails &amp; Tackles — Game Day Tutorial</title>
-<link rel="preload" as="style" href="strategy-tutorial-coach-v4.css?v=20260905-field1">
-<link rel="preload" as="script" href="strategy-tutorial-coach-v4.js?v=20260905-layout3">
-<link rel="preload" as="script" href="strategy-tutorial-input-guard.js?v=20260905-rps1">
-<link rel="preload" as="image" href="cards/football-card.webp">
-<link rel="preload" as="image" href="cards/run-card.webp">
-<link rel="preload" as="image" href="cards/pass-card.webp">
-<link rel="preload" as="image" href="cards/tackle-card.webp">
-<link rel="preload" as="image" href="cards/interception-card.webp">
-<link rel="preload" as="image" href="cards/block-card.webp">
-<link rel="preload" as="image" href="cards/blitz-card.webp">
-<link rel="preload" as="image" href="https://raw.githubusercontent.com/lu20140621-png/goal-scoring-moment/main/images/coach-guide.webp">
-<link rel="stylesheet" href="strategy-tutorial-coach-v4.css?v=20260905-field1">
+<meta name="theme-color" content="#125187">
+<meta name="description" content="Learn the latest Tails & Tackles Game Day rules with an interactive animal coach: four quarters, football scoring, one-use magic, and animal abilities.">
+<title>Game Day Interactive Tutorial | Tails &amp; Tackles</title>
 <style>
-/* Football field visual layer. Four compact player seats stay in the corners so the center is reserved for the drive. */
-.board{
-  min-height:680px;
-  background:
-    linear-gradient(90deg,#5a3b22 0 8%,transparent 8% 92%,#163e5b 92% 100%),
-    repeating-linear-gradient(90deg,#16743d 0 9.9%,#1b8245 9.9% 19.8%);
-  box-shadow:inset 0 0 55px #00190daa,0 22px 50px #0005;
-}
-.fieldLines{left:8%;right:8%;inset-block:8px;border-radius:8px;background:
-  repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),rgba(255,255,255,.34) calc(10% - 1px) 10%),
-  repeating-linear-gradient(0deg,transparent 0 48%,rgba(255,255,255,.18) 48% 49%,transparent 49% 100%)}
-.fieldLines:before{left:50%;border-left:3px solid #fff}.fieldLines:after{left:0;right:0;top:50%;border-top:1px dashed #ffffff55}
-.endZoneLabel{position:absolute;top:50%;z-index:1;transform:translateY(-50%);writing-mode:vertical-rl;font-size:12px;font-weight:950;letter-spacing:.12em;color:#fff;opacity:.72;pointer-events:none}.endZoneLabel.red{left:2.2%}.endZoneLabel.blue{right:2.2%}
-.yardLabels{position:absolute;inset:8px 8%;z-index:1;pointer-events:none}.yardLabels span{position:absolute;top:8%;transform:translateX(-50%);font-size:18px;font-weight:950;color:#ffffff5c;text-shadow:0 2px 5px #0006}.yardLabels span.bottom{top:auto;bottom:8%}
-
-/* Compact four-corner player layout. */
-.players{
-  position:relative;
-  z-index:4;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:72px 72px;
-  align-content:space-between;
-  min-height:390px;
-  height:390px;
-  padding:22px 9.5% 8px;
-  pointer-events:none;
-}
-.playerSeat{
-  width:220px;
-  max-width:220px;
-  min-height:62px;
-  height:62px;
-  padding:7px 10px;
-  align-self:center;
-  pointer-events:auto;
-  background:#0a2739e8;
-}
-.playerSeat:nth-child(odd){justify-self:start}.playerSeat:nth-child(even){justify-self:end}
-.seatName{font-size:12px}.role{font-size:7px}
-.ballMini{right:7px;top:50%;width:35px;height:53px;z-index:4}
-
-/* Two independent drive runners stay in the clear center lanes. */
-.runnerMarker{position:absolute;z-index:3;left:50%;width:62px;height:54px;transform:translate(-50%,-50%);transition:left .58s cubic-bezier(.2,.8,.2,1),opacity .2s ease,filter .2s ease;pointer-events:none;filter:drop-shadow(0 8px 8px #0008)}
-.runnerMarker.redRunner{top:37%;--runner:#e34f58}.runnerMarker.blueRunner{top:51%;--runner:#4b91e2}
-.runnerPerson{position:absolute;left:5px;top:3px;font-size:39px;line-height:1;animation:runnerBob .46s ease-in-out infinite alternate;transform-origin:50% 100%;text-shadow:0 0 7px var(--runner),0 3px 5px #000}
-.blueRunner .runnerPerson{transform:scaleX(-1)}
-.runnerBall{position:absolute;right:0;top:15px;font-size:18px;opacity:0;transform:rotate(-18deg) scale(.75);transition:opacity .18s ease,transform .18s ease;filter:drop-shadow(0 2px 3px #000)}
-.blueRunner .runnerBall{right:auto;left:0;transform:rotate(18deg) scale(.75)}
-.runnerMarker.active{opacity:1;filter:drop-shadow(0 8px 9px #0009) drop-shadow(0 0 10px var(--runner))}.runnerMarker:not(.active){opacity:.52;filter:grayscale(.2) drop-shadow(0 6px 7px #0008)}
-.runnerMarker.active .runnerBall{opacity:1;transform:rotate(-18deg) scale(1.08)}.blueRunner.active .runnerBall{transform:rotate(18deg) scale(1.08)}
-.runnerMarker:after{content:attr(data-yard);position:absolute;left:50%;top:49px;transform:translateX(-50%);padding:3px 7px;border-radius:999px;background:#07151fe8;border:1px solid var(--runner);color:#fff;font-size:7px;font-weight:950;white-space:nowrap}
-.runnerTeam{position:absolute;left:50%;top:-10px;transform:translateX(-50%);font-size:7px;font-weight:950;color:#fff;background:var(--runner);border-radius:999px;padding:2px 6px;letter-spacing:.08em;box-shadow:0 2px 5px #0008}
-.driveRow{z-index:5;margin-top:8px}.tableReveal{z-index:5}.eventBanner{z-index:5}
-@keyframes runnerBob{to{translate:0 -3px}}
-
-@media(max-width:760px){
-  .board{min-height:540px;padding-top:40px}
-  .yardLabels span{font-size:12px}.endZoneLabel{font-size:8px}
-  .players{grid-template-rows:56px 56px;min-height:315px;height:315px;padding:12px 7px 5px}
-  .playerSeat{width:min(41vw,148px);max-width:148px;min-height:50px;height:50px;padding:5px 5px;border-radius:10px}
-  .seatName{font-size:10px}.role{font-size:6px}
-  .ballMini{right:3px;width:27px;height:41px}
-  .runnerMarker{width:48px;height:42px}.runnerMarker.redRunner{top:34%}.runnerMarker.blueRunner{top:49%}
-  .runnerPerson{font-size:30px}.runnerBall{font-size:14px;top:12px}.runnerMarker:after{top:39px;font-size:6px}.runnerTeam{top:-8px;font-size:6px}
-  .driveRow{margin-top:5px}
-}
-@media(max-width:380px){
-  .players{padding-inline:4px}.playerSeat{width:42vw;max-width:136px}.ballMini{width:24px;height:37px;right:2px}
-}
+:root{--ink:#102d4f;--blue:#14558e;--cream:#fff4df;--yellow:#ffd15e;--pale:#e8f6ff;--green:#268351}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:"Trebuchet MS",Verdana,Arial,sans-serif;background:radial-gradient(#d1e1ea 1px,transparent 1px) 0 0/25px 25px,linear-gradient(#faf5e9,#fffaf0)}
+button,a{font:inherit}
+button{cursor:pointer;color:inherit}
+.shell{width:min(1060px,100%);padding:12px 18px 60px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;background:#125187;color:white;border:4px solid var(--ink);border-radius:23px;box-shadow:0 6px 0 #153751}
+.brand{font:950 clamp(18px,3vw,27px) "Arial Black","Trebuchet MS",Arial,sans-serif;letter-spacing:-.04em}
+.brand small{display:block;margin-top:5px;font:850 11px "Trebuchet MS",Arial,sans-serif;letter-spacing:.1em;color:#e0effa}
+.actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.navBtn{display:inline-flex;align-items:center;justify-content:center;min-height:37px;padding:9px 11px;border:2px solid var(--ink);border-radius:10px;background:var(--yellow);color:var(--ink);text-decoration:none;font-size:12px;font-weight:950}
+.navBtn.alt{background:#e8f6ff}
+.intro{margin:21px 0 14px;padding:21px 24px;border:4px solid var(--ink);border-radius:22px;background:linear-gradient(115deg,#bce7ff,#dff3ff 65%,#a6d681);box-shadow:0 5px 0 #315d76}
+.intro h1{margin:0 0 6px;font:950 clamp(26px,4vw,40px) "Arial Black",Arial,sans-serif;letter-spacing:-.045em}
+.intro p{margin:0;font-size:13px;line-height:1.6;font-weight:800}
+.progressPanel{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:20px 0 11px;font-weight:950;font-size:12px}
+.progressRail{height:13px;background:#cbdbe5;border:3px solid var(--ink);border-radius:12px;overflow:hidden}
+.progressFill{height:100%;background:#ffc74f;width:0%;transition:width .25s}
+.field{position:relative;display:grid;grid-template-columns:8% 1fr 8%;height:210px;border:5px solid var(--ink);border-radius:20px;overflow:hidden;background:#24743d;box-shadow:0 7px 0 #2e5876}
+.endZone{display:grid;place-items:center;color:white;font-weight:950;font-size:10px;letter-spacing:.12em;writing-mode:vertical-rl}
+.endZone.red{background:#bb4344;transform:none}
+.endZone.blue{background:#2a5eb7}
+.pitch{position:relative;background:repeating-linear-gradient(90deg,#267949 0 10%,#2c884e 10% 20%);overflow:hidden}
+.pitch:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 2px),rgba(255,255,255,.5) calc(10% - 2px) 10%);pointer-events:none}
+.yardRow{position:absolute;top:13px;left:0;right:0;display:flex;justify-content:space-around;color:#edfff0;font-size:11px;font-weight:950}
+.ball{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;transition:left .35s;z-index:3}
+.ballIcon{display:grid;place-items:center;width:55px;height:55px;border-radius:50%;border:3px solid var(--ink);background:#ffd56d;font-size:26px;box-shadow:0 5px 0 #17442d}
+.ballName{background:#fef3cb;border:2px solid var(--ink);border-radius:6px;padding:3px 7px;white-space:nowrap;font-size:9px;font-weight:950}
+.dashboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0}
+.stat{padding:12px;border:3px solid var(--ink);border-radius:12px;background:#fff8e7;text-align:center}
+.statLabel{font-size:10px;font-weight:950;color:#526d80;letter-spacing:.04em}
+.statVal{margin-top:3px;font-size:18px;font-weight:950}
+.coach{display:grid;grid-template-columns:112px 1fr;gap:14px;margin:18px 0}
+.coachArt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px;border:4px solid var(--ink);border-radius:20px;background:#b8e1fa;box-shadow:0 5px 0 #315d76}
+.coachFace{font-size:62px;line-height:1}
+.coachArt b{font-size:12px;letter-spacing:.09em}
+.bubble{position:relative;padding:22px 23px;border:4px solid var(--ink);border-radius:21px;background:#fffaf0;box-shadow:0 5px 0 #acbdc8}
+.bubble:before{content:"";position:absolute;width:16px;height:16px;left:-13px;top:28px;border-left:4px solid var(--ink);border-bottom:4px solid var(--ink);transform:rotate(45deg);background:#fffaf0}
+.kicker{font-size:10px;font-weight:950;color:#1c6d9a;letter-spacing:.12em}
+.lessonTitle{font:950 clamp(20px,3vw,30px) "Arial Black",Arial,sans-serif;letter-spacing:-.035em;margin:8px 0}
+.speech{margin:0;color:#274560;font-size:15px;font-weight:750;line-height:1.7}
+.cards{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:11px 0}
+.cards img{width:65px;aspect-ratio:.72;object-fit:cover;border:2px solid var(--ink);border-radius:8px;box-shadow:0 4px 0 #7592a4}
+.challenge{padding:20px;border:4px solid var(--ink);border-radius:20px;background:var(--pale)}
+.challenge h2{margin:0 0 14px;font:950 19px "Arial Black",Arial,sans-serif}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.option{min-height:58px;padding:13px 14px;border:3px solid var(--ink);border-radius:11px;background:white;font-size:13px;font-weight:950;line-height:1.4;text-align:left}
+.option:hover:not([disabled]){background:#fff0b4}
+.option[disabled]{cursor:default;opacity:.8}
+.option.correct{background:#d6f9e3;border-color:#267f4f}
+.feedback{display:none;margin-top:13px;padding:13px;border:2px solid #4e8198;border-radius:11px;background:#fffef6;font-size:13px;line-height:1.6;font-weight:800}
+.feedback.show{display:block}
+.feedback.ok{border-color:#288558;background:#dffbe9}
+.navBottom{display:flex;justify-content:space-between;gap:10px;margin-top:17px;flex-wrap:wrap}
+.stepBtn{min-height:46px;padding:11px 19px;border:3px solid var(--ink);border-radius:12px;font-weight:950;background:#d9e9f4}
+.stepBtn.next{background:var(--yellow)}
+.stepBtn[disabled]{opacity:.45;cursor:not-allowed}
+.disclaimer{font-size:12px;line-height:1.6;color:#506579;margin:21px 0;text-align:center}
+:focus-visible{outline:4px solid #ed9d13;outline-offset:3px}
+@media(max-width:620px){.shell{padding:7px 10px 35px}.top{padding:10px;border-radius:16px;border-width:3px}.brand{font-size:16px}.brand small{font-size:9px}.actions{gap:4px}.navBtn{padding:6px 8px;font-size:10px;min-height:35px}.intro{padding:16px;border-width:3px}.field{height:155px;border-width:3px}.dashboard{gap:5px}.stat{padding:8px 4px;border-width:2px}.statLabel{font-size:8px}.statVal{font-size:13px}.coach{grid-template-columns:70px 1fr;gap:8px}.coachArt{padding:4px;border-width:3px}.coachFace{font-size:37px}.coachArt b{font-size:9px}.bubble{padding:15px;border-width:3px}.bubble:before{left:-10px;border-width:3px}.speech{font-size:13px}.lessonTitle{font-size:19px}.options{grid-template-columns:1fr}.challenge{padding:15px;border-width:3px}.cards img{width:50px}.ballIcon{width:43px;height:43px;font-size:19px}}
 </style>
 </head>
 <body>
-<div class="bootLoader" id="bootLoader" role="status" aria-live="polite">
-  <div class="bootCard">
-    <div class="loaderFootball" aria-hidden="true"></div>
-    <div class="bootKicker">GAME DAY MODE</div>
-    <div class="bootTitle">LOADING TUTORIAL</div>
-    <div class="bootTrack"><div class="bootBar" id="bootBar"></div></div>
-    <div class="bootMeta"><span id="bootText">Preparing coaching session…</span><span id="bootPct">0%</span></div>
-    <button class="bootRetry" id="bootRetry" type="button" hidden>RETRY</button>
-  </div>
+<div class="shell">
+  <nav class="top"><div class="brand">🏈 TAILS &amp; TACKLES<small>GAME DAY MODE · INTERACTIVE COACH</small></div><div class="actions"><a class="navBtn alt" href="home-en.html">← Home</a><a class="navBtn" href="game-day-cards.html">📖 Rulebook</a></div></nav>
+  <header class="intro"><h1>LEARN AS YOU PLAY</h1><p>Follow your animal coach, choose what happens next, and watch the field change. This is a guided rules lesson—not a full match simulator.</p></header>
+  <div class="progressPanel"><span id="lessonCount">LESSON 1</span><span id="lessonPercent">0%</span></div>
+  <div class="progressRail" aria-hidden="true"><div class="progressFill" id="progressFill"></div></div>
+  <div class="field" aria-label="Football field illustration with ball position"><div class="endZone red">RED END ZONE</div><div class="pitch"><div class="yardRow"><span>40</span><span>30</span><span>20</span><span>10</span><span>50</span><span>40</span><span>30</span><span>20</span><span>10</span></div><div class="ball" id="ball"><span class="ballIcon">🏈</span><span class="ballName" id="ballName">RED BALL · 50</span></div></div><div class="endZone blue">BLUE END ZONE</div></div>
+  <div class="dashboard" aria-live="polite"><div class="stat"><div class="statLabel">QUARTER</div><div class="statVal" id="quarter">Q1 / 4</div></div><div class="stat"><div class="statLabel">DOWN</div><div class="statVal" id="down">1st</div></div><div class="stat"><div class="statLabel">RED SCORE</div><div class="statVal" id="redScore">0</div></div><div class="stat"><div class="statLabel">BLUE SCORE</div><div class="statVal" id="blueScore">0</div></div></div>
+  <section class="coach" aria-label="Coach instructions"><div class="coachArt"><span class="coachFace" aria-hidden="true">🦊</span><b>COACH</b></div><div class="bubble"><span class="kicker" id="kicker">GAME DAY TRAINING</span><h2 class="lessonTitle" id="lessonTitle"></h2><p class="speech" id="speech"></p><div class="cards" id="sampleCards" aria-label="Action card examples"></div></div></section>
+  <section class="challenge" aria-labelledby="challengeTitle"><h2 id="challengeTitle">What's your move?</h2><div class="options" id="options"></div><div class="feedback" id="feedback" aria-live="polite"></div><div class="navBottom"><button class="stepBtn" id="previous" type="button">← Back</button><button class="stepBtn next" id="next" type="button" disabled>Next Lesson →</button></div></section>
+  <p class="disclaimer">Learn the latest four-quarter Game Day rules and read the complete Magic / Animal Role abilities in the Rulebook. Proposed abilities are labeled there; they are not presented as finalized here.</p>
 </div>
-
-<div class="app" id="tutorialApp" aria-hidden="true">
-  <header class="top">
-    <div class="brand">🎓🏈 TAILS &amp; TACKLES · GAME DAY TUTORIAL</div>
-    <div class="topBtns">
-      <a class="btn" href="home-en.html">← Home</a>
-      <a class="btn" href="game-day-cards.html">Magic + Animal Roles</a>
-      <a class="btn" href="strategy-game-en.html">Solo Game</a>
-      <button class="btn gold" id="chooseBtn" type="button">Choose Lesson</button>
-      <button class="btn" id="restartBtn" type="button">Restart Tutorial</button>
-    </div>
-  </header>
-
-  <div class="progressWrap">
-    <div class="lessonLine"><span id="lessonNo">LESSON 1 / 13</span><strong id="lessonTitle">The Goal</strong></div>
-    <div class="stepbar" id="stepbar"></div>
-  </div>
-
-  <div class="scoreStrip">
-    <div class="teamBox red"><span>RED TEAM</span><strong id="redScore">🏈 0 / 3</strong></div>
-    <div class="roundBox"><b id="roundInfo">ROUND 1 · RED FIRST OFFENSE</b><span id="possessionText">POSSESSION · R1</span></div>
-    <div class="teamBox blue"><span>BLUE TEAM</span><strong id="blueScore">🏈 0 / 3</strong></div>
-  </div>
-
-  <main class="board" id="board">
-    <div class="fieldLines" aria-hidden="true"></div>
-    <div class="endZoneLabel red" aria-hidden="true">RED END ZONE</div>
-    <div class="endZoneLabel blue" aria-hidden="true">BLUE END ZONE</div>
-    <div class="yardLabels" aria-hidden="true">
-      <span style="left:10%">10</span><span style="left:20%">20</span><span style="left:30%">30</span><span style="left:40%">40</span><span style="left:50%">50</span><span style="left:60%">40</span><span style="left:70%">30</span><span style="left:80%">20</span><span style="left:90%">10</span>
-      <span class="bottom" style="left:10%">10</span><span class="bottom" style="left:20%">20</span><span class="bottom" style="left:30%">30</span><span class="bottom" style="left:40%">40</span><span class="bottom" style="left:50%">50</span><span class="bottom" style="left:60%">40</span><span class="bottom" style="left:70%">30</span><span class="bottom" style="left:80%">20</span><span class="bottom" style="left:90%">10</span>
-    </div>
-    <div class="runnerMarker redRunner active" id="redRunner" data-yard="RED · 50 YD" aria-hidden="true"><span class="runnerTeam">RED</span><span class="runnerPerson">🏃‍♂️</span><span class="runnerBall">🏈</span></div>
-    <div class="runnerMarker blueRunner" id="blueRunner" data-yard="BLUE · 50 YD" aria-hidden="true"><span class="runnerTeam">BLUE</span><span class="runnerPerson">🏃‍♂️</span><span class="runnerBall">🏈</span></div>
-    <div class="possessionBadge" aria-hidden="true">FOOTBALL CARD = POSSESSION</div>
-    <section class="players" aria-label="Players">
-      <button class="playerSeat red" data-player="r1" type="button"><span class="seatName">R1</span><span class="role">PLAYER</span></button>
-      <button class="playerSeat blue" data-player="b1" type="button"><span class="seatName">B1</span><span class="role">PLAYER</span></button>
-      <button class="playerSeat red" data-player="r2" type="button"><span class="seatName">R2</span><span class="role">QB</span></button>
-      <button class="playerSeat blue" data-player="b2" type="button"><span class="seatName">B2</span><span class="role">QB</span></button>
-    </section>
-
-    <section class="driveRow">
-      <button class="driveBox" id="redDrive" type="button">
-        <div class="driveHead"><span>RED DRIVE</span><strong id="redYard">50 YD</strong></div>
-        <div class="driveDots" id="redDriveDots"></div>
-      </button>
-      <button class="driveBox" id="blueDrive" type="button">
-        <div class="driveHead"><span>BLUE DRIVE</span><strong id="blueYard">50 YD</strong></div>
-        <div class="driveDots" id="blueDriveDots"></div>
-      </button>
-    </section>
-
-    <div class="tableReveal" id="tableReveal" aria-live="polite"></div>
-    <div class="eventBanner" id="eventBanner" aria-live="polite"></div>
-  </main>
-
-  <section class="guideScene">
-    <div class="guidePortrait" role="img" aria-label="Game Day coach"></div>
-    <div class="guideDialogue" id="guideDialogue" tabindex="0">
-      <span class="guideSpeaker">COACH</span>
-      <p class="guideText" id="guideText" aria-live="polite"></p>
-      <button class="guideContinue" id="guideContinue" type="button" aria-label="Continue">›</button>
-    </div>
-  </section>
-
-  <section class="handPanel">
-    <div class="handHead">
-      <div><span class="handKicker">YOUR HAND / CURRENT ACTION</span><strong id="handNote">Listen to the coach.</strong></div>
-      <div class="handSizeInfo" id="handSizeInfo">2v2: 7 · 3v3: 6 · 4v4: 5</div>
-    </div>
-    <div class="handCards" id="handCards"></div>
-    <div class="contextActions" id="contextActions"></div>
-  </section>
-</div>
-
-<div class="overlay" id="lessonModal" aria-hidden="true">
-  <div class="dialog">
-    <h2>Choose a Lesson</h2>
-    <p>Jump to any lesson and practice it again.</p>
-    <div class="lessonGrid" id="lessonGrid"></div>
-    <div class="dialogBtns">
-      <button class="secondary" id="closeLessonBtn" type="button">Close</button>
-      <button class="primary" id="restartModalBtn" type="button">Restart from Lesson 1</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="done" aria-hidden="true">
-  <div class="dialog completeDialog">
-    <div class="completeBall">🏈</div>
-    <h2>Coach says you’re ready.</h2>
-    <p>You completed the Game Day Mode tutorial and won the Final Challenge.</p>
-    <div class="dialogBtns">
-      <button class="primary" id="againBtn" type="button">Restart Tutorial</button>
-      <a class="secondary" href="strategy-game-en.html">Play Solo Game</a>
-    </div>
-  </div>
-</div>
-
-<script src="strategy-tutorial-coach-v4.js?v=20260905-layout3"></script>
-<script src="strategy-tutorial-input-guard.js?v=20260905-rps1"></script>
 <script>
 (() => {
   'use strict';
-  const redRunner = document.getElementById('redRunner');
-  const blueRunner = document.getElementById('blueRunner');
-  if (!redRunner || !blueRunner) return;
-  const progressByYard = {'50':0,'40':1,'30':2,'20':3,'10':4};
-  const redX = [50,58,66,74,82];
-  const blueX = [50,42,34,26,18];
-  const yardText = ['50 YD','40 YD','30 YD','20 YD','10 YD'];
-
-  function readProgress(team) {
-    const el = document.getElementById(team === 'RED' ? 'redYard' : 'blueYard');
-    if (!el) return 0;
-    const text = el.textContent || '';
-    if (/TD/.test(text)) return 4;
-    const m = text.match(/(50|40|30|20|10)/);
-    return m ? (progressByYard[m[1]] ?? 0) : 0;
+  const S=[
+    {title:'The Goal',speech:'One game has FOUR quarters. No quarter uses a 10-minute clock. After the fourth quarter, add up the touchdowns, kicks and field goals. Who wins?',opts:['The team with the higher total score.','The first team to score three touchdowns.'],correct:0,reply:'Exactly. A touchdown scores 6, a successful extra point adds 1, and a field goal scores 3.',board:{q:1,down:1,pos:50,carrier:'RED',red:0,blue:0}},
+    {title:'Meet Your Animal',speech:'Before the game, shuffle ten different Animal Role Cards. They are not divided into red and blue teams. How many animal roles does each player draw?',opts:['One unique animal for the entire game.','One new animal every quarter.'],correct:0,reply:'Right. Every animal has a unique skill. Role skills are separate from Magic Cards.',board:{q:1,down:1,pos:50,carrier:'RED',red:0,blue:0}},
+    {title:'Your Two Magic Cards',speech:'Shuffle 20 unique Magic Cards. Each player gets exactly two before Quarter 1. The rest stay out of the game, unseen. What happens after you play a Magic Card?',opts:['It is spent and removed from this game.','You draw a replacement Magic Card.'],correct:0,reply:'Each spell is one-use only. There are no replacement Magic Cards during the game.',board:{q:1,down:1,pos:50,carrier:'RED',red:0,blue:0}},
+    {title:'When Can You Cast?',speech:'You decide when to use your Magic Cards, provided their printed trigger is legal. There is no longer a one-Magic-per-quarter restriction. Can you use both cards in Quarter 1?',opts:['Yes, if both meet their timing conditions.','No, only one Magic Card each quarter.'],correct:0,reply:'Yes! You can spend both early or save them for Quarter 4. Each card still works only once.',board:{q:1,down:1,pos:50,carrier:'RED',red:0,blue:0}},
+    {title:'Deal Action Cards',speech:'At the start of EACH quarter, shuffle and deal Action Cards. Which starting hand sizes are we using for 2v2 / 3v3 / 4v4?',opts:['7 / 6 / 5 per player.','5 / 5 / 5 per player.','Everyone draws two Action Cards.'],correct:0,reply:'Perfect. These are Action Cards only. Magic and Animal Role Cards do not count toward the starting hand.',board:{q:1,down:1,pos:50,carrier:'RED',red:0,blue:0}},
+    {title:'One Play, Four Downs',speech:'A Play means ONE offensive RUN or PASS plus all defensive responses. The offense gets up to four downs to gain ten yards. What does a normal successful RUN do?',opts:['Advance 10 yards and earn a new first down.','Automatically score 6 points.'],correct:0,reply:'Right! Red moves from midfield to the opponent\'s 40-yard line and starts first down again.',board:{q:1,down:1,pos:60,carrier:'RED',red:0,blue:0},cards:['run']},
+    {title:'A Defender Responds',speech:'A defender uses TACKLE against RUN. If the TACKLE stands, the run gains no yards. What happens to the down?',opts:['The offense uses up one down.','The offense receives a new first down.'],correct:0,reply:'Correct. That failed run spends a down. A fourth-down failure would turn possession over.',board:{q:1,down:2,pos:60,carrier:'RED',red:0,blue:0},cards:['run','tackle']},
+    {title:'BLOCK and BREAK THROUGH',speech:'The offense can play BLOCK to cancel TACKLE or INTERCEPTION. Defense may still answer with BREAK THROUGH. If that final defense stands, what happens?',opts:['The play fails and uses a down.','The offense automatically gets 20 yards.'],correct:0,reply:'Exactly. Action Cards can react in a chain. Animal Skills and Magic can change that result.',board:{q:1,down:3,pos:60,carrier:'RED',red:0,blue:0},cards:['tackle','block','blitz']},
+    {title:'Pass or Interception?',speech:'On PASS, the ball carrier names a teammate to receive. A successful pass advances 10 yards and moves the football to the receiver. What if the defense successfully plays INTERCEPTION?',opts:['The opposing team takes possession.','The passing team gets a free extra down.'],correct:0,reply:'Right. The defender takes the FOOTBALL CARD and begins a new first down.',board:{q:1,down:1,pos:60,carrier:'BLUE',red:0,blue:0},cards:['pass','interception']},
+    {title:'Wolf: Once per Play',speech:'Wolf can give one card to a teammate or take one card from a teammate ONCE PER PLAY. Remember: a Play is not every individual card in a defense chain. When must Wolf do this?',opts:['Before the offense plays RUN or PASS.','After seeing every defensive card.'],correct:0,reply:'Correct. Wolf can help on offense or defense, but the handoff happens before the Play starts.',board:{q:1,down:1,pos:60,carrier:'BLUE',red:0,blue:0}},
+    {title:'Invisible Runner',speech:'INVISIBILITY lasts the whole quarter for the caster. While the ball stays invisible with that runner, ordinary Action Cards cannot defend RUN unless a defender used TRUE SIGHT this quarter. What happens if the runner PASSES?',opts:['The football becomes visible and stays visible.','The football automatically becomes invisible again on return.'],correct:0,reply:'Yes. The animal stays invisible, but once passed, the ball is visible for the rest of the quarter—even if it returns.',board:{q:1,down:1,pos:60,carrier:'RED',red:0,blue:0},cards:['run','pass']},
+    {title:'Roll of Fate',speech:'ROLL OF FATE makes every OTHER player roll when they play an Action Card or use an Animal Role ability: 1–3 fails and is spent, 4–6 succeeds. What about Magic Cards?',opts:['Magic Cards always bypass this roll.','Magic Cards must roll too.'],correct:0,reply:'Exactly. Magic Cards are not affected by ROLL OF FATE.',board:{q:1,down:1,pos:60,carrier:'RED',red:0,blue:0}},
+    {title:'Touchdowns and Kicks',speech:'A successful play into the end zone scores a touchdown worth 6 points. Afterward you can attempt a one-point extra kick. How many points can that scoring sequence earn?',opts:['Up to 7 points.','Exactly 3 points.'],correct:0,reply:'Six for the touchdown, plus one if the extra-point kick is good. Your opponent then receives possession.',board:{q:1,down:1,pos:30,carrier:'BLUE',red:7,blue:0},cards:['run']},
+    {title:'Field Goal or Punt?',speech:'In range, the offense may try a field goal for 3 points. A field goal uses two dice; from the opponent\'s 30-yard line it goes in with a total of 5 or higher. Which play can also hand possession to the opponent without scoring?',opts:['PUNT.','BLOCK.'],correct:0,reply:'Right! Punt moves the ball downfield and switches possession. You can also attempt a field goal before a down while in range.',board:{q:2,down:1,pos:30,carrier:'RED',red:7,blue:3},cards:['block']},
+    {title:'Rewind After a Score',speech:'REWIND may be played even after a touchdown or field goal, before the next Play begins. It restores that Play\'s starting ball position, possession and down. What stays unchanged?',opts:['Scores and the current hands/deck.','Scores reset to zero and cards are redealt.'],correct:0,reply:'Correct. The scoreboard and spent cards stay as they are. Re-scoring on a replayed scoring Play remains an open rule to finalize.',board:{q:2,down:1,pos:70,carrier:'BLUE',red:7,blue:3}},
+    {title:'End of a Quarter',speech:'No quarter timer. One team may still attack after the other runs out of RUN and PASS. So when does the quarter finally end?',opts:['When BOTH teams have no usable attacks and the current Play is finished.','As soon as either team has no RUN.'],correct:0,reply:'Correct. Collect the Action Cards, reshuffle, and redeal 7 / 6 / 5 according to player count. Save your unused Magic Cards.',board:{q:3,down:1,pos:50,carrier:'RED',red:7,blue:3}},
+    {title:'Win After Four Quarters',speech:'At halftime, the team that defended at the start of the game receives the ball at midfield. At the end of Quarter 4, compare the accumulated points. Who wins this example?',opts:['Red wins with 13 to 10.','Blue wins because it has more Magic Cards left.'],correct:0,reply:'You got it! Final score decides Game Day—not how many cards or touchdowns you collect. Open the Rulebook for all 20 spells and 10 animal skills.',board:{q:4,down:4,pos:50,carrier:'RED',red:13,blue:10}}
+  ];
+  const $=id=>document.getElementById(id);
+  const cardNames={run:'RUN',pass:'PASS',tackle:'TACKLE',interception:'INTERCEPTION',block:'BLOCK',blitz:'BREAK THROUGH'};
+  let index=0,solved=false;
+  function draw(){
+    const s=S[index],v=s.board;
+    $('lessonCount').textContent='LESSON '+(index+1)+' / '+S.length;
+    $('lessonPercent').textContent=Math.round(index/S.length*100)+'%';
+    $('progressFill').style.width=(index/S.length*100)+'%';
+    $('lessonTitle').textContent=s.title;
+    $('speech').textContent=s.speech;
+    $('kicker').textContent='COACH · GAME DAY MODE';
+    $('quarter').textContent='Q'+v.q+' / 4';
+    $('down').textContent=({1:'1st',2:'2nd',3:'3rd',4:'4th'})[v.down];
+    $('redScore').textContent=v.red;
+    $('blueScore').textContent=v.blue;
+    $('ball').style.left=(Math.max(6,Math.min(94,v.pos)))+'%';
+    $('ballName').textContent=v.carrier+' BALL · DEMO';
+    $('sampleCards').innerHTML='';
+    (s.cards||[]).forEach(card=>{
+       const img=document.createElement('img');
+       img.src='cards/'+card+'-card.webp';img.alt=cardNames[card]+' card example';img.loading='lazy';
+       img.onerror=()=>{img.onerror=null;img.src='cards/'+card+'-card.png'};
+       $('sampleCards').appendChild(img);
+    });
+    $('options').innerHTML='';
+    s.opts.forEach((answer,j)=>{
+      const b=document.createElement('button');b.type='button';b.className='option';b.textContent=answer;
+      b.addEventListener('click',()=>answerChoice(j));$('options').appendChild(b);
+    });
+    $('feedback').className='feedback';$('feedback').textContent='';
+    $('previous').disabled=index===0;
+    $('next').disabled=true;$('next').textContent=index===S.length-1?'FINISH TRAINING ✓':'Next Lesson →';
+    solved=false;
   }
-
-  function updateRunners() {
-    const possession = (document.getElementById('possessionText')?.textContent || '').toUpperCase();
-    const activeTeam = /\bB[12]\b/.test(possession) ? 'BLUE' : 'RED';
-    const redProgress = readProgress('RED');
-    const blueProgress = readProgress('BLUE');
-
-    redRunner.style.left = redX[redProgress] + '%';
-    blueRunner.style.left = blueX[blueProgress] + '%';
-    redRunner.dataset.yard = 'RED · ' + yardText[redProgress];
-    blueRunner.dataset.yard = 'BLUE · ' + yardText[blueProgress];
-
-    redRunner.classList.toggle('active', activeTeam === 'RED');
-    blueRunner.classList.toggle('active', activeTeam === 'BLUE');
+  function answerChoice(j){
+    if(solved)return;
+    const s=S[index],correct=j===s.correct;
+    const f=$('feedback');
+    f.className='feedback show'+(correct?' ok':'');
+    f.textContent=correct?'✓ '+s.reply:'Not quite. Read the coach’s explanation and choose again.';
+    if(correct){
+      solved=true;
+      [...$('options').children].forEach((b,k)=>{b.disabled=true;if(k===j)b.classList.add('correct')});
+      $('next').disabled=false;
+      $('progressFill').style.width=((index+1)/S.length*100)+'%';
+      $('lessonPercent').textContent=Math.round((index+1)/S.length*100)+'%';
+      $('next').focus();
+    }
   }
-
-  const observer = new MutationObserver(updateRunners);
-  ['possessionText','redYard','blueYard'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) observer.observe(el,{childList:true,subtree:true,characterData:true});
-  });
-  updateRunners();
+  $('previous').addEventListener('click',()=>{if(index>0){index--;draw()}});
+  $('next').addEventListener('click',()=>{if(!solved)return;if(index===S.length-1){index=0;draw();$('lessonTitle').scrollIntoView({behavior:'smooth',block:'center'});return}index++;draw();$('lessonTitle').scrollIntoView({behavior:'smooth',block:'center'})});
+  draw();
 })();
 </script>
-<script src="english-only.js?v=20260831-break-through"></script>
 </body>
 </html>
