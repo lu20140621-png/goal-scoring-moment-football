@@ -271,7 +271,7 @@ function startLesson(index){
 
 function lesson1(){
   setHolder('r1'); setTD(0,0); setDrive('RED',0); setDrive('BLUE',0);
-  say('Welcome to Strategy Mode.',{next:()=>{
+  say('Welcome to Game Day Mode.',{next:()=>{
     document.querySelectorAll('.teamBox').forEach(x=>focus(x));
     say('Red plays Blue. First team to score 3 touchdowns wins.',{next:()=>{
       clearFocus(); focus($('handSizeInfo'),'SETUP');
