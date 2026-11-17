@@ -111,7 +111,14 @@ button{color:inherit}
 .choiceTitle{font:950 clamp(21px,3vw,30px) "Arial Black","Trebuchet MS",sans-serif}
 .choiceSub{margin-top:9px;color:#556c7b;font-size:13px;line-height:1.55}
 .close{flex:0 0 39px;width:39px;height:39px;border:3px solid var(--ink);background:#ffe6a1;color:var(--ink);font-weight:950;font-size:21px;border-radius:12px;cursor:pointer}
-.choiceGrid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:23px}
+.choiceGuide{display:flex;align-items:center;gap:16px;padding:17px 19px;margin-top:18px;border:3px solid var(--ink);border-radius:17px;background:#d6f2dc;color:var(--ink);text-decoration:none;box-shadow:0 4px 0 #26516b;transition:transform .2s}
+.choiceGuide:hover{transform:translateY(-2px)}
+.choiceGuide .guideIcon{font-size:33px;flex:none}
+.choiceGuide .guideText{flex:1;min-width:0}
+.choiceGuide .guideText strong{display:block;font:950 18px "Arial Black","Trebuchet MS",sans-serif}
+.choiceGuide .guideText small{display:block;margin-top:5px;font-size:12px;line-height:1.45;font-weight:800;color:#476474}
+.choiceGuide .guideArrow{font-size:23px;font-weight:950}
+.choiceGrid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:17px}
 .choiceCard{display:flex;flex-direction:column;min-height:253px;padding:19px;border:3px solid var(--ink);border-radius:18px;background:#e8f5ff;color:var(--ink);cursor:pointer;transition:transform .2s}
 .choiceCard:hover{transform:translateY(-3px)}
 .choiceCard.tutorial{background:#fff2c7}
@@ -265,8 +272,8 @@ button{color:inherit}
           <span class="modeSticker">FULL MATCH</span>
         </div>
         <div class="modeBottom">
-          <p>Make your plays, push downfield, and take on the defense in the tactical football game.</p>
-          <div class="featureRow"><span class="feature">TEAM STRATEGY</span><span class="feature">RUN &amp; PASS</span><span class="feature">SOLO + TUTORIAL</span></div>
+          <p>Call the plays, unleash one-of-a-kind Magic Cards, and use animal skills in a full football showdown.</p>
+          <div class="featureRow"><span class="feature">20 MAGIC CARDS</span><span class="feature">10 ANIMAL ROLES</span><span class="feature">TEAM STRATEGY</span></div>
           <div class="enter">ENTER GAME DAY <span class="enterArrow" aria-hidden="true">➜</span></div>
         </div>
       </button>
@@ -317,16 +324,17 @@ button{color:inherit}
     <div class="choiceHead">
       <div>
         <div class="choiceTitle">Choose Game Day Mode</div>
-        <div class="choiceSub">Start with the guided tutorial, or jump directly into a solo match against the computer.</div>
+        <div class="choiceSub">Explore the updated 20 Magic Cards and 10 animal Roles, or try the current earlier-version demos.</div>
       </div>
       <button class="close" id="closeChoice" type="button">×</button>
     </div>
 
+    <a class="choiceGuide" href="game-day-cards.html"><span class="guideIcon" aria-hidden="true">🪄🐾</span><span class="guideText"><strong>GAME DAY CARDS &amp; RULES</strong><small>Read all 20 Magic Cards, 10 animal abilities, and the four-quarter match rules.</small></span><span class="guideArrow" aria-hidden="true">➜</span></a>
     <div class="choiceGrid">
       <button class="choiceCard tutorial" type="button" data-target="strategy-tutorial-en.html" data-title="GAME DAY TUTORIAL">
         <div class="choiceIcon">🎓🏈</div>
         <div class="choiceName">Tutorial</div>
-        <div class="choiceDesc">Learn ball-carrier selection, RUN, PASS, TACKLE, INTERCEPTION, BLOCK, BREAK THROUGH, possession changes, QB timing, and scoring through guided interactive lessons.</div>
+        <div class="choiceDesc">Earlier demo: practice ball-carrier selection, RUN, PASS, TACKLE, INTERCEPTION, BLOCK, and BREAK THROUGH. New Magic and animal Role rules are in the Card Guide above.</div>
         <div class="mini">Recommended for your first game</div>
         <div class="choiceBtn">START TUTORIAL</div>
       </button>
@@ -334,7 +342,7 @@ button{color:inherit}
       <button class="choiceCard single" type="button" data-target="strategy-game-en.html" data-title="GAME DAY SOLO GAME">
         <div class="choiceIcon">🎮🏈</div>
         <div class="choiceName">Solo Game</div>
-        <div class="choiceDesc">Choose 2v2, 3v3, or 4v4. You control Red. The computer controls Blue.</div>
+        <div class="choiceDesc">Earlier solo demo: choose 2v2, 3v3, or 4v4. You control Red and the computer controls Blue. The new Magic and animal Role abilities are not playable here yet.</div>
         <div class="mini">For players who already know the rules</div>
         <div class="choiceBtn">START SOLO GAME</div>
       </button>
