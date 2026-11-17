@@ -264,7 +264,7 @@ function startLesson(index){
 
 function lesson1(){
   renderHand(['RUN','PASS','TACKLE']);setDeck(33);
-  say('Welcome to Casual Mode. Everyone is playing for themselves.',{next:()=>{
+  say('Welcome to Pigskin Frenzy Mode. Everyone is playing for themselves.',{next:()=>{
     document.querySelectorAll('.seatScore').forEach(x=>focus(x));
     say('The first player to collect 3 footballs wins immediately.',{next:()=>{
       clearFocus();const card=showSingleCard('FOOTBALL','THE CARD YOU WANT');
