@@ -95,105 +95,150 @@ h1{font:950 clamp(36px,5vw,62px)/.99 "Arial Black",Arial,sans-serif;margin:17px 
 .chain{margin:7px 0;padding:12px 15px;border:2px solid #729cbc;border-radius:9px;background:#fffdf8;font-size:12px;line-height:1.6;font-weight:800}
 @media(max-width:900px){.types{grid-template-columns:repeat(3,minmax(0,1fr))}.priorityBar>span:not(.prioArrow){min-width:145px}.actionCard img{width:70px;flex-basis:70px}}
 @media(max-width:600px){.step{padding:14px;gap:9px}.stepNo{flex-basis:35px;min-height:35px;font-size:13px}.step h3{font-size:15px}.step p{font-size:12px}.types{grid-template-columns:repeat(2,minmax(0,1fr))}.actionGrid{grid-template-columns:1fr}.actionCard{gap:11px;padding:12px}.actionCard img{width:68px;flex-basis:68px}.priorityBar{gap:6px;padding:10px}.priorityBar>span:not(.prioArrow){min-width:0;width:100%;flex:auto;padding:11px}.prioArrow{transform:rotate(90deg);font-size:16px}.chain{font-size:11px;padding:10px}}
+
+/* Readable, step-by-step manual layout */
+.ruleExample{margin:12px 0 4px;padding:12px 14px;border:2px solid #7199b7;border-left:6px solid #2678ae;border-radius:11px;background:#e9f7ff;color:#244961;font-size:12px;line-height:1.7}
+.ruleTable{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0;background:#fff;overflow:hidden;border:2px solid #9cb6cb;border-radius:9px}
+.ruleTable th,.ruleTable td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid #cadee9;font-size:12px;line-height:1.4}
+.ruleTable th{background:#dcefff;color:#143f5f;font-weight:950}
+.ruleTable tr:last-child td{border-bottom:0}
+.scoreDemo{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:13px;margin:18px 0;padding:16px;border:3px solid var(--ink);border-radius:17px;background:#e3f2ff;text-align:center}
+.scoreDemo>div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.scoreDemo strong{font:950 36px "Arial Black",Arial,sans-serif}
+.scoreDemo small{font-size:12px;font-weight:950}
+.scoreDemo span{font-size:11px;color:#405b75}
+.scoreDemo>b{font-size:11px;white-space:nowrap}
+.jump{margin-bottom:27px}
+.jump a{min-width:155px}
+.section{scroll-margin-top:14px}
+.sectionHead h2{letter-spacing:-.045em}
+@media(max-width:600px){.ruleTable th,.ruleTable td{font-size:10px;padding:7px}.scoreDemo{gap:4px;padding:10px}.scoreDemo strong{font-size:29px}.scoreDemo>b{font-size:9px}.jump a{min-width:130px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <nav class="top" aria-label="Main navigation"><div class="brand">🏈 TAILS &amp; TACKLES<small>GAME DAY MODE · COMPLETE RULEBOOK</small></div><a class="back" href="home-en.html">← HOME</a></nav>
   <header class="hero">
-    <span class="pretitle">GAME DAY MODE · OFFICIAL RULEBOOK</span>
+    <span class="pretitle">GAME DAY MODE · STEP-BY-STEP RULEBOOK</span>
     <h1>FOUR QUARTERS.<br>ONE BIG GAME.</h1>
-    <p>Start with the tabletop setup, learn every Action Card and defensive response, then explore all 20 Magic Cards and 10 animal identities. After four quarters, the team with the highest score wins.</p>
+    <p>Follow all NINE steps: sort five types of cards, set up the mat, choose teams, deal and roll dice, attack and defend, use Magic and animal abilities, then finish four quarters. The higher-scoring team wins.</p>
     <div class="stats"><span class="stat">🃏 7 ACTION CARDS / PLAYER / QUARTER</span><span class="stat">🪄 2 MAGIC CARDS / PLAYER / GAME</span><span class="stat">🐾 1 ROLE / PLAYER / GAME</span></div>
   </header>
-  <div class="note"><strong>Start here for the full rules.</strong><div>This rulebook covers setup, the field mat, starting possession, play timing, all six Action Cards and their counters, downs and scoring, 20 Magic Cards, and 10 Animal Role Cards. You can also learn with the <a href="strategy-tutorial-en.html?v=20261117-complete-game-day"><b>interactive coach tutorial</b></a>.</div></div>
-  <div class="jump">
-    <a href="#setup">1. Setup &amp; Teams</a><a href="#deal">2. Deal &amp; Kickoff</a><a href="#priority">3. Play Order</a><a href="#actions">4. Action Cards</a><a href="#scoring">5. Downs &amp; Points</a><a href="#magic">6. Magic Cards</a><a href="#roles">7. Animal Roles</a>
-  </div>
-  <section class="section" id="setup">
-    <div class="sectionHead"><div><h2>1 · SET UP THE GAME</h2><p>Five card types, one mat, two team markers, and one football card.</p></div><span class="counter">START HERE</span></div>
-    <div class="setupFlow">
-      <div class="step"><span class="stepNo">01</span><div><h3>SORT THE FIVE TYPES OF CARDS</h3><p>Separate all the cards into <b>five groups</b>. Keep them in their own piles throughout setup:</p>
-        <div class="types">
-          <span>🪄 <b>MAGIC CARDS</b><small>Unique one-use spells</small></span>
-          <span>🃏 <b>ACTION CARDS</b><small>RUN, PASS &amp; defenses</small></span>
-          <span>🐾 <b>ANIMAL ROLE CARDS</b><small>One animal per player</small></span>
-          <span>🏆 <b>SCORING CARDS</b><small>Track team points</small></span>
-          <span>🏈 <b>FOOTBALL CARD</b><small>One card marks possession</small></span>
-        </div>
-      </div></div>
-      <div class="step"><span class="stepNo">02</span><div><h3>OPEN THE FIELD MAT</h3><p>Unfold the game mat on the table. It tracks both teams' position on the football field. Take out the <b>red miniature football</b> (Red Team) and <b>blue miniature football</b> (Blue Team). Place <b>both team markers at the 50 | 50 midfield starting position</b>. The miniature footballs show team positions; they are <b>not</b> the Football Card used for possession.</p>
-        <div class="miniField" role="img" aria-label="Two team markers, red and blue, start at midfield 50–50"><span>RED SIDE</span><span class="fieldCenter"><b>50 | 50</b><i class="redMini">🏈 RED</i><i class="blueMini">🏈 BLUE</i></span><span>BLUE SIDE</span></div>
-      </div></div>
-      <div class="step"><span class="stepNo">03</span><div><h3>MAKE YOUR TEAMS</h3><p>Talk with the other players and decide who plays together. Even teams can be <b>1v1, 2v2, 3v3, or 4v4</b>. With an odd number of players, both sides may <b>mutually agree</b> to an uneven matchup, such as <b>1v2, 2v3, 3v4, or 4v5</b>. Uneven teams are a player choice, not a requirement. Decide which side is <b>Red</b> and which side is <b>Blue</b>.</p></div></div>
-      <div class="step"><span class="stepNo">04</span><div><h3>SET THE CARD SUPPLIES OUT</h3><p>Keep <b>Scoring Cards</b> where players on both teams can reach them. There is only <b>one Football Card</b>; put it in the middle of the table for now. Keep the five card types separate when dealing.</p></div></div>
-    </div>
-  </section>
-  <section class="section" id="deal">
-    <div class="sectionHead"><div><h2>2 · DEAL CARDS &amp; DECIDE WHO STARTS</h2><p>Deal before Quarter 1. Every player receives the same Action Card count.</p></div><span class="counter">7 EACH</span></div>
-    <div class="infoGrid">
-      <div class="info"><h3>🪄 Magic — 2 per game</h3><p>Shuffle all <b>20 unique Magic Cards</b>. Deal <b>2 Magic Cards to every player</b> for the entire game. Place all remaining Magic Cards <b>face down to one side</b> and leave them out of the game. Each Magic Card is single-use; a player may use both in the same quarter or save them. <b>There is no per-quarter Magic limit.</b></p></div>
-      <div class="info"><h3>🃏 Action — 7 per quarter</h3><p>Shuffle the Action Cards. Deal <b>exactly 7 Action Cards to EVERY player at the beginning of EVERY quarter</b>, regardless of team size: 1v1, 2v2, 3v3, 4v4, or a mutually agreed uneven matchup. Place the undealt Action Cards <b>face down to one side</b>, ready for effects that explicitly let players draw. Do not draw automatically after playing a card.</p></div>
-      <div class="info"><h3>🐾 Animal identity — 1 per game</h3><p>Shuffle the <b>10 different Animal Role Cards</b>. Deal <b>one animal per player</b> before the game starts. Each animal has its own special ability; animals have <b>no assigned team color</b>. Put leftover Animal Role Cards <b>face down to one side</b>, out of play.</p></div>
-      <div class="info"><h3>🏆 Scoring &amp; Football</h3><p>Keep Scoring Cards <b>within reach of both teams</b> to record points as they score. Leave the <b>single Football Card</b> at the center until starting possession is decided. The red and blue <b>miniature footballs remain at 50 | 50</b> until the field position changes.</p></div>
-    </div>
-    <div class="step dieStep"><span class="stepNo">05</span><div><h3>ROLL DICE TO CHOOSE THE FIRST OFFENSE</h3><p>Each team chooses <b>one player to roll</b>. <b>Before either player rolls</b>, both teams agree whether the <b>higher number</b> or the <b>lower number</b> wins. Then roll and compare. The winning team takes the <b>Football Card</b> and decides which of its players holds it to start the first Play. <b>Whoever holds the Football Card acts first.</b></p>
-      <div class="chain">AGREE: HIGH OR LOW WINS → BOTH SIDES ROLL → WINNER TAKES THE FOOTBALL CARD → BALL CARRIER STARTS</div>
-      <p class="minor">If both sides roll the same number, roll again to break the tie (standard suggested tie procedure).</p>
-    </div></div>
-    <div class="note"><strong>Deck-size check for large groups</strong><div>For a 4v5 matchup there are <b>9 players × 7 Action Cards = 63 Action Cards</b> needed just for the opening deal, before any optional draws. The earlier proposed 52-card Action Deck is <b>not enough</b> for this player count, so no fixed 52-card deck list is claimed here. The final Action Deck size and distribution still need to be confirmed.</div></div>
-  </section>
-  <section class="section" id="priority">
-    <div class="sectionHead"><div><h2>3 · CARD EFFECTS &amp; PLAY ORDER</h2><p>First resolve the stronger effects; then the normal football action.</p></div><span class="counter">PRIORITY</span></div>
-    <div class="priorityBar"><span>🪄 <b>1. MAGIC CARD</b><small>Highest effect priority</small></span><span class="prioArrow">→</span><span>🐾 <b>2. ANIMAL ROLE</b><small>Next priority</small></span><span class="prioArrow">→</span><span>🃏 <b>3. ACTION CARD</b><small>Resolve ordinary plays</small></span></div>
-    <div class="infoGrid">
-      <div class="info"><h3>🏈 The player with the football acts</h3><p><b>Only the current Football Card holder starts the offense</b> by playing RUN or PASS. Before a new Play, a teammate may receive possession if the current carrier has no attack card and the teammate does. An ordinary Play consists of one offensive action followed by its permitted defensive responses and final result.</p></div>
-      <div class="info"><h3>🪄 Magic → Role → Action</h3><p>When card effects compete, check and resolve them in this order: <b>Magic Cards first, then Animal Role abilities, then ordinary Action Cards</b>. This is effect priority, <b>not</b> a rule forcing players to spend all Magic Cards before anyone plays RUN/PASS. A Magic Card may be used at its own legal trigger, including in response to an Action Card. A Magic Card that specifically counters another Magic Card still works as written.</p></div>
-      <div class="info"><h3>⏱️ PLAY / QUARTER / GAME</h3><p><b>One Play:</b> the setup just before one RUN/PASS, that offensive Action Card, all reactions, and final resolution. <b>One Quarter:</b> one period of dealing and playing Action Cards until both teams run out of usable attacks. <b>One Game:</b> four quarters, with cumulative points deciding the winner.</p></div>
-      <div class="info"><h3>📣 Using an Animal Skill</h3><p>When a skill has a limit, <b>the use is spent as soon as the player announces it</b>, even if the play later fails. For example, WOLF can give or take a card from a teammate <b>once per Play, before the offense starts RUN or PASS</b>. That is not once for each individual card in the defense chain.</p></div>
-    </div>
-  </section>
-  <section class="section" id="actions">
-    <div class="sectionHead"><div><h2>4 · ALL SIX ACTION CARDS</h2><p>The offense begins a Play; the defense reacts and both teams may respond.</p></div><span class="counter">6 TYPES</span></div>
-    <div class="actionGrid">
-      <article class="actionCard"><img src="cards/run-card.webp" alt="RUN Action Card" loading="lazy"><div><h3>RUN</h3><p><b>Offense:</b> the ball carrier runs the football. If this Play succeeds, advance <b>10 yards</b>; the Football Card stays with the same player. <b>Defended by:</b> TACKLE or BREAK THROUGH. Some Role and Magic abilities alter this result.</p></div></article>
-      <article class="actionCard"><img src="cards/pass-card.webp" alt="PASS Action Card" loading="lazy"><div><h3>PASS</h3><p><b>Offense:</b> choose a teammate as the receiver. If the Play succeeds, advance <b>10 yards</b> and give the Football Card to that teammate. <b>Defended by:</b> INTERCEPTION or BREAK THROUGH. A successful INTERCEPTION gives the ball to the defender.</p></div></article>
-      <article class="actionCard"><img src="cards/tackle-card.webp" alt="TACKLE Action Card" loading="lazy"><div><h3>TACKLE</h3><p><b>Defense versus RUN:</b> stop the runner, preventing any yards gained. A normal TACKLE can be canceled by the attacking side's BLOCK, unless the defending player is BEAR using its stronger defense.</p></div></article>
-      <article class="actionCard"><img src="cards/interception-card.webp" alt="INTERCEPTION Action Card" loading="lazy"><div><h3>INTERCEPTION</h3><p><b>Defense versus PASS:</b> intercept the pass and take possession of the Football Card. A normal INTERCEPTION can be canceled by BLOCK. If the interception stands, the defense becomes the new offense, starting first down.</p></div></article>
-      <article class="actionCard"><img src="cards/block-card.webp" alt="BLOCK Action Card" loading="lazy"><div><h3>BLOCK</h3><p><b>Offensive response:</b> cancel an opposing TACKLE or INTERCEPTION so the original RUN/PASS can succeed, unless another defense applies. <b>BEAR exception:</b> if BEAR personally played TACKLE or INTERCEPTION with its skill active, opponents need <b>two BLOCK cards</b> to cancel it.</p></div></article>
-      <article class="actionCard"><img src="cards/blitz-card.webp" alt="BREAK THROUGH Action Card" loading="lazy"><div><h3>BREAK THROUGH</h3><p><b>Defense:</b> stop an opponent's RUN or PASS directly, or play it after the attacking side has used BLOCK to restore the final defense. If it stands at resolution, the offense gains no yards. Unlike INTERCEPTION, it does <b>not</b> steal the ball by itself.</p></div></article>
-    </div>
-    <div class="combos">
-      <h3>FOLLOW THE ACTION CARD CHAIN</h3>
-      <div class="chain">RUN → NO DEFENSE = <b>RUN SUCCEEDS · +10 YARDS</b></div>
-      <div class="chain">RUN → TACKLE = <b>RUN STOPPED · NEXT DOWN</b></div>
-      <div class="chain">RUN → TACKLE → BLOCK = <b>RUN SUCCEEDS</b> (unless defended again)</div>
-      <div class="chain">RUN → TACKLE → BLOCK → BREAK THROUGH = <b>RUN STOPPED</b></div>
-      <div class="chain">PASS → NO DEFENSE = <b>PASS SUCCEEDS · +10 YARDS · NEW CARRIER</b></div>
-      <div class="chain">PASS → INTERCEPTION = <b>BALL STOLEN · CHANGE POSSESSION</b></div>
-      <div class="chain">PASS → INTERCEPTION → BLOCK = <b>PASS SUCCEEDS</b> (unless defended again)</div>
-      <div class="chain">PASS → INTERCEPTION → BLOCK → BREAK THROUGH = <b>PASS STOPPED</b></div>
-      <div class="chain">RUN or PASS → BREAK THROUGH = <b>OFFENSE STOPPED</b> (unless Magic / Role overrides)</div>
-    </div>
-    <div class="note"><strong>After a Play:</strong><div>Used Action Cards go to the discard pile. If the defense stopped the Play, the offense gains no yards and consumes one down. If RUN succeeds, the same player keeps the Football Card; if PASS succeeds, the receiver takes it; if INTERCEPTION succeeds, the intercepting defender takes it. <b>No automatic Action Card draw</b> after any Play.</div></div>
-  </section>
-  <section class="section" id="scoring">
-    <div class="sectionHead"><div><h2>5 · DOWNS, SCORING &amp; QUARTERS</h2><p>Move the colored miniature football markers as the teams advance.</p></div><span class="counter">4 QUARTERS</span></div>
-    <div class="infoGrid">
-      <div class="info"><h3>1️⃣ Four downs for 10 yards</h3><p>A team has <b>four downs</b> to advance at least <b>10 yards</b>. A successful normal RUN or PASS moves <b>10 yards</b> and resets to first down. A stopped Play gains no yards and consumes a down. A failed fourth down turns over possession at the current spot. Mark field progress on the mat using your team's colored miniature football. Special 20-yard gains cannot skip the last 10-yard position: finish a Play from there to score.</p></div>
-      <div class="info"><h3>🏈 TOUCHDOWN — 6 points</h3><p>Successfully enter the opponent's end zone to score <b>6 points</b>. Take the appropriate Scoring Cards to record those points. The scoring team may then attempt an <b>extra-point kick (+1)</b>. After the attempt, the opponent receives the Football Card and begins a new first down from its own 30-yard line.</p></div>
-      <div class="info"><h3>🥅 FIELD GOAL — 3 points</h3><p>At the opponent's <b>40-, 30-, 20- or 10-yard line</b>, the team with possession may attempt a field goal before a new Play. Roll <b>two six-sided dice</b>; a successful kick scores <b>3 points</b>. On a made kick, the opponent starts a drive from its own 30. A missed kick changes possession at the kick spot (or the opponent's own 20 if the spot is inside its 10).</p></div>
-      <div class="info"><h3>🎲 Kick dice</h3><p>For an <b>extra point</b>, a two-dice total of <b>3+</b> succeeds. A field goal from the opponent's <b>10-yard line: 3+</b>; <b>20: 4+</b>; <b>30: 5+</b>; <b>40: 6+</b>. Magic effects such as GOAL SHIFT or GALE FORCE may still prevent a kick from scoring.</p></div>
-      <div class="info"><h3>🦶 PUNT and possession</h3><p>The offense can choose to <b>PUNT</b> on fourth down, or when no RUN/PASS cards remain. A punt moves the ball <b>40 yards</b> toward the opposing end zone and gives the Football Card to the other team; a punt into the opponent's end zone becomes a touchback at its own 20. In field-goal range, the offense may choose a kick instead.</p></div>
-      <div class="info"><h3>⏳ How a quarter ends</h3><p>There is <b>no clock timer</b>. Keep playing until <b>both teams have no usable RUN or PASS Action Cards</b>, and complete any Play already started. If just one team is out of attack cards, the other team may still attack. Each quarter begins with a fresh deal of <b>7 Action Cards to every player</b>.</p></div>
-      <div class="info"><h3>🔄 Between quarters</h3><p>Collect the Action Cards, reshuffle, and deal <b>7 to each player</b>. Scores, animal identities, unused Magic Cards and previously spent once-per-game Role Skills remain unchanged. Quarter-limited Role uses refresh; quarter-long Magic effects expire. Between Q1/Q2 and Q3/Q4, preserve the current ball situation unless your agreed kickoff rule requires a new drive.</p></div>
-      <div class="info"><h3>🏆 End of the game</h3><p>One game has exactly <b>four quarters</b>. Add up all touchdowns (6), successful extra points (+1), and field goals (3) using the Scoring Cards. <b>The team with the higher total score after Quarter 4 wins.</b> A tied game remains tied unless players agree on a tiebreaker.</p></div>
-    </div>
-    <div class="note"><strong>Draws and the end of a quarter:</strong><div>Players only draw extra Action Cards if a specific skill tells them to. Resolve legally announced draws before declaring both teams out of attacks. As soon as the quarter is declared finished, no one may start a new Play in that quarter.</div></div>
-  </section>
+  <div class="note"><strong>Start here for the full rules.</strong><div>This complete rulebook follows NINE steps from unpacking to victory. It includes all Action Card interactions, all 20 Magic Cards, and all 10 Animal Role Cards. You can also learn with the <a href="strategy-tutorial-en.html?v=20261117-complete-game-day"><b>interactive coach tutorial</b></a>.</div></div>
   
-  <section class="section" id="magic">
-    <div class="sectionHead"><div><h2>20 MAGIC CARDS</h2><p>20 unique effects. Every Magic Card is one-use only, and you decide when to cast it as long as its trigger is legal. No per-quarter Magic limit.</p></div><span class="counter">20 / 20</span></div>
+<div class="jump">
+  <a href="#setup">1. Prepare Cards</a>
+  <a href="#field">2. Set Up the Mat</a>
+  <a href="#deal">3. Teams &amp; Kickoff</a>
+  <a href="#offense">4. How to Attack</a>
+  <a href="#defense">5. How to Defend</a>
+  <a href="#magic">6. Magic Cards</a>
+  <a href="#roles">7. Animal Roles</a>
+  <a href="#actions">8. Action Cards</a>
+  <a href="#victory">9. How to Win</a>
+</div>
+
+<section class="section" id="setup">
+  <div class="sectionHead"><div><h2>STEP 1 · PREPARE THE FIVE CARD TYPES</h2><p>Sort everything before you start dealing. Do not mix these categories together.</p></div><span class="counter">5 TYPES</span></div>
+  <div class="step"><span class="stepNo">01</span><div>
+    <h3>MAKE FIVE SEPARATE PILES</h3>
+    <p>Open the card set and organize it into the following <b>five card types</b>. Each type has a different job. They are not all dealt in the same way.</p>
+    <div class="types">
+      <span>🪄 <b>MAGIC CARDS</b><small>20 different one-use spells. Each human player gets 2 for the whole game.</small></span>
+      <span>🃏 <b>ACTION CARDS</b><small>RUN, PASS, TACKLE, INTERCEPTION, BLOCK, BREAK THROUGH. Each human player gets 7 per quarter.</small></span>
+      <span>🐾 <b>ANIMAL ROLE CARDS</b><small>10 unique animals with different abilities. Normally 1 per person; 1v1 uses 2 per person.</small></span>
+      <span>🏆 <b>SCORING CARDS</b><small>Record the points earned by Red and Blue. Keep these in reach of both teams.</small></span>
+      <span>🏈 <b>FOOTBALL CARD</b><small>There is only one. Whoever holds it has possession and starts the offense.</small></span>
+    </div>
+    <div class="ruleExample"><b>DO NOT CONFUSE THE FOOTBALL CARD WITH THE MINI FOOTBALLS.</b> The Football Card shows <b>who has possession</b>; the red and blue miniature footballs on the mat show the teams' <b>field positions</b>.</div>
+  </div></div>
+</section>
+
+<section class="section" id="field">
+  <div class="sectionHead"><div><h2>STEP 2 · UNFOLD THE FIELD MAT</h2><p>Both teams begin in the middle. The colored markers stay on the mat.</p></div><span class="counter">50 | 50</span></div>
+  <div class="setupFlow">
+    <div class="step"><span class="stepNo">02</span><div><h3>OPEN AND POSITION THE GAME MAT</h3><p>Lay the football field mat flat where everyone can see it. The mat is your playing field: use it to track where Red Team and Blue Team are during the match. Make sure both teams can read the yard lines and see the end zones.</p></div></div>
+    <div class="step"><span class="stepNo">03</span><div><h3>PLACE THE RED AND BLUE MINI FOOTBALLS</h3><p>Take out the <b>red miniature football</b> for Red Team and the <b>blue miniature football</b> for Blue Team. Place <b>both at the center 50 | 50 starting position</b>. After successful plays, move the corresponding colored miniature football on the mat to show progress. Do not pass these miniatures from player to player; possession is shown by the single Football Card.</p>
+      <div class="miniField" role="img" aria-label="Red and blue team position markers begin together at the fifty-fifty midfield line"><span>RED SIDE</span><span class="fieldCenter"><b>50 | 50</b><i class="redMini">🏈 RED</i><i class="blueMini">🏈 BLUE</i></span><span>BLUE SIDE</span></div>
+    </div></div>
+    <div class="step"><span class="stepNo">04</span><div><h3>PUT SCORING CARDS AND THE FOOTBALL CARD ON THE TABLE</h3><p>Place the <b>Scoring Cards</b> somewhere that both teams can easily reach. Keep Red's and Blue's points separate as the game goes on. Place the <b>only Football Card</b> in the center of the table until the first possession is decided by rolling dice. Do not give it to either team yet.</p></div></div>
+  </div>
+</section>
+
+<section class="section" id="deal">
+  <div class="sectionHead"><div><h2>STEP 3 · CHOOSE TEAMS, DEAL &amp; KICK OFF</h2><p>Agree on teams first, deal your cards, then roll to find out who goes on offense.</p></div><span class="counter">7 EACH</span></div>
+  <div class="setupFlow">
+    <div class="step"><span class="stepNo">05</span><div><h3>CHOOSE WHO PLAYS TOGETHER</h3>
+      <p>Players decide who joins Red Team and who joins Blue Team. Balanced matchups include <b>1v1, 2v2, 3v3 and 4v4</b>. If there are an odd number of people, both sides may <b>agree</b> to an uneven game such as <b>1v2, 2v3, 3v4 or 4v5</b>. The players on both teams decide whether the proposed matchup is fair and fun for them.</p>
+      <div class="ruleExample"><b>SPECIAL RULE FOR 1v1:</b> Each <b>human player controls TWO animal characters</b>. Deal two distinct Animal Role Cards to each human player. You can use PASS to throw the ball from one of your animal characters to the other. <b>Each human still gets only 7 Action Cards per quarter and 2 Magic Cards for the entire game</b>; controlling two animals does not double your Action or Magic hand.</div>
+    </div></div>
+    <div class="step"><span class="stepNo">06</span><div><h3>DEAL MAGIC CARDS — FOR THE WHOLE GAME</h3><p>Shuffle the <b>20 unique Magic Cards</b> face down. Deal <b>2 to every human player</b>, regardless of team size. Put the leftover Magic Cards <b>face down, off to the side</b>, without revealing them. Players keep unused Magic Cards into later quarters. There are no new Magic draws between quarters. You may use both cards in the same quarter if their conditions allow it, but each individual Magic Card can be used <b>only once</b>.</p></div></div>
+    <div class="step"><span class="stepNo">07</span><div><h3>DEAL ANIMAL ROLE CARDS — FOR THE WHOLE GAME</h3><p>Shuffle the <b>10 different Animal Role Cards</b> face down. Normally, deal <b>one animal to each human player</b>, with no team-specific roles. <b>For 1v1, deal two animal characters to each human player instead.</b> Set the unused Animal Role Cards aside face down. Each player's animal abilities stay with that character for all four quarters unless a card says otherwise.</p></div></div>
+    <div class="step"><span class="stepNo">08</span><div><h3>DEAL ACTION CARDS — FOR QUARTER 1</h3><p>Shuffle the Action Card deck and deal <b>EXACTLY 7 ACTION CARDS to each human player</b>. This is always seven: <b>1v1, 2v2, 3v3, 4v4 and agreed uneven teams</b> all use the same per-person count. Place the undealt Action Cards <b>face down at the side</b>; they can be drawn only when a card effect specifically says to draw. Do not draw a replacement after every card played.</p>
+      <table class="ruleTable"><thead><tr><th>Matchup</th><th>Humans</th><th>Action cards dealt at the start of each quarter</th></tr></thead><tbody>
+      <tr><td>1v1</td><td>2</td><td>14 total — 7 each (and 2 animal roles each)</td></tr>
+      <tr><td>2v2</td><td>4</td><td>28 total — 7 each</td></tr>
+      <tr><td>3v3</td><td>6</td><td>42 total — 7 each</td></tr>
+      <tr><td>4v4</td><td>8</td><td>56 total — 7 each</td></tr>
+      <tr><td>4v5</td><td>9</td><td>63 total — 7 each</td></tr>
+      </tbody></table>
+      <div class="ruleExample"><b>NOT ENOUGH ACTION CARDS?</b> For a larger group, use Action Cards from <b>another purchased copy of the game</b> to make up the required seven cards per person. Do not automatically add duplicate Magic or Animal Role Cards to the unique 20-card Magic set or unique 10-card Role set.</div>
+    </div></div>
+    <div class="step"><span class="stepNo">09</span><div><h3>ROLL DICE TO DECIDE WHO STARTS</h3><p>Red and Blue each choose <b>one representative to roll a die</b>. <b>BEFORE either side rolls</b>, the teams agree on which rule will decide the winner: <b>higher number wins</b> or <b>lower number wins</b>. Then both representatives roll. If the numbers are equal, roll again until there is a winner.</p><p>The winning team takes the <b>single Football Card</b> from the center and gives it to the animal character who will carry the ball first. <b>The character holding the Football Card starts the first offensive Play.</b></p>
+      <div class="chain"><b>AGREE ON HIGH OR LOW → ROLL → WINNER TAKES THE FOOTBALL CARD → HOLDER ATTACKS FIRST</b></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="section" id="offense">
+  <div class="sectionHead"><div><h2>STEP 4 · HOW TO ATTACK</h2><p>Only the side with the Football Card may start an offensive Play.</p></div><span class="counter">OFFENSE</span></div>
+  <div class="setupFlow">
+    <div class="step"><span class="stepNo">01</span><div><h3>CHECK WHO HAS THE FOOTBALL CARD</h3><p>The animal character currently holding the <b>Football Card</b> is the <b>ball carrier</b>. <b>Only the ball carrier</b> may begin a normal attack. The opponent cannot announce its own RUN or PASS until it gains possession. In a 1v1 match, one human controls two animal characters, but the Football Card belongs to <b>one character at a time</b>.</p></div></div>
+    <div class="step"><span class="stepNo">02</span><div><h3>CHOOSE YOUR ATTACK: RUN OR PASS</h3>
+      <p><b>RUN:</b> The ball carrier plays a RUN Action Card. If the attack succeeds, advance <b>10 yards</b> and keep the Football Card with that same character.</p>
+      <p><b>PASS:</b> The ball carrier plays a PASS Action Card and names a teammate animal character as the receiver <b>before the defense responds</b>. If the pass succeeds, advance <b>10 yards</b> and hand the Football Card to the named receiver. <b>In 1v1</b>, PASS is made between the two animal characters controlled by the same human player.</p>
+      <div class="ruleExample"><b>NO FOOTBALL CARD = NO NORMAL ATTACK.</b> A player cannot use an ordinary RUN or PASS to start an attack for the opposing team or from an animal who does not have the ball. A Magic Card may create its own special effect only when its text permits.</div>
+    </div></div>
+    <div class="step"><span class="stepNo">03</span><div><h3>LET THE DEFENSE RESPOND</h3><p>Once RUN or PASS is played, <b>pause</b> so the opposing side can respond. The defending team may play its legal defense (TACKLE against RUN; INTERCEPTION against PASS; or BREAK THROUGH when allowed). The offense may respond with BLOCK when appropriate. Magic and Animal Role abilities can change the outcome—resolve them according to the <b>Magic → Animal Role → Action</b> priority and each ability's own trigger.</p></div></div>
+    <div class="step"><span class="stepNo">04</span><div><h3>RESOLVE THE PLAY, MOVE THE MARKER, THEN CHECK THE DOWN</h3><p>If the attack succeeds, move the attacking side's colored miniature football forward on the mat, <b>normally by 10 yards</b>. A successful 10-yard gain earns a new first down. If the attack is stopped, do <b>not</b> advance; instead, count one down used. A failed fourth down changes possession, unless a special ability changes the result.</p></div></div>
+    <div class="step"><span class="stepNo">05</span><div><h3>START THE NEXT PLAY ONLY AFTER EVERYTHING SETTLES</h3><p>Finish all defensive replies, counter Magic, Role effects, movement, points, and possession changes. Used Action Cards go to the discard pile. Only then may the current ball carrier announce another normal RUN or PASS. A teammate who has a usable attack card may become the new carrier before the next Play under the team handoff rule when the current carrier has none.</p></div></div>
+  </div>
+  <div class="combos"><h3>OFFENSE EXAMPLES</h3>
+    <div class="chain">🏈 <b>RED HOLDS THE FOOTBALL CARD</b> → RED plays RUN → no valid defense → RED gains 10 yards → RED starts a new first down</div>
+    <div class="chain">🏈 <b>RED HOLDS THE FOOTBALL CARD</b> → RED plays PASS to a teammate → no valid defense → advance 10 yards → teammate receives the Football Card</div>
+    <div class="chain">🏈 RED plays RUN → BLUE plays TACKLE → attack fails → gain 0 yards → one down is used</div>
+  </div>
+</section>
+
+<section class="section" id="defense">
+  <div class="sectionHead"><div><h2>STEP 5 · HOW TO DEFEND</h2><p>The opposing team may act as soon as the ball carrier plays an offensive Action Card.</p></div><span class="counter">DEFENSE</span></div>
+  <div class="setupFlow">
+    <div class="step"><span class="stepNo">01</span><div><h3>WAIT FOR THE OPPONENT TO START AN ATTACK</h3><p>When the opponent has the Football Card, your team is <b>on defense</b>. Wait until its ball carrier announces and plays RUN or PASS. <b>After that offensive card is played, the defending side may respond.</b> You cannot start a normal defensive chain with TACKLE or INTERCEPTION before there is a legal attack to defend.</p></div></div>
+    <div class="step"><span class="stepNo">02</span><div><h3>MATCH THE DEFENSE TO THE ATTACK</h3><p>Against <b>RUN</b>, play <b>TACKLE</b> to stop the run. Against <b>PASS</b>, play <b>INTERCEPTION</b> to intercept the pass and take the Football Card if the interception succeeds. <b>BREAK THROUGH</b> may stop either RUN or PASS directly, or be used as a further defensive reply after BLOCK as permitted by its effect.</p>
+      <div class="ruleExample"><b>IMPORTANT:</b> A successful TACKLE or BREAK THROUGH stops the gain but does <b>not automatically steal the Football Card</b>. A successful INTERCEPTION <b>does</b> give possession to the intercepting defender.</div>
+    </div></div>
+    <div class="step"><span class="stepNo">03</span><div><h3>GIVE THE OFFENSE A CHANCE TO COUNTER</h3><p>If the defense plays <b>TACKLE</b> or <b>INTERCEPTION</b>, the attacking side may answer with <b>BLOCK</b>. One normal BLOCK cancels one normal TACKLE or INTERCEPTION. If <b>BEAR</b> personally played the TACKLE or INTERCEPTION, the attacking side needs <b>two BLOCK cards</b> to cancel that defense. The defense may still use <b>BREAK THROUGH</b> after a successful BLOCK chain where permitted.</p></div></div>
+    <div class="step"><span class="stepNo">04</span><div><h3>CHECK FOR MAGIC AND ROLE EFFECTS</h3><p>Some cards change this ordinary result. For instance, GRAVITY can cancel FLIGHT; SHATTER can remove a MAGIC BARRIER; FOX may force an INTERCEPTION roll; TIGER can make one RUN immune to normal Action Card defense. If abilities conflict, use the game's <b>Magic → Animal Role → Action</b> effect priority, while still honoring the trigger on each card.</p></div></div>
+    <div class="step"><span class="stepNo">05</span><div><h3>COMPLETE THE DEFENSIVE RESULT</h3><p>If a valid defense remains, the offense does not gain yards and uses a down. If a valid INTERCEPTION remains, the defender takes the Football Card and its team gains possession. If BLOCK successfully removes the defense and there is no remaining counter, the original RUN or PASS succeeds. Put every used Action Card into the discard pile.</p></div></div>
+  </div>
+  <div class="combos"><h3>FOLLOW THE RESPONSE CHAIN</h3>
+    <div class="chain"><b>RUN → TACKLE</b> = run stopped; 0 yards; one down used</div>
+    <div class="chain"><b>RUN → TACKLE → BLOCK</b> = RUN succeeds if no further defense</div>
+    <div class="chain"><b>RUN → TACKLE → BLOCK → BREAK THROUGH</b> = run stopped</div>
+    <div class="chain"><b>PASS → INTERCEPTION</b> = defending player takes the Football Card</div>
+    <div class="chain"><b>PASS → INTERCEPTION → BLOCK</b> = PASS succeeds if no further defense</div>
+    <div class="chain"><b>PASS → INTERCEPTION → BLOCK → BREAK THROUGH</b> = PASS stopped; no interception occurs</div>
+    <div class="chain"><b>RUN or PASS → BREAK THROUGH</b> = attack stopped unless a valid Magic or Role effect changes it</div>
+  </div>
+</section>
+<section class="section" id="magic">
+    <div class="sectionHead"><div><h2>STEP 6 · MAGIC CARDS</h2><p>Before the match, each HUMAN PLAYER receives two unique Magic Cards for the entire game. Read each effect and its trigger below. Every Magic Card can be used only once, with no limit on how many you use in a single quarter.</p></div><span class="counter">20 UNIQUE</span></div>
+    <div class="infoGrid">
+       <div class="info"><h3>WHEN YOU MAY USE MAGIC</h3><p>You decide when to play a Magic Card, <b>as long as its printed condition is met</b>. Some are played during an offensive Play, some answer another Magic Card, some affect a kick, and some last until the end of the quarter. A reaction can happen after an opponent has played an Action Card when the spell specifically allows it.</p></div>
+       <div class="info"><h3>ONE USE — THEN OUT OF THE GAME</h3><p>Magic Cards are <b>not drawn again</b> after use and are <b>not redealt</b> between quarters. You may spend both of your starting Magic Cards during Quarter 1 or save them for later. A Magic Card is never forced to roll because of ROLL OF FATE. A triggered GUARDIAN also counts as using that one physical card, but there is <b>no per-quarter Magic limit</b>.</p></div>
+       <div class="info"><h3>HOW TO RESOLVE A MAGIC RESPONSE</h3><p>Declare the Magic Card and its target, then let opponents use any eligible counter Magic Card. Resolve the specific counter first (for example, GRAVITY can stop FLIGHT, SHATTER can break MAGIC BARRIER). Then settle the affected Play and put each used Magic Card out of the game.</p></div>
+       <div class="info"><h3>HOW LONG DOES THE EFFECT LAST?</h3><p>Unless the description says otherwise, a spell resolves immediately or during its current Play. Quarter-long effects such as INVISIBILITY and ROLL OF FATE expire at the end of that quarter. Playing a Magic Card does not use up an Animal Role ability.</p></div>
+    </div>
     <div class="searchWrap"><label for="search">🔎 FIND A CARD</label><input id="search" type="search" placeholder="Try FLIGHT, RUN, TRUE SIGHT, BEAR…" autocomplete="off"></div>
     <p id="searchInfo" aria-live="polite">Showing all 30 cards.</p>
     <div class="cardGrid" id="magicGrid"><article class="tile magic-tile" data-search="magic 01 control time stop freeze the action during this play no animal except the caster may play action cards this includes the caster s teammates magic cards are unaffected"><div class="tileTop"><span class="num">MAGIC 01</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">⏳</div><h3>TIME STOP</h3><div class="alias">Freeze the action</div><p>During this play, no animal except the caster may play Action Cards. This includes the caster's teammates. Magic Cards are unaffected.</p></article>
@@ -218,7 +263,13 @@ h1{font:950 clamp(36px,5vw,62px)/.99 "Arial Black",Arial,sans-serif;margin:17px 
 <article class="tile magic-tile" data-search="magic 20 control mystic fog redistribute every hand every player shuffles their action cards back into the shared action deck then draws exactly as many action cards as they held before magic cards and role cards are unchanged"><div class="tileTop"><span class="num">MAGIC 20</span><span class="type">Control</span></div><div class="symbol" aria-hidden="true">🌁</div><h3>MYSTIC FOG</h3><div class="alias">Redistribute every hand</div><p>Every player shuffles their Action Cards back into the shared Action Deck, then draws exactly as many Action Cards as they held before. Magic Cards and Role Cards are unchanged.</p></article></div>
   </section>
   <section class="section" id="roles">
-    <div class="sectionHead"><div><h2>10 ANIMAL ROLES</h2><p>Any team can draw any animal. Skills are different for every character.</p></div><span class="counter">10 / 10</span></div>
+    <div class="sectionHead"><div><h2>STEP 7 · ANIMAL ROLE CARDS</h2><p>Each character has a different football skill. Role cards are not tied to team colors. The 1v1 exception gives each human player two animal characters.</p></div><span class="counter">10 / 10</span></div>
+    <div class="infoGrid">
+      <div class="info"><h3>HOW TO USE YOUR ANIMAL</h3><p>Every person normally controls <b>one animal character</b> and uses that animal's ability when its trigger applies. In <b>1v1, each of the two human players controls two animal characters</b>, so that player can PASS between their own two characters.</p></div>
+      <div class="info"><h3>ABILITY LIMITS</h3><p>Some abilities are always available, some are <b>once per Play</b>, some <b>once per Quarter</b>, and some <b>once per Game</b>. A Play includes an entire offensive action and all responses. When a player declares a limited ability, <b>that use is spent immediately</b>, even if the ability fails or the Play is stopped.</p></div>
+      <div class="info"><h3>ROLE CARDS ARE NOT MAGIC CARDS</h3><p>Role abilities do not consume Magic Cards. If ROLL OF FATE is active, a player other than its caster must roll for an Animal Role ability; 1–3 fails and 4–6 succeeds. A limited use is still spent when declared even if the roll fails.</p></div>
+      <div class="info"><h3>WOLF'S ONCE-PER-PLAY EXAMPLE</h3><p>Before a RUN or PASS starts, WOLF can give a teammate one card or take one card from a teammate. If RUN → TACKLE → BLOCK → BREAK THROUGH follows, all four cards still belong to <b>the same Play</b>. WOLF cannot transfer another card in the middle of that chain.</p></div>
+    </div>
     <div class="note"><strong>Role skill statuses:</strong> EAGLE, LION and CAT are proposed abilities. The proposed once-per-quarter limits for RABBIT and BEAR still need confirmation. The other animal skills follow the current discussion. <b>All limited Role abilities are spent when announced.</b></div>
     <div class="cardGrid" id="roleGrid"><article class="tile role-tile" data-search="role 01 quarterly raccoon sneaky thief once per quarter discard one card from your hand to steal one action card from any player you can never steal magic cards or animal role cards declaring the skill uses up this quarter s activation even if it later fails"><div class="tileTop"><span class="num">ROLE 01</span><span class="type roleTag">Quarterly</span></div><div class="symbol" aria-hidden="true">🦝</div><h3>RACCOON</h3><div class="alias">SNEAKY THIEF</div><p>Once per quarter, discard one card from your hand to steal one Action Card from any player. You can never steal Magic Cards or Animal Role Cards. Declaring the skill uses up this quarter's activation even if it later fails.</p></article>
 <article class="tile role-tile" data-search="role 02 proposed limit rabbit speed burst playtest limit once per quarter declare speed burst when playing run if the run succeeds gain 20 yards instead of 10 subject to the final 10-yard line the use is spent when declared even if the run fails earlier unlimited use is under balance review"><div class="tileTop"><span class="num">ROLE 02</span><span class="type roleTag">Proposed limit</span></div><div class="symbol" aria-hidden="true">🐇</div><h3>RABBIT</h3><div class="alias">SPEED BURST</div><p>Playtest limit: once per quarter, declare SPEED BURST when playing RUN. If the RUN succeeds, gain 20 yards instead of 10 (subject to the final 10-yard line). The use is spent when declared, even if the RUN fails. Earlier unlimited use is under balance review.</p></article>
@@ -231,28 +282,65 @@ h1{font:950 clamp(36px,5vw,62px)/.99 "Arial Black",Arial,sans-serif;margin:17px 
 <article class="tile role-tile" data-search="role 09 draft cat lucky paw proposed skill once per quarter before the next play starts draw one action card from the shared deck announcing the skill spends the use even if the card cannot be drawn"><div class="tileTop"><span class="num">ROLE 09</span><span class="type draft">Draft</span></div><div class="symbol" aria-hidden="true">🐱</div><h3>CAT</h3><div class="alias">LUCKY PAW</div><p>Proposed skill — once per quarter, before the next Play starts, draw one Action Card from the shared deck. Announcing the skill spends the use, even if the card cannot be drawn.</p></article>
 <article class="tile role-tile" data-search="role 10 always on dog play switch you may play a pass card as run instead resolve it as a run including the normal run defense rules"><div class="tileTop"><span class="num">ROLE 10</span><span class="type roleTag">Always on</span></div><div class="symbol" aria-hidden="true">🐶</div><h3>DOG</h3><div class="alias">PLAY SWITCH</div><p>You may play a PASS card as RUN instead; resolve it as a RUN, including the normal RUN defense rules.</p></article></div>
   </section>
-  <section class="details">
-    <h2>IMPORTANT RULE CLARIFICATIONS</h2>
-    <ul>
-      <li><b>One game = four quarters.</b> A quarter ends only when both sides have no usable RUN/PASS, after finishing the current Play. There is no clock countdown.</li>
-      <li><b>Every player receives 7 Action Cards per quarter, regardless of team size.</b> Keep undealt cards face down. Even 4v5 is possible only with enough cards to deal at least 63.</li>
-      <li><b>Five card types:</b> Magic, Action, Animal Role, Scoring and the single Football Card. Red and blue miniature footballs on the mat mark each team’s position and begin together at 50 | 50.</li>
-      <li><b>Starting possession:</b> Choose one roller per team, agree whether high or low wins before rolling, then award the Football Card to the winning team. The holder acts first.</li>
-      <li><b>Effect priority:</b> MAGIC → ANIMAL ROLE → ACTION; this priority does not override a card’s printed activation timing or a direct counter effect.</li>
-      <li><b>Magic Cards:</b> Each player receives only two for the entire game. You may use both in the same quarter or save them. Each Magic Card is consumed after one use; none are redealt.</li>
-      <li><b>Play / Quarter / Game:</b> One Play starts before the offensive RUN/PASS and ends after all reactions resolve. A Quarter ends when both teams run out of attacks. The Game consists of all four quarters.</li>
-      <li><b>Role skills:</b> Limited uses are spent as soon as the player declares the skill. No refunds for failure. Persistent passive effects apply only while their conditions hold.</li>
-      <li><b>WOLF:</b> Transfers one card before a Play starts, at most once for that Play. It is not a separate turn for every card played.</li>
-      <li><b>INVISIBILITY:</b> The carrier is invisible throughout the quarter. Consecutive RUN plays remain hidden until PASS; once passed, the football stays visible.</li>
-      <li><b>TRUE SIGHT:</b> An opponent who has used it during the same quarter can defend an invisible RUN with the correct Action Card.</li>
-      <li><b>CHAOS:</b> Targets a <b>teammate on your own team</b>, not an opponent. The teammate returns next quarter.</li>
-      <li><b>REWIND:</b> May be used after a touchdown or field goal. Restore this Play's initial field state; retain scores, current hands, deck and spent cards.</li>
-      <li><b>ROLL OF FATE:</b> Only Action Cards and Animal Role skills must roll; no Magic Card ever needs the roll.</li>
-    </ul>
-    <p><b>Still to finalize:</b> Action Deck card quantities (4v5 requires at least 63 Action Cards before bonus draws); PASS receiving rules in 1v1 without teammates; whether a REWIND replay may score again; the halftime opening possession rule; Role-skill limits for RABBIT and BEAR; and the suggested EAGLE, LION and CAT skills. These have not been silently treated as finalized.</p>
+  <section class="section" id="actions">
+    <div class="sectionHead"><div><h2>STEP 8 · ALL SIX ACTION CARDS</h2><p>Keep this quick reference open when deciding whether a card can attack, defend, counter, or steal the Football Card.</p></div><span class="counter">6 ACTION TYPES</span></div>
+    <div class="actionGrid">
+      <article class="actionCard"><img src="cards/run-card.webp" alt="RUN Action Card" loading="lazy"><div><h3>RUN</h3><p><b>Offense:</b> the ball carrier runs the football. If this Play succeeds, advance <b>10 yards</b>; the Football Card stays with the same player. <b>Defended by:</b> TACKLE or BREAK THROUGH. Some Role and Magic abilities alter this result.</p></div></article>
+      <article class="actionCard"><img src="cards/pass-card.webp" alt="PASS Action Card" loading="lazy"><div><h3>PASS</h3><p><b>Offense:</b> choose a teammate as the receiver. If the Play succeeds, advance <b>10 yards</b> and give the Football Card to that teammate. <b>Defended by:</b> INTERCEPTION or BREAK THROUGH. A successful INTERCEPTION gives the ball to the defender.</p></div></article>
+      <article class="actionCard"><img src="cards/tackle-card.webp" alt="TACKLE Action Card" loading="lazy"><div><h3>TACKLE</h3><p><b>Defense versus RUN:</b> stop the runner, preventing any yards gained. A normal TACKLE can be canceled by the attacking side's BLOCK, unless the defending player is BEAR using its stronger defense.</p></div></article>
+      <article class="actionCard"><img src="cards/interception-card.webp" alt="INTERCEPTION Action Card" loading="lazy"><div><h3>INTERCEPTION</h3><p><b>Defense versus PASS:</b> intercept the pass and take possession of the Football Card. A normal INTERCEPTION can be canceled by BLOCK. If the interception stands, the defense becomes the new offense, starting first down.</p></div></article>
+      <article class="actionCard"><img src="cards/block-card.webp" alt="BLOCK Action Card" loading="lazy"><div><h3>BLOCK</h3><p><b>Offensive response:</b> cancel an opposing TACKLE or INTERCEPTION so the original RUN/PASS can succeed, unless another defense applies. <b>BEAR exception:</b> if BEAR personally played TACKLE or INTERCEPTION with its skill active, opponents need <b>two BLOCK cards</b> to cancel it.</p></div></article>
+      <article class="actionCard"><img src="cards/blitz-card.webp" alt="BREAK THROUGH Action Card" loading="lazy"><div><h3>BREAK THROUGH</h3><p><b>Defense:</b> stop an opponent's RUN or PASS directly, or play it after the attacking side has used BLOCK to restore the final defense. If it stands at resolution, the offense gains no yards. Unlike INTERCEPTION, it does <b>not</b> steal the ball by itself.</p></div></article>
+    </div>
+    <div class="combos">
+      <h3>FOLLOW THE ACTION CARD CHAIN</h3>
+      <div class="chain">RUN → NO DEFENSE = <b>RUN SUCCEEDS · +10 YARDS</b></div>
+      <div class="chain">RUN → TACKLE = <b>RUN STOPPED · NEXT DOWN</b></div>
+      <div class="chain">RUN → TACKLE → BLOCK = <b>RUN SUCCEEDS</b> (unless defended again)</div>
+      <div class="chain">RUN → TACKLE → BLOCK → BREAK THROUGH = <b>RUN STOPPED</b></div>
+      <div class="chain">PASS → NO DEFENSE = <b>PASS SUCCEEDS · +10 YARDS · NEW CARRIER</b></div>
+      <div class="chain">PASS → INTERCEPTION = <b>BALL STOLEN · CHANGE POSSESSION</b></div>
+      <div class="chain">PASS → INTERCEPTION → BLOCK = <b>PASS SUCCEEDS</b> (unless defended again)</div>
+      <div class="chain">PASS → INTERCEPTION → BLOCK → BREAK THROUGH = <b>PASS STOPPED</b></div>
+      <div class="chain">RUN or PASS → BREAK THROUGH = <b>OFFENSE STOPPED</b> (unless Magic / Role overrides)</div>
+    </div>
+    <div class="note"><strong>After a Play:</strong><div>Used Action Cards go to the discard pile. If the defense stopped the Play, the offense gains no yards and consumes one down. If RUN succeeds, the same player keeps the Football Card; if PASS succeeds, the receiver takes it; if INTERCEPTION succeeds, the intercepting defender takes it. <b>No automatic Action Card draw</b> after any Play.</div></div>
   </section>
   
-  <footer class="footer">TAILS &amp; TACKLES · GAME DAY MODE · MAGIC &amp; ANIMAL ROLE REFERENCE</footer>
+<section class="section" id="victory">
+  <div class="sectionHead"><div><h2>STEP 9 · SCORE POINTS &amp; WIN THE GAME</h2><p>Play four quarters and keep a running score using the Scoring Cards.</p></div><span class="counter">HIGH SCORE WINS</span></div>
+  <div class="infoGrid">
+    <div class="info"><h3>🏈 FOUR DOWNS TO GAIN 10 YARDS</h3><p>The team with possession gets <b>four downs</b> to gain at least 10 yards. A normal successful RUN or PASS gains <b>10 yards</b> and earns a new first down. If the defense stops the Play, gain 0 yards and advance to the next down. If fourth down fails, the defending team receives the Football Card at the current spot and starts its own first down. Enhanced 20-yard moves cannot skip the final 10-yard line: complete a Play from there to score a touchdown.</p></div>
+    <div class="info"><h3>6️⃣ TOUCHDOWN = 6 POINTS</h3><p>If the offense successfully advances into the opponent's end zone, it scores a <b>TOUCHDOWN worth 6 points</b>. Record those points with the Scoring Cards. The team that scored may then choose to attempt a one-point <b>extra-point kick</b>.</p></div>
+    <div class="info"><h3>➕ EXTRA-POINT KICK = 1 POINT</h3><p>After a touchdown, the scoring team may attempt the kick. Roll <b>two six-sided dice</b>. A total of <b>3 or more</b> normally scores the extra point. GOAL SHIFT, GALE FORCE and other applicable effects may change the result. After the kick attempt, the team that was scored on receives the Football Card and begins a new first down from its own <b>30-yard line</b>.</p></div>
+    <div class="info"><h3>🥅 FIELD GOAL = 3 POINTS</h3><p>When the offense is close enough—at the opponent's <b>40-, 30-, 20- or 10-yard line</b>—it may attempt a field goal rather than starting the next normal RUN/PASS. Roll two dice; if successful, score <b>3 points</b> and record them with Scoring Cards. After a successful field goal the opponent starts from its own <b>30-yard line</b>. After a missed field goal, the opponent takes possession at the kick spot (or its own 20 if the spot is inside its 10).</p></div>
+    <div class="info"><h3>🎲 FIELD-GOAL ROLL TABLE</h3><p>Use <b>two six-sided dice</b>. The required minimum total is: <b>opponent's 10-yard line: 3+</b>; <b>20-yard line: 4+</b>; <b>30-yard line: 5+</b>; <b>40-yard line: 6+</b>. For an <b>extra-point kick: 3+</b>. Any legally played kicking Magic or Role abilities apply to the kick before the final result.</p></div>
+    <div class="info"><h3>🦶 PUNT WHEN YOU NEED TO HAND OVER THE BALL</h3><p>Instead of trying fourth down, the offense may choose to <b>PUNT</b>. If its team has no RUN or PASS left, it can also punt rather than remain stuck. Move the ball <b>40 yards</b> toward the opponent's end zone and give the Football Card to the other team. A punt into or beyond the opponent's end zone is a <b>touchback</b>; the receiving team begins on its own <b>20-yard line</b>.</p></div>
+    <div class="info"><h3>⏳ EXACTLY FOUR QUARTERS — NO QUARTER TIMER</h3><p>There is <b>no 10-minute timer</b>. A quarter ends only when <b>BOTH teams have no usable RUN or PASS Action Cards</b>, after any already-started Play and legally announced effects are resolved. If only one team has run out of offense, keep playing as long as the other team has usable attacks and possession can move.</p></div>
+    <div class="info"><h3>🔁 START THE NEXT QUARTER</h3><p>Collect the Action Cards, shuffle them and deal <b>7 fresh Action Cards to EACH HUMAN PLAYER</b>. Keep both teams' accumulated points, the same Animal Role Cards and any unused Magic Cards. Quarter-limited Role abilities reset; game-limited ones do not. Effects that last “this quarter” end. Continue the current game rather than resetting the score.</p></div>
+    <div class="info"><h3>🏆 WINNING CONDITION</h3><p>After <b>Quarter 4</b>, count all points each team recorded on its Scoring Cards: <b>touchdowns (6), extra points (1), and field goals (3)</b>. The team with the <b>HIGHER TOTAL SCORE</b> wins the game. A tied final score remains a tie unless the players agree to a separate tiebreaker.</p></div>
+  </div>
+  <div class="scoreDemo" aria-label="Example final scoring"><div><small>RED TEAM</small><strong>13</strong><span>🏈 TD 6 + XP 1 + TD 6</span></div><b>FINAL SCORE</b><div><small>BLUE TEAM</small><strong>10</strong><span>🥅 FG 3 + 🏈 TD 6 + XP 1</span></div></div>
+  <div class="note"><strong>Example result:</strong><div>After four quarters, RED scores 13 and BLUE scores 10. RED wins because <b>13 is higher than 10</b>. Scoring Cards represent the running point totals throughout the match, not extra Action Cards.</div></div>
+</section>
+
+<section class="details" id="notes">
+  <h2>RULE CLARIFICATIONS &amp; CARD-SPECIFIC EXCEPTIONS</h2>
+  <ul>
+    <li><b>1v1:</b> Each human player controls two animal characters and may PASS between those two characters. Each human still receives 7 Action Cards every quarter and 2 Magic Cards for the game; only the animal Role count is doubled.</li>
+    <li><b>More players, not enough cards:</b> Buy/use another copy of the game and add the Action Cards needed for a seven-card hand per person. Keep the single-use unique Magic and Role decks separate so duplicates are not silently introduced.</li>
+    <li><b>Possession:</b> Only the current animal holding the single Football Card begins a normal RUN or PASS. The colored miniature footballs remain on the mat for field position.</li>
+    <li><b>Effect priority:</b> Resolve MAGIC → ANIMAL ROLE → ACTION when effects conflict, without ignoring the timing stated on individual cards. A response Magic Card may still counter a Magic Card previously played.</li>
+    <li><b>Magic:</b> Two per human, each only once in the entire game, no per-quarter use cap, no automatic redrawing, and never subject to ROLL OF FATE.</li>
+    <li><b>Limited Role skills:</b> Consumed when announced, whether they succeed or fail. WOLF's “once per Play” refers to a complete attack and its defensive replies, not to each card in that sequence.</li>
+    <li><b>INVISIBILITY:</b> The animal remains invisible through that quarter. A football that is passed becomes visible and stays visible, even if later returned to the original animal; TRUE SIGHT can overcome the normal invisible-run protection.</li>
+    <li><b>CHAOS:</b> It benches one teammate on the caster's OWN team until the quarter ends, not a player on the opposing team.</li>
+    <li><b>REWIND:</b> Can be used after a touchdown or field goal; rewind ball position, down, and possession but do not change points or restore spent cards.</li>
+    <li><b>Scoring:</b> 6 for a touchdown, optional +1 for the extra-point kick, 3 for a field goal. Four-quarter high score wins.</li>
+  </ul>
+  <p><b>Abilities pending final approval:</b> EAGLE, LION and CAT currently display proposed abilities. RABBIT and BEAR show proposed once-per-quarter limits awaiting final confirmation. Whether REWIND may award additional points by replaying a scored Play, and exact between-quarter kickoff/possession treatment, also remain unsettled. They are not silently presented as finalized.</p>
+</section>
+<footer class="footer">TAILS &amp; TACKLES · GAME DAY MODE · COMPLETE NINE-STEP RULEBOOK</footer>
 </div>
 <script>
 (() => {
