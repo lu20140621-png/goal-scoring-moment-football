@@ -1,33 +1,157 @@
 <!doctype html>
-<html lang="en" class="is-loading">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07131d">
-<title>Tails &amp; Tackles — Pigskin Frenzy Tutorial</title>
-<link rel="preload" as="style" href="casual-tutorial-v2.css?v=20260904-coach2">
-<link rel="preload" as="script" href="casual-tutorial-v2.js?v=20260904-coach2">
-<link rel="preload" as="image" href="cards/football-card.webp">
-<link rel="preload" as="image" href="cards/run-card.webp">
-<link rel="preload" as="image" href="cards/pass-card.webp">
-<link rel="preload" as="image" href="cards/tackle-card.webp">
-<link rel="preload" as="image" href="cards/interception-card.webp">
-<link rel="preload" as="image" href="cards/block-card.webp">
-<link rel="preload" as="image" href="cards/blitz-card.webp">
-<link rel="preload" as="image" href="https://raw.githubusercontent.com/lu20140621-png/goal-scoring-moment/main/images/coach-guide.webp">
-<link rel="stylesheet" href="casual-tutorial-v2.css?v=20260904-coach2">
-</head>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#125187"><title>Pigskin Frenzy | Interactive Tutorial</title>
+<meta name="description" content="Learn Pigskin Frenzy in 12 interactive lessons using the new 15-minute and eight-football rules.">
+<style>
+:root{--ink:#112f4f;--blue:#125187;--gold:#ffd15e;--cream:#fffaf0;--muted:#536e83;--line:#acc6d7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(#d0dce4 1px,transparent 1px) 0 0/24px 24px,linear-gradient(#f5f6ee,#fffaf2);font:14px/1.6 "Trebuchet MS",Verdana,Arial,sans-serif}button,select{font:inherit}
+a{color:inherit}.wrap{width:min(1120px,100%);margin:auto;padding:13px 14px 65px}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 17px;background:#125187;color:white;border:3px solid var(--ink);border-radius:17px;box-shadow:0 5px 0 #113651}
+.brand{font:950 clamp(15px,2.3vw,21px)/1.16 "Arial Black",Arial,sans-serif}.links{display:flex;gap:7px;flex-wrap:wrap}
+.links a{background:#fff5df;color:var(--ink);border:2px solid var(--ink);border-radius:10px;text-decoration:none;font-size:12px;font-weight:950;padding:8px 12px}
+.hero{margin:20px 0 15px;background:linear-gradient(110deg,#bfe8ff,#ecf9ff 65%,#a6d774);border:4px solid var(--ink);border-radius:22px;padding:22px 26px;box-shadow:0 5px 0 #1c527a}
+.hero h1{font:950 clamp(27px,4.2vw,46px)/1.1 "Arial Black",Arial,sans-serif;letter-spacing:-.04em;margin:8px 0}.hero p{margin:8px 0 0;font-weight:800;max-width:800px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.badge{background:white;border:2px solid var(--ink);border-radius:9px;font-size:11px;font-weight:950;padding:6px 9px}
+.progress{display:flex;align-items:center;gap:11px;justify-content:space-between;margin:16px 0 9px}.progress b{font-size:13px}.track{height:12px;border-radius:30px;border:2px solid var(--ink);background:#e2edf4;overflow:hidden;flex:1}.bar{height:100%;width:0;background:#ffc742;transition:width .25s}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:14px;align-items:start}
+.menu{position:sticky;top:10px;background:#fffdf7;border:2px solid #a7c5d8;border-radius:15px;padding:9px;display:grid;gap:4px}
+.menu button{display:flex;align-items:center;gap:8px;text-align:left;border:1px solid transparent;border-radius:9px;background:transparent;color:#315b75;padding:9px;cursor:pointer;font-size:12px;font-weight:900;line-height:1.3}
+.menu button.active{background:#d8eeff;border-color:#9ebfd5;color:#143b5e}.menu button:hover{background:#e9f6ff}.num{display:grid;place-items:center;background:#d5e6f2;color:#1b4e75;border-radius:7px;flex:0 0 24px;height:24px;font-size:11px}.menu button.active .num{background:var(--gold)}
+.panel{background:#fffefa;border:3px solid #8cbbd8;border-radius:19px;padding:22px clamp(14px,3vw,30px);box-shadow:0 5px 0 #d0e0eb;min-height:560px}
+.stepOverline{color:#326b90;font-weight:950;font-size:11px;letter-spacing:.1em}.panel h2{font:950 clamp(22px,3vw,31px)/1.18 "Arial Black",Arial,sans-serif;margin:9px 0 10px}.panel p{line-height:1.7}.hint{margin:13px 0;padding:13px 15px;background:#eaf5fc;border-left:5px solid #5aafda;border-radius:8px;font-weight:800}
+.stage{margin:15px 0;min-height:155px;border:2px dashed #9ab6c9;background:#f5faff;border-radius:16px;padding:15px}
+.prompt{font-size:12px;color:#395e77;font-weight:950;text-transform:uppercase;letter-spacing:.05em}
+.buttons{display:flex;flex-wrap:wrap;gap:9px;margin:13px 0}.act{background:#ffe4a2;border:2px solid var(--ink);border-radius:11px;font-weight:950;cursor:pointer;color:var(--ink);padding:10px 13px;transition:transform .15s}
+.act:hover{transform:translateY(-2px)}.act:focus-visible{outline:3px solid #f08e23;outline-offset:2px}.act:disabled{opacity:.45;cursor:not-allowed}
+.act.secondary{background:#e0f2ff}.act.green{background:#d7efca}
+.feedback{padding:13px;background:#e8f7df;border-left:5px solid #5da652;border-radius:9px;margin:12px 0;min-height:0;font-weight:800}.feedback:empty{display:none}
+.footballRow{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.ball{display:grid;place-items:center;width:42px;height:42px;border:2px solid #a1b8c6;border-radius:50%;background:#eaf2f7;font-size:22px}.ball.earned{background:#ffdeb1;border-color:#956331}
+.cardrow{display:flex;flex-wrap:wrap;gap:12px;margin-top:13px}
+.visual{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:112px;min-height:138px;padding:7px;border:2px solid #163f5b;border-radius:12px;background:linear-gradient(#bde7ff,#e8f8ff);box-shadow:3px 4px 0 #b8cedd;text-align:center;cursor:pointer}
+.visual img{display:block;width:80px;height:100px;object-fit:cover;object-position:center;border-radius:6px}.visual strong{font-size:13px;line-height:1.25}.visual small{font-size:10px;line-height:1.25}
+.visual.gold{background:linear-gradient(#ffebaa,#fff8e0)}.visual.purple{background:linear-gradient(#d9c5f5,#f7efff)}
+.cardsLegend{font-size:12px;color:#55758a;margin-top:11px}
+.rulelist{margin:10px 0;padding-left:20px}.rulelist li{margin:5px 0}
+.magiclist{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0;max-height:320px;overflow:auto}
+.magicbtn{border:1px solid #b8a4d0;border-radius:8px;background:#f4edfc;color:var(--ink);font-size:11px;font-weight:900;padding:8px 9px;text-align:left;cursor:pointer}.magicbtn.active{background:#d7bbfb;border-color:#8566ae}
+.magicdesc{min-height:70px;background:#f6f0ff;border-left:4px solid #9b71c3;border-radius:9px;padding:11px;font-size:13px}
+.flow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.flow span{background:white;border:1px solid #b4c9d7;border-radius:10px;padding:9px;font-weight:850;font-size:12px}
+.navbottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;border-top:1px solid #d6e4eb;padding-top:17px}
+.navbottom button{background:#ffd15e;border:2px solid #1a415d;border-radius:11px;font-weight:950;padding:11px 20px;cursor:pointer}.navbottom button:disabled{opacity:.4;cursor:not-allowed}
+.note{color:#6a5832;background:#fff5db;border-left:4px solid #dca93b;padding:12px;border-radius:8px;font-size:12px;margin-top:15px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.menu{position:static;display:flex;flex-wrap:nowrap;overflow:auto}.menu button{min-width:145px}.panel{min-height:0;padding:18px}.top{flex-wrap:wrap}.hero{padding:19px 15px}}
+@media(max-width:420px){.visual{width:95px;min-height:125px}.visual img{width:70px;height:88px}.magiclist{grid-template-columns:1fr}.ball{width:34px;height:34px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
 <body>
-<div class="bootLoader" id="bootLoader" role="status" aria-live="polite"><div class="bootCard"><div class="loaderFootball" aria-hidden="true"></div><div class="bootKicker">PIGSKIN FRENZY MODE</div><div class="bootTitle">LOADING TUTORIAL</div><div class="bootTrack"><div class="bootBar" id="bootBar"></div></div><div class="bootMeta"><span id="bootText">Preparing coaching session…</span><span id="bootPct">0%</span></div><button class="bootRetry" id="bootRetry" type="button" hidden>RETRY</button></div></div>
-<div class="app" id="tutorialApp" aria-hidden="true">
-<header class="top"><div class="brand">🎓🏈 TAILS &amp; TACKLES · PIGSKIN FRENZY TUTORIAL</div><div class="topBtns"><a class="btn" href="casual-en.html">← Pigskin Frenzy Mode</a><a class="btn" href="casual-game-en.html">Solo Game</a><button class="btn gold" id="chooseBtn" type="button">Choose Lesson</button><button class="btn" id="restartBtn" type="button">Restart Tutorial</button></div></header>
-<div class="progressWrap"><div class="lessonLine"><span id="lessonNo">LESSON 1 / 11</span><strong id="lessonTitle">First to 3</strong></div><div class="stepbar" id="stepbar"></div></div>
-<main class="board" id="board"><div class="turnBanner" id="turnBanner">YOUR TURN</div><section class="players" aria-label="Players"><button class="playerSeat you" id="player0" data-player="0" type="button"><span class="seatName">YOU</span><span class="seatScore" id="score0">🏈 0 / 3</span><span class="seatCards" id="count0">5 cards</span></button><button class="playerSeat" id="player1" data-player="1" type="button"><span class="seatName">AI 1</span><span class="seatScore" id="score1">🏈 0 / 3</span><span class="seatCards" id="count1">5 cards</span></button><button class="playerSeat" id="player2" data-player="2" type="button"><span class="seatName">AI 2</span><span class="seatScore" id="score2">🏈 0 / 3</span><span class="seatCards" id="count2">5 cards</span></button></section><section class="tableZone"><button class="pile discardPile" id="discardPile" type="button" aria-label="Discard pile"><span class="pileLabel">DISCARD</span><span class="discardStack" aria-hidden="true"></span><strong id="discardCount">0</strong></button><button class="pile deckPile" id="deck" type="button" aria-label="Shared draw pile"><span class="pileLabel">SHARED DECK</span><span class="cardBack" aria-hidden="true">🏈</span><strong id="deckCount">34</strong></button><div class="tableReveal" id="tableReveal" aria-live="polite"></div></section><div class="eventBanner" id="eventBanner" aria-live="polite"></div></main>
-<section class="guideScene" id="guideScene"><div class="guidePortrait" id="guidePortrait" role="img" aria-label="Coach"></div><div class="guideDialogue" id="guideDialogue" tabindex="0"><span class="guideSpeaker">COACH</span><p class="guideText" id="guideText" aria-live="polite"></p><button class="guideContinue" id="guideContinue" type="button" aria-label="Continue">›</button></div></section>
-<section class="handPanel" id="handPanel"><div class="handHead"><div><span class="handKicker">YOUR HAND</span><strong id="handNote">Listen to the coach.</strong></div><div class="normalDrawNote" id="normalDrawNote">NORMAL DRAW STILL OWED</div></div><div class="handCards" id="handCards"></div><div class="peekRow" id="peekRow"></div><div class="contextActions" id="contextActions"></div></section>
+<div class="wrap">
+<header class="top"><div class="brand">🏈 TAILS &amp; TACKLES <small style="font:800 10px Arial,sans-serif;display:block;letter-spacing:.1em;margin-top:5px">PIGSKIN FRENZY · INTERACTIVE TUTORIAL</small></div>
+<div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261119-mode3-audit">📖 RULEBOOK</a></div></header>
+<div class="hero"><span class="badge">MODE 3 · EASY</span><h1>LEARN AS YOU PLAY</h1><p>Follow the coach through 12 short, hands-on lessons. Tap cards to practice real examples, then use the rulebook to play at the table.</p>
+<div class="badges"><span class="badge">⏱️ 15 MINUTES</span><span class="badge">🏈 8 MINI FOOTBALLS</span><span class="badge">🪄 ONE MAGIC CARD EACH</span></div></div>
+<div class="progress"><b id="progressLabel">LESSON 1 / 12</b><div class="track"><div class="bar" id="bar"></div></div></div>
+<div class="layout">
+<nav class="menu" id="menu" aria-label="Choose a lesson"></nav>
+<main class="panel" id="panel" tabindex="-1"><div id="lesson"></div><div class="feedback" id="feedback" role="status" aria-live="polite"></div><div class="navbottom"><button id="back" type="button">← BACK</button><button id="next" type="button">NEXT →</button></div></main>
 </div>
-<div class="overlay" id="lessonModal" aria-hidden="true"><div class="dialog"><h2>Choose a Lesson</h2><p>Jump to any lesson and practice it again.</p><div class="lessonGrid" id="lessonGrid"></div><div class="dialogBtns"><button class="secondary" id="closeLessonBtn" type="button">Close</button><button class="primary" id="restartModalBtn" type="button">Restart from Lesson 1</button></div></div></div>
-<div class="overlay" id="done" aria-hidden="true"><div class="dialog completeDialog"><div class="completeBall">🏈</div><h2>Coach says you’re ready.</h2><p>You completed the Pigskin Frenzy Mode tutorial and finished the Final Challenge.</p><div class="dialogBtns"><button class="primary" id="againBtn" type="button">Restart Tutorial</button><a class="secondary" href="casual-game-en.html">Play Solo Game</a></div></div></div>
-<script src="casual-tutorial-v2.js?v=20260904-coach2"></script><script src="english-only.js?v=20260831-break-through"></script>
-</body>
-</html>
+</div>
+<script>
+(function(){
+'use strict';
+var lessons=[
+['The goal','Collect the most mini footballs. The game ends when the 8 mini footballs are all claimed or 15 minutes run out—whichever comes first.'],
+['Sort the decks','Separate the Magic Cards. Shuffle Action Cards and Scoring Cards together with the single FOOTBALL Card. No Animal Role abilities are used.'],
+['Set up the table','Deal one Magic Card per player. Set out eight mini footballs and start a 15-minute timer when the first turn begins.'],
+['Run: draw one','Use RUN to draw one card from the shared draw pile. If that card is FOOTBALL, it can score a mini football.'],
+['Pass: draw two','Use PASS to draw two cards. Look at both, keep one and give the other to any player you choose.'],
+['Tackle and Block','TACKLE takes one card from a player, including a card just drawn with RUN. BLOCK can cancel TACKLE or INTERCEPTION.'],
+['Interception','When someone uses PASS, INTERCEPTION takes the card the passer chose to keep. The passer may cancel with BLOCK.'],
+['Strip reverses play','STRIP is the fixed name of the physical card. In Mode 3, its effect reverses the direction of play.'],
+['Six Scoring Cards','The printed 30 / 20 / 10 / 6 / 3 / 1 values are card names, not points counted toward victory.'],
+['Twenty Magic Cards','Each player starts with one Magic Card. Use it once, then remove it from the game. Its effect belongs to Mode 3 only.'],
+['A FOOTBALL reaction','When FOOTBALL appears, pause to allow a valid reaction such as SHATTER, GOALPOST WARP or SPELL SWAP before awarding the mini football.'],
+['Finish the game','The first of two conditions ends the game: all eight mini footballs are claimed, or the 15-minute timer expires. The player holding the most wins.']
+];
+var spells=[
+['Time Stop','Play on your turn. Take an extra turn immediately after this one.'],
+['Goalpost Warp','React to another player drawing FOOTBALL: move it one position deeper into the shared draw pile.'],
+['Flight','Look through the shared draw pile for FOOTBALL without changing its order.'],
+['Gravity','Other players need twice as many cards to use ordinary card abilities for this round.'],
+['Magic Barrier','Other effects cannot cancel your cards or take cards from your hand for this round.'],
+['Shatter','React when an opponent draws FOOTBALL: prevent that draw from earning a mini football.'],
+['Time Rewind','Play on your turn. Take an extra turn immediately after this one.'],
+['Invincibility','Other effects cannot cancel your cards or take cards from your hand for this round.'],
+['Phantom Pass','Insert an unused Animal Role Card into the draw pile as a trap. If drawn, steal one mini football from the drawer.'],
+['True Sight','Look through the shared draw pile for FOOTBALL without changing its order.'],
+['Gale Force','Other players need twice as many cards to use ordinary card abilities for this round.'],
+["Titan's Might",'Double the number of cards drawn by Action Card abilities during your turn. Scoring Card draws are unaffected.'],
+['Chaos','Everyone shuffles their hand into the shared deck and draws the same number again. FOOTBALL still scores.'],
+['Arcane Heist','Take one card from the hand of each other player.'],
+['Guardian','Other effects cannot cancel your cards or take cards from your hand for this round.'],
+['Copycat','Immediately copy one Magic Card effect already used in this game. You cannot save it for later.'],
+['Spell Swap','When another player draws FOOTBALL, swap one card from your hand for their FOOTBALL Card.'],
+['Invisibility','Draw one extra card on every player’s turn this round, whether or not they draw or play an Action Card.'],
+['Roll of Fate','Roll two dice. If the total is greater than six, claim one available mini football.'],
+['Mystic Fog','Steal one mini football from another player.']
+];
+var n=0,passed={},picked={},seen={},state={balls:0,dir:1};
+var lesson=document.getElementById('lesson'),feedback=document.getElementById('feedback'),menu=document.getElementById('menu'),back=document.getElementById('back'),next=document.getElementById('next');
+var img={Run:'cards/run-card.webp',Pass:'cards/pass-card.webp',Tackle:'cards/tackle-card.webp',Interception:'cards/interception-card.webp',Block:'cards/block-card.webp',Football:'cards/football-card.webp'};
+function button(label,action,cl){return '<button type="button" class="act '+(cl||'')+'" data-do="'+action+'">'+label+'</button>';}
+function card(label,action){
+var src=img[label];return '<button type="button" class="visual '+(src?'':'gold')+'" data-do="'+action+'">'+(src?'<img src="'+src+'" alt="">':'<span style="font-size:30px">🃏</span>')+'<strong>'+label+'</strong></button>';
+}
+function done(){return !!passed[n]}
+function complete(message){passed[n]=true;feedback.textContent=message;next.disabled=false;document.getElementById('bar').style.width=((n+1)/lessons.length*100)+'%';}
+function feedbackOnly(message){feedback.textContent=message;}
+function footballs(num){var h='<div class="footballRow" role="img" aria-label="'+num+' of 8 mini footballs claimed">';for(var i=0;i<8;i++)h+='<span class="ball '+(i<num?'earned':'')+'">'+(i<num?'🏈':'○')+'</span>';return h+'</div>'}
+function render(){
+var info=lessons[n];document.getElementById('progressLabel').textContent='LESSON '+(n+1)+' / '+lessons.length;
+menu.innerHTML=lessons.map(function(l,i){return '<button type="button" data-jump="'+i+'" class="'+(n===i?'active':'')+'"><span class="num">'+(i+1)+'</span>'+l[0]+'</button>'}).join('');
+var h='<div class="stepOverline">COACH · LESSON '+(n+1)+'</div><h2>'+info[0]+'</h2><p>'+info[1]+'</p><div class="stage">';
+if(n===0)h+='<div class="prompt">Try it: draw FOOTBALL</div>'+card('Football','football')+footballs(picked[0]?1:0);
+if(n===1)h+='<div class="prompt">Tap all three piles to sort them</div><div class="buttons">'+button('🪄 MAGIC · separate','magic','secondary')+button('🃏 ACTION + SCORING · together','mixed','secondary')+button('🐾 ANIMAL ROLES · aside','roles','secondary')+'</div><p>Magic is a separate deck. Action, Scoring and FOOTBALL share one draw pile. Animal Roles are not dealt in this mode.</p>';
+if(n===2)h+='<div class="prompt">Practice the setup</div><div class="buttons">'+button('1 · Deal one Magic Card each','deal-magic')+button('2 · Place eight mini footballs','place-balls')+button('3 · Start the 15-minute timer','start-clock')+'</div><p class="cardsLegend">The number of regular starting cards is still a playtest decision; the rulebook flags it rather than inventing a final number.</p>';
+if(n===3)h+='<div class="prompt">Tap RUN</div><div class="cardrow">'+card('Run','run')+card('Football','wrong-run')+'</div>';
+if(n===4)h+='<div class="prompt">You drew FOOTBALL and BLOCK. Which would you keep?</div><div class="cardrow">'+card('Football','pass-football')+card('Block','pass-block')+'</div><p>Choose one to keep; give the other to the player you name. FOOTBALL scoring is resolved after legal responses.</p>';
+if(n===5)h+='<div class="prompt">You are being targeted by TACKLE. What stops it?</div><div class="cardrow">'+card('Block','block')+card('Tackle','wrong-block')+'</div>';
+if(n===6)h+='<div class="prompt">Opponent just used PASS and chose a card to keep. Respond!</div><div class="cardrow">'+card('Interception','interception')+card('Run','wrong-interception')+'</div>';
+if(n===7)h+='<div class="prompt">Current direction: '+(state.dir>0?'CLOCKWISE ↻':'COUNTERCLOCKWISE ↺')+'</div><div class="buttons">'+button('STRIP · REVERSE DIRECTION','strip')+'</div>';
+if(n===8)h+='<div class="prompt">Tap each Scoring Card to see its Mode 3 effect</div><div class="buttons">'+['30','20','10','6','3','1'].map(function(x){return button(x+'-POINT CARD','score-'+x,(picked['score'+x]?'green':'secondary'))}).join('')+'</div><p id="scoreeffect">The 30-point card lets you draw five cards. Try it first!</p>';
+if(n===9)h+='<div class="prompt">Explore the 20 Magic Cards (tap any three)</div><div class="magiclist">'+spells.map(function(s,i){return '<button class="magicbtn '+(picked['spell'+i]?'active':'')+'" type="button" data-do="spell-'+i+'">'+(i+1)+'. '+s[0]+'</button>'}).join('')+'</div><div class="magicdesc" id="magicdesc">Pick a card to read its unique name and current Mode 3 effect.</div>';
+if(n===10)h+='<div class="prompt">An opponent draws FOOTBALL. Choose one legal Magic reaction</div><div class="buttons">'+button('SHATTER · deny football','react-shatter')+button('GOALPOST WARP · move card','react-warp')+button('SPELL SWAP · exchange','react-swap')+'</div><p class="cardsLegend">Only a holder of the matching one-use Magic Card can make that response. Exact multi-reaction priority is still awaiting confirmation.</p>';
+if(n===11)h+='<div class="prompt">Practice both end conditions</div>'+footballs(picked['finish8']?8:0)+'<div class="buttons">'+button('All 8 mini footballs claimed','finish8')+button('15-minute timer expires','finish15')+'</div>';
+h+='</div>';
+if(n===2)h+='<div class="note">Rulebook note: the exact initial regular hand size and detailed turn order are not finalized. Do not teach the old first-to-three-footballs rule.</div>';
+if(n===8)h+='<div class="note">Card values are labels only: 30 = draw 5; 20 = cancel a card ability; 10 = end turn, then draw 3 on your next turn; 6 = reorder top 5; 3 = reveal top 3; 1 = reshuffle the draw pile and draw 1.</div>';
+if(n===11)h+='<div class="note">Tied-player tiebreakers and some card-response rules are still pending. Check the rulebook before using them in a real game.</div>';
+lesson.innerHTML=h;
+feedback.textContent=seen[n]||'';
+back.disabled=n===0;next.disabled=!done();
+next.textContent=n===lessons.length-1?'OPEN RULEBOOK →':'NEXT →';
+}
+function jump(k){n=k;render();document.getElementById('panel').focus();}
+function action(s){
+if(s==='football'&&n===0){picked[0]=true;complete('You earned one mini football! Seven remain in the shared supply.');render();feedback.textContent=seen[n]='You earned one mini football! Seven remain in the shared supply.';return}
+if(n===1&&['magic','mixed','roles'].indexOf(s)>=0){picked[s]=true;if(picked.magic&&picked.mixed&&picked.roles)complete('Setup piles sorted! Only one Magic Card is dealt to each player.');else feedbackOnly('Good! Tap the remaining piles.');return}
+if(n===2&&['deal-magic','place-balls','start-clock'].indexOf(s)>=0){picked[s]=true;if(picked['deal-magic']&&picked['place-balls']&&picked['start-clock'])complete('Ready for the first turn. Magic is one-use only!');else feedbackOnly('Great. Complete the other setup steps.');return}
+if(n===3){if(s==='run'){complete('RUN draws one card. A FOOTBALL draw earns a mini football unless a legal reaction prevents it.');return}else{feedbackOnly('Try RUN. FOOTBALL is what you hope to draw.');return}}
+if(n===4){if(s==='pass-football'){complete('You kept FOOTBALL and give BLOCK to another player. Resolve any legal reaction, then score the FOOTBALL draw.');return}else{feedbackOnly('You could give FOOTBALL away, but to practice scoring, keep it!');return}}
+if(n===5){if(s==='block'){complete('BLOCK cancels the TACKLE. Put your BLOCK in the discard pile.');return}else{feedbackOnly('TACKLE does not cancel another TACKLE. Use BLOCK.');return}}
+if(n===6){if(s==='interception'){complete('INTERCEPTION takes the card the passer kept. BLOCK can stop this.');return}else{feedbackOnly('RUN draws a card; INTERCEPTION reacts to PASS.');return}}
+if(n===7&&s==='strip'){state.dir*=-1;complete('Direction reversed. STRIP keeps its physical card name.');render();feedback.textContent=seen[n]='Direction reversed. STRIP keeps its physical card name.';return}
+if(n===8&&s.indexOf('score-')===0){var val=s.slice(6);picked['score'+val]=true;var effects={'30':'Immediately draw five cards.','20':'Cancel the ability of any one card.','10':'End your turn now; draw three cards on your next turn.','6':'Privately examine and reorder the top five cards.','3':'Reveal the top three cards to everybody without changing their order.','1':'Reshuffle the shared draw pile, then draw one card.'};document.getElementById('scoreeffect').textContent=val+'-POINT CARD: '+effects[val];if(['30','20','10','6','3','1'].every(function(v){return picked['score'+v]}))complete('You have reviewed all six Scoring Card abilities. These values are not points in Mode 3.');return}
+if(n===9&&s.indexOf('spell-')===0){var idx=Number(s.slice(6));if(!isFinite(idx)||idx<0||idx>=spells.length)return;picked['spell'+idx]=true;document.getElementById('magicdesc').innerHTML='<strong>'+spells[idx][0]+'</strong><p>'+spells[idx][1]+'</p>';document.querySelectorAll('.magicbtn').forEach(function(el,j){el.classList.toggle('active',!!picked['spell'+j])});if(spells.filter(function(z,j){return picked['spell'+j]}).length>=3){complete('You explored at least three spells. Browse all 20 or continue.');}return}
+if(n===10&&s.indexOf('react-')===0){var out={'react-shatter':'SHATTER stops this mini football from being awarded.','react-warp':'GOALPOST WARP inserts FOOTBALL one card deeper into the draw pile.','react-swap':'SPELL SWAP trades a card from your hand for FOOTBALL before it scores.'};complete(out[s]);return}
+if(n===11&&(s==='finish8'||s==='finish15')){picked[s]=true;complete(s==='finish8'?'All eight have been claimed: the player with the most wins.':'Time is up: the player with the most mini footballs wins.');render();feedback.textContent=seen[n]=(s==='finish8'?'All eight have been claimed: the player with the most wins.':'Time is up: the player with the most mini footballs wins.');return}
+}
+document.addEventListener('click',function(e){
+var target=e.target.closest('[data-do]');if(target){action(target.getAttribute('data-do'));return}
+var go=e.target.closest('[data-jump]');if(go){jump(Number(go.getAttribute('data-jump')))}
+});
+back.addEventListener('click',function(){if(n>0)jump(n-1)});
+next.addEventListener('click',function(){if(!done())return;if(n===lessons.length-1){location.href='casual-rules-en.html?v=20261119-mode3-audit'}else jump(n+1)});
+render();
+})();
+</script></body></html>
