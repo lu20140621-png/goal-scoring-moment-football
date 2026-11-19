@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14558e">
+<meta name="description" content="Practice Tails & Tackles Quick Play Mode step by step: cards, kickoff, RUN, PASS, STRIP, Magic, animal abilities, and three-touchdown victory.">
+<title>Quick Play Interactive Tutorial | Tails &amp; Tackles</title>
+<style>
+:root{--ink:#123251;--blue:#14558e;--green:#137052;--cream:#fffaf0;--yellow:#ffd15e;--red:#c75943;--pale:#e9f6fc}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font:15px/1.55 "Trebuchet MS",Arial,sans-serif;background:radial-gradient(#d5e7eb 1px,transparent 1px) 0 0/24px 24px,linear-gradient(175deg,#e6f7ff,#fffaf0 68%)}
+button,a{font:inherit}button{cursor:pointer}a{color:#13598a}
+.wrap{max-width:900px;margin:auto;padding:12px 16px 50px}
+header{display:flex;gap:10px;justify-content:space-between;align-items:center;background:var(--ink);color:white;border-radius:17px;border:3px solid var(--ink);padding:13px 16px}
+.brand{font:900 17px "Arial Black",Arial,sans-serif}.brand small{display:block;font:700 11px Arial,sans-serif;color:#bddfe9;margin-top:4px}
+.navlink{display:inline-block;padding:8px 10px;border-radius:9px;background:#fff;color:var(--ink);text-decoration:none;font-size:12px;font-weight:900;white-space:nowrap}
+.intro{margin:16px 0;background:linear-gradient(130deg,#175b91,#158067);border:3px solid var(--ink);border-radius:20px;padding:22px;color:white}
+.intro h1{font:950 clamp(27px,5vw,45px)/1.08 "Arial Black",Arial,sans-serif;letter-spacing:-.035em;margin:4px 0 10px}
+.intro p{margin:0;color:#eff9ff}
+.lesson{padding:22px;background:var(--cream);border:3px solid var(--ink);border-radius:21px;box-shadow:0 5px 0 #bad4dc}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:900;color:#255a78}
+.bar{height:13px;border:2px solid var(--ink);border-radius:10px;background:#d7e9f4;overflow:hidden;margin:10px 0 20px}
+.bar>div{background:#ffc94f;height:100%;width:0;transition:width .2s}
+h2{font:950 clamp(23px,4vw,32px)/1.14 "Arial Black",Arial,sans-serif;letter-spacing:-.03em;margin:6px 0 13px}
+.coach{display:flex;align-items:flex-start;gap:13px;background:#eaf5fe;padding:14px;border:2px solid #99c0d1;border-radius:14px;margin:15px 0}
+.coach .avatar{font-size:38px;line-height:1}.coach p{margin:0}
+.field{border:3px solid #0f3a4c;border-radius:13px;overflow:hidden;background:repeating-linear-gradient(90deg,#236e4f 0 55px,#1c6346 55px 110px);color:white;padding:15px 11px;position:relative}
+.yards{display:grid;grid-template-columns:repeat(6,1fr);text-align:center;gap:3px;align-items:center;font-size:12px;font-weight:900}
+.yards span{border-right:1px dashed #d8f2d9;padding:10px 0}.yards span:last-child{border:0}
+.ball{margin-top:11px;display:flex;align-items:center;gap:10px;font-size:16px;font-weight:900}.ball em{font-style:normal;font-size:21px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.box{border:2px solid #a6c7d0;border-radius:12px;padding:12px;background:#fff}.box strong{display:block;margin-bottom:5px}
+.challenge{padding:17px;border-radius:15px;background:#fff1cc;border:2px solid #d0a854;margin:17px 0}
+.challenge h3{margin:0 0 8px;font-size:16px}.choices{display:grid;grid-template-columns:1fr;gap:9px}
+.choice{border:2px solid #205378;background:white;color:var(--ink);font-size:14px;border-radius:11px;text-align:left;padding:12px;font-weight:750;transition:background .15s}
+.choice:hover{background:#ecf6ff}.choice.correct{border-color:#08734c;background:#e4f9ee}.choice.wrong{border-color:#b4463a;background:#fff0ec}
+.feedback{min-height:36px;margin:9px 0 0;font-weight:800;font-size:13px;color:#1d5678}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.btn{padding:11px 15px;border:2px solid var(--ink);border-radius:10px;background:#fff;color:var(--ink);font-weight:900}
+.btn.main{background:#ffd15e}.btn:disabled{background:#e6ebee;color:#83919c;cursor:not-allowed}
+.dice{border:2px solid #2d698d;border-radius:12px;background:#e9f6ff;padding:12px;margin-top:12px;display:flex;align-items:center;gap:15px}
+.die{font:950 29px "Arial Black",Arial,sans-serif;width:52px;height:52px;background:white;border:2px solid var(--ink);border-radius:11px;text-align:center;display:grid;place-items:center}
+.details{background:#fff;border:2px solid #b4ccdb;border-radius:12px;padding:13px;margin-top:15px}.details summary{font-weight:950;cursor:pointer}.details ul{margin:10px 0 0;padding-left:22px}.details li{margin:5px 0}
+.footer{font-size:12px;text-align:center;margin:23px auto;color:#3d6278}
+@media(max-width:600px){.wrap{padding:9px 9px 35px}header{padding:10px}.brand{font-size:13px}.navlink{font-size:10px}.lesson{padding:14px}.grid{grid-template-columns:1fr}.intro{padding:18px}.yards{font-size:10px}.coach{gap:9px}.coach .avatar{font-size:28px}}
+</style></head><body><div class="wrap">
+<header><div class="brand">🏈 TAILS &amp; TACKLES<small>QUICK PLAY · INTERACTIVE TUTORIAL</small></div><nav><a class="navlink" href="home-en.html">HOME</a> <a class="navlink" href="quick-play-rules.html">RULEBOOK</a></nav></header>
+<section class="intro"><div>MODE 02 · LEARN AS YOU PLAY</div><h1>Race to 3 Touchdowns!</h1><p>Follow the nine-step rulebook in short interactive lessons. Try decisions, see results, then use the complete rulebook as your card reference. This is a guided tutorial, not an AI game.</p></section>
+<main class="lesson">
+<div class="topline"><span id="count">LESSON 1</span><span id="chapter">STEP 1 · PREPARE CARDS</span></div>
+<div class="bar" aria-hidden="true"><div id="bar"></div></div>
+<h2 id="title">Get ready</h2>
+<div class="coach"><span class="avatar" aria-hidden="true">🏈</span><p id="explain"></p></div>
+<div class="field" role="img" aria-label="Field from midfield to touchdown">
+<div class="yards"><span>50</span><span>40</span><span>30</span><span>20</span><span>10</span><span>TD</span></div>
+<div class="ball"><em>🏈</em><span id="fieldText">50 | 50 · MIDFIELD</span></div></div>
+<div id="extras"></div>
+<div class="challenge"><h3 id="question">What should we do?</h3><div class="choices" id="choices"></div><p class="feedback" id="feedback" aria-live="polite"></p></div>
+<div class="actions"><button type="button" class="btn" id="back">← BACK</button><button type="button" class="btn" id="restart">RESTART</button><button type="button" class="btn main" id="next" disabled>NEXT LESSON →</button></div>
+<details class="details"><summary>Quick reference: 6 Action Cards</summary><ul><li><b>RUN</b>: successful rush +10 yards; runner keeps possession</li><li><b>PASS</b>: successful pass +10 yards; receiver takes possession</li><li><b>TACKLE</b>: blocks a RUN; can be canceled by BLOCK</li><li><b>INTERCEPTION</b>: steals an unblocked PASS; reset to 50 | 50</li><li><b>BLOCK</b>: cancels TACKLE or INTERCEPTION, not STRIP</li><li><b>STRIP</b>: defend RUN only; die 5–6 steals possession at current yard line, 1–4 RUN succeeds unless another legal effect changes the result</li></ul></details>
+<details class="details"><summary>Quick reference: 10 animal abilities</summary><ul>
+<li><b>Dog</b>: PASS as RUN</li><li><b>Cat</b>: RUN/PASS as BLOCK</li><li><b>Wolf</b>: supply Action Cards for one teammate's play</li><li><b>Bear</b>: RUN/PASS as TACKLE</li><li><b>Lion</b>: self and one teammate each draw 1 Action Card</li><li><b>Tiger</b>: stop ONE opposing Role ability for this quarter (maximum 2 uses per match)</li><li><b>Eagle</b>: RUN/PASS as INTERCEPTION</li><li><b>Fox</b>: steal 1 random Action Card from each of up to 2 different opposing animal hands</li><li><b>Rabbit</b>: one successful RUN advances 20 yards</li><li><b>Raccoon</b>: all animal characters draw 1 Action Card</li></ul><p>Unless stated otherwise, each animal may use its ability once per quarter.</p></details>
+<details class="details"><summary>Quick reference: 20 Magic Cards</summary><p>Each animal receives two one-use Magic Cards for the entire game. Magic never directly gives you a touchdown. The <a href="quick-play-rules.html#magic">complete card effects are in Step 6 of the rulebook</a>.</p><p>Time Stop · Goalpost Warp · Flight · Gravity · Magic Barrier · Shatter · Time Rewind · Invincibility · Phantom Pass · True Sight · Gale Force · Titan's Might · Chaos · Arcane Heist · Guardian · Copycat · Spell Swap · Invisibility · Roll of Fate · Mystic Fog.</p></details>
+</main><footer class="footer">No sign-up. No AI opponent. Full rules: <a href="quick-play-rules.html">Quick Play nine-step rulebook</a>.</footer>
+</div>
+<script>
+(function(){
+"use strict";
+var L=[
+{step:1,chapter:"PREPARE CARDS",title:"Sort the five card types",text:"Separate Action Cards, Magic Cards, Animal Roles, Scoring Cards and the single Football Card. Scoring Cards record completed touchdowns—never shuffle them into the Action Deck.",q:"Which cards go into the Action Deck?",options:["All five card types together","Only the six kinds of Action Cards","Scoring Cards and Magic Cards"],answer:1,why:"Correct: mix RUN, PASS, TACKLE, INTERCEPTION, BLOCK and STRIP into one Action Deck."},
+{step:1,chapter:"PREPARE CARDS",title:"Keep each animal's hand separate",text:"The current rulebook deals 7 Action Cards per animal each quarter and 2 Magic Cards per animal for the entire match. In a two-human game, each human controls two animals with separate hands.",q:"In a two-human 2v2 game, does each animal have its own cards?",options:["Yes, separate Action and Magic hands for each animal","No, both animals always share one hand"],answer:0,why:"Correct. Keep each animal's cards separate. Cards transfer only when a rule explicitly permits it."},
+{step:2,chapter:"SET UP THE MAT",title:"Meet at 50 | 50",text:"Unfold the field mat. Put the red and blue mini football position markers together at 50 | 50. Use the single Football Card to show which animal carries the ball.",q:"What shows who actually holds the ball?",options:["The red mini field marker","The single Football Card","A Scoring Card"],answer:1,why:"Correct: mini markers show field position, while the Football Card identifies the carrier.",yard:0},
+{step:3,chapter:"TEAMS AND KICKOFF",title:"Roll to decide who starts",text:"Play as Red Team vs Blue Team with at least two animals per team. The teams agree whether high or low wins, then roll one die each; re-roll ties. Start a 10-minute quarter.",q:"Red starts Quarter 1. Who starts Quarter 2?",options:["Whichever team scored last","Blue, because starting teams alternate","Red again"],answer:1,why:"Yes: the opening team alternates every quarter, regardless of the last possession."},
+{step:4,chapter:"HOW TO ATTACK",title:"RUN moves the ball",text:"The animal holding the Football Card plays RUN. If no legal defense stops it, advance 10 yards and keep possession. Quick Play has no four-down limit.",q:"A successful RUN from midfield advances to...",options:["Opponent's 40-yard line","Opponent's 10-yard line","An automatic touchdown"],answer:0,why:"Correct: 50 → 40 is the first successful gain.",yard:10},
+{step:4,chapter:"HOW TO ATTACK",title:"PASS moves and changes the carrier",text:"Name a teammate as receiver before defenders respond. If PASS succeeds, move both mini field markers 10 yards and give the Football Card to that teammate.",q:"After a successful PASS, who has possession?",options:["The original passer","The chosen teammate receiver","The opposing team"],answer:1,why:"Correct: the receiver takes the Football Card.",yard:20},
+{step:5,chapter:"HOW TO DEFEND",title:"TACKLE and BLOCK",text:"TACKLE stops a RUN. An attacking teammate can answer with BLOCK to cancel that TACKLE. Resolve reactions before moving the mini field markers.",q:"RUN → TACKLE → BLOCK, with no further counter. Does RUN succeed?",options:["Yes, BLOCK canceled TACKLE","No, TACKLE always wins"],answer:0,why:"Exactly. The successful RUN then advances 10 yards."},
+{step:5,chapter:"HOW TO DEFEND",title:"INTERCEPTION steals a PASS",text:"Defenders may use INTERCEPTION against PASS. Without a legal BLOCK, the intercepting team receives the Football Card and both markers return to midfield.",q:"A successful INTERCEPTION sends the markers to...",options:["The same current spot","50 | 50","The opponent's 10"],answer:1,why:"Correct: INTERCEPTION resets to midfield. STRIP works differently.",yard:0},
+{step:5,chapter:"HOW TO DEFEND",title:"STRIP is a risky fumble attempt",text:"Defend RUN with STRIP instead of TACKLE. Roll one die after legal Magic/Role reactions. 5–6 forces a fumble and steals the ball at the SAME field position; 1–4 means STRIP fails and RUN normally succeeds. BLOCK cannot cancel STRIP.",q:"Can the defense follow STRIP with TACKLE on that same RUN?",options:["Yes, if the STRIP die fails","No. Only one STRIP, and no TACKLE follow-up"],answer:1,why:"Correct: the defense accepts the risk when it plays STRIP.",dice:true},
+{step:6,chapter:"MAGIC CARDS",title:"Use Magic once, then remove it",text:"Magic Cards can protect attacks, change yardage, steal cards or counter other Magic. Every used Magic is removed from the game even if countered, and never refreshes after a quarter.",q:"What happens to used Magic between quarters?",options:["It is returned to the player","It is shuffled into the Action Deck","It stays out of the game"],answer:2,why:"Correct: only unused Magic carries forward."},
+{step:6,chapter:"MAGIC CARDS",title:"TIME REWIND has a deadline",text:"You can cancel an opponent's successful play with TIME REWIND before its result is finalized. Once the Scoring Card has been taken for a touchdown, that touchdown cannot be rewound.",q:"A touchdown has been recorded and its Scoring Card taken. Can TIME REWIND undo it?",options:["Yes, at any later time","No, it is too late"],answer:1,why:"Correct: declare the response before the score is recorded."},
+{step:7,chapter:"ANIMAL ROLE CARDS",title:"Animals add one special trick",text:"Your animal stays the same all match. Most animals use their Role ability once per quarter. Tiger can disable one enemy Role ability, but only twice per match in total.",q:"Can Tiger stop an opponent's Magic Cards?",options:["Yes, all cards belonging to that animal","No. Only that animal's Role ability"],answer:1,why:"Correct: Tiger cannot disable Magic or Action Cards."},
+{step:8,chapter:"ACTION CARD REFERENCE",title:"Know which defense fits",text:"RUN faces TACKLE or STRIP. PASS faces INTERCEPTION. BLOCK counters TACKLE or INTERCEPTION—not STRIP. If the opposing team cannot attack but yours can, you take over at the same physical field position and attack in the opposite direction.",q:"Red reaches Blue's 10, then Blue succeeds with STRIP. From where does Blue start its attack?",options:["Blue's own 10-yard line","Red's 10-yard line, nearly a touchdown","50 | 50"],answer:0,why:"Correct: Blue must run back the other way from its own 10; STRIP does not teleport the ball."},
+{step:9,chapter:"HOW TO WIN",title:"Three touchdowns to win",text:"From midfield, five normal 10-yard successful advances reach the end zone. A touchdown earns exactly ONE Scoring Card, whatever number is printed on it. The first team with THREE touchdowns wins immediately.",q:"A team has two Scoring Cards and scores again. What happens?",options:["They count the printed values","They win immediately","They must kick an extra point"],answer:1,why:"Correct: three touchdowns, three Scoring Cards, game over.",yard:50},
+{step:9,chapter:"QUARTER RESETS",title:"New quarter, new kickoff",text:"A quarter ends after 10 minutes (finish the current play) or earlier when BOTH teams cannot attack. Reset both markers to 50 | 50 regardless of the previous position, redeal 7 Action Cards to each animal, and alternate the opening team. There is NO cap on the number of quarters.",q:"The timer expires at the opponent's 10-yard line. What happens next quarter?",options:["Keep the 10-yard spot","Reset both markers to 50 | 50 and alternate the kickoff","Award a touchdown automatically"],answer:1,why:"Exactly. Keep earned Scoring Cards and unused Magic; refresh eligible animal abilities. Keep playing until a team reaches 3 touchdowns.",yard:0}
+];
+var i=0,answered=false;
+var $=function(id){return document.getElementById(id)};
+function show(){
+var x=L[i];answered=false;
+$("count").textContent="LESSON "+(i+1)+" / "+L.length;
+$("chapter").textContent="STEP "+x.step+" · "+x.chapter;
+$("title").textContent=x.title;$("explain").textContent=x.text;
+$("question").textContent=x.q;
+$("fieldText").textContent=(x.yard===undefined?"50 | 50 · Current play":x.yard===0?"50 | 50 · MIDFIELD":x.yard>=50?"TOUCHDOWN!":x.yard+" yards gained from midfield");
+$("bar").style.width=((i+1)/L.length*100)+"%";
+$("feedback").textContent="Choose an answer to continue.";
+$("next").disabled=true;$("next").textContent=i===L.length-1?"FINISH TUTORIAL ✓":"NEXT LESSON →";
+$("back").disabled=i===0;
+var box=$("choices");box.textContent="";
+x.options.forEach(function(t,j){var b=document.createElement("button");b.type="button";b.className="choice";b.textContent=t;b.addEventListener("click",function(){if(answered)return;
+if(j===x.answer){b.classList.add("correct");$("feedback").textContent="✓ "+x.why;answered=true;$("next").disabled=false;}
+else{b.classList.add("wrong");$("feedback").textContent="Not quite. Review the coach's note and try another option.";}
+});box.appendChild(b);});
+var ext=$("extras");ext.textContent="";
+if(x.dice){var holder=document.createElement("div");holder.className="dice";var die=document.createElement("div");die.className="die";die.textContent="?";var label=document.createElement("span");label.textContent="Try the STRIP roll!";var roll=document.createElement("button");roll.type="button";roll.className="btn main";roll.textContent="ROLL DIE";roll.addEventListener("click",function(){var n=1+Math.floor(Math.random()*6);die.textContent=String(n);label.textContent=n>=5?"5–6: Fumble! Defense takes possession at the same position.":"1–4: STRIP failed. RUN normally succeeds unless another effect changes it.";});holder.appendChild(die);holder.appendChild(label);holder.appendChild(roll);ext.appendChild(holder);}
+}
+$("next").addEventListener("click",function(){if(!answered)return;if(i<L.length-1){i++;show();window.scrollTo({top:0,behavior:"smooth"});}else{$("feedback").textContent="✓ Tutorial complete! You can now use the nine-step rulebook while playing. Your team wins after 3 touchdowns.";$("next").disabled=true;}});
+$("back").addEventListener("click",function(){if(i>0){i--;show();}});
+$("restart").addEventListener("click",function(){i=0;show();});
+show();
+})();
+</script></body></html>
