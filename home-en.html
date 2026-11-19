@@ -93,7 +93,15 @@ button{color:inherit}
 .modeSticker{position:absolute;z-index:5;right:11px;bottom:16px;max-width:85%;padding:7px 12px;border:3px solid var(--ink);border-radius:10px;background:#ffcf59;font:950 12px "Arial Black","Trebuchet MS",sans-serif;transform:rotate(-5deg);box-shadow:3px 4px 0 rgba(15,46,80,.35)}
 .modeCard.quick .modeSticker{right:50%;bottom:26px;white-space:nowrap;transform:translateX(50%) rotate(-4deg);font-size:16px}
 .modeBottom{display:flex;flex:1;flex-direction:column;align-items:stretch;gap:13px;padding:20px 19px 19px;background:var(--cream);border-top:3px solid var(--ink)}
-.modeBottom p{margin:0;color:#203b55;font-size:13px;font-weight:780;line-height:1.6;min-height:66px}
+.modeBottom p{margin:0;color:#203b55;font-size:13px;font-weight:780;line-height:1.55}
+.modeFit{display:flex;align-items:center;flex-wrap:wrap;gap:7px 9px;min-height:29px}
+.modeDifficulty{display:inline-flex;align-items:center;padding:6px 8px;border:2px solid var(--ink);border-radius:6px;font-size:10px;font-weight:950;letter-spacing:.02em;line-height:1.05;white-space:nowrap}
+.modeDifficulty.hard{background:#ffd9c7;color:#813119}
+.modeDifficulty.medium{background:#ffebae;color:#6e480c}
+.modeDifficulty.easy{background:#d3efc3;color:#195b31}
+.modeFit .fitAudience{color:#174669;font-size:11px;font-weight:950}
+.modeBottom p strong{font-weight:950}
+.modeBottom .modeDescription{min-height:106px}
 .featureRow{display:flex;gap:6px;flex-wrap:wrap}
 .feature{padding:6px 9px;border:2px solid #9bbad2;border-radius:7px;background:#e9f5ff;color:#245078;font-size:10px;font-weight:950;line-height:1.1}
 .enter{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:auto;padding:12px 16px;border:3px solid var(--ink);border-radius:12px;background:#ffd05e;color:var(--ink);font:950 13px "Arial Black","Trebuchet MS",sans-serif;box-shadow:0 4px 0 #153d5d;letter-spacing:.005em}
@@ -167,7 +175,7 @@ button{color:inherit}
  .artCards img:nth-child(1){left:calc(50% - 146px);top:48px}
  .artCards img:nth-child(2){left:calc(50% - 70px);top:7px}
  .artCards img:nth-child(3){left:calc(50% + 32px);top:45px}
- .modeBottom p{min-height:0}
+ .modeBottom .modeDescription{min-height:0}
  .sectionIntro{max-width:620px;margin:0 auto 17px}
 }
 @media(max-width:520px){
@@ -250,7 +258,7 @@ button{color:inherit}
 
     <div class="sectionIntro">
       <h2>CHOOSE YOUR GAME <span aria-hidden="true">🏈</span></h2>
-      <p>Three ways to hit the field. Pick a full matchup or dive into card chaos. Quick Play rules are now available.</p>
+      <p>Three game modes, three difficulty levels. New to football or playing with kids? Start with Pigskin Frenzy. Game Day is for experienced football fans.</p>
     </div>
 
     <section class="modeGrid" id="gameModes" aria-label="Game modes">
@@ -265,8 +273,9 @@ button{color:inherit}
           <span class="modeSticker">FULL MATCH</span>
         </div>
         <div class="modeBottom">
-          <p>Four quarters. Seven Action Cards each. Roll for possession, call your plays, and use Magic and animal abilities. Highest score wins.</p>
-          <div class="featureRow"><span class="feature">7 ACTION CARDS EACH</span><span class="feature">4 QUARTERS</span><span class="feature">20 MAGIC CARDS</span></div>
+          <div class="modeFit"><span class="modeDifficulty hard">HARD · ADVANCED</span><span class="fitAudience">BEST FOR FOOTBALL FANS</span></div>
+          <p class="modeDescription">For players familiar with American football. Four quarters, downs, kicking, Magic and strategy make this the most challenging mode. <strong>Not recommended for beginners or families playing with younger kids.</strong></p>
+          <div class="featureRow"><span class="feature">4 QUARTERS</span><span class="feature">DOWNS + KICKS</span><span class="feature">FULL STRATEGY</span></div>
           <div class="enter">ENTER GAME DAY <span class="enterArrow" aria-hidden="true">➜</span></div>
         </div>
       </button>
@@ -282,8 +291,9 @@ button{color:inherit}
           <span class="modeSticker">RULEBOOK LIVE!</span>
         </div>
         <div class="modeBottom">
-          <p>Race to three touchdowns! No four-down limit, no field goals. Fresh kickoffs from midfield every 10-minute quarter. Read the new rulebook.</p>
-          <div class="featureRow"><span class="feature">FIRST TO 3 TDs</span><span class="feature">NO 4 DOWNS</span></div>
+          <div class="modeFit"><span class="modeDifficulty medium">MEDIUM · SOME CHALLENGE</span><span class="fitAudience">BEGINNERS + FAMILIES</span></div>
+          <p class="modeDescription">A lighter option for first-time players and families playing with kids. Race to three touchdowns without four-down limits or field goals. <strong>There are still rules to learn—choose Pigskin Frenzy if you want the easiest game.</strong></p>
+          <div class="featureRow"><span class="feature">FIRST TO 3 TDs</span><span class="feature">NO 4 DOWNS</span><span class="feature">SOME STRATEGY</span></div>
           <div class="enter">OPEN QUICK PLAY RULEBOOK <span class="enterArrow" aria-hidden="true">➜</span></div>
         </div>
       </button>
@@ -299,8 +309,9 @@ button{color:inherit}
           <span class="modeSticker">CARD CHAOS!</span>
         </div>
         <div class="modeBottom">
-          <p>Draw footballs, play clever Action Cards, and disrupt everyone else's plans. First to collect 3 wins in the current version.</p>
-          <div class="featureRow"><span class="feature">PARTY FUN</span><span class="feature">DRAW &amp; DISRUPT</span><span class="feature">SOLO + TUTORIAL</span></div>
+          <div class="modeFit"><span class="modeDifficulty easy">EASY · SIMPLEST MODE</span><span class="fitAudience">FOR EVERYONE</span></div>
+          <p class="modeDescription">Our easiest, most casual mode—great for beginners, families with kids, and mixed-experience groups. <strong>No football knowledge needed.</strong> Draw cards, surprise your friends, and be the first to collect 3 wins.</p>
+          <div class="featureRow"><span class="feature">ALL EXPERIENCE LEVELS</span><span class="feature">PARTY FUN</span><span class="feature">DRAW &amp; DISRUPT</span></div>
           <div class="enter">ENTER PIGSKIN FRENZY <span class="enterArrow" aria-hidden="true">➜</span></div>
         </div>
       </button>
