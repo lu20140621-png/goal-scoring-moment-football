@@ -110,7 +110,7 @@ button{color:inherit}
 .feature{padding:6px 9px;border:2px solid #9bbad2;border-radius:7px;background:#e9f5ff;color:#245078;font-size:10px;font-weight:950;line-height:1.1}
 .enter{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:auto;padding:12px 16px;border:3px solid var(--ink);border-radius:12px;background:#ffd05e;color:var(--ink);font:950 13px "Arial Black","Trebuchet MS",sans-serif;box-shadow:0 4px 0 #153d5d;letter-spacing:.005em}
 .enterArrow{font-size:24px;line-height:1}
-.modeCard.quick .enter{background:#dce5ea;color:#576d7c;box-shadow:none}
+.modeCard.quick .enter{background:#ffd15e;color:var(--ink);box-shadow:0 4px 0 #153d5d}
 .infoStrip{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:31px 0 0;padding:14px;border:3px solid var(--ink);border-radius:16px;background:#cce9fc;box-shadow:0 5px 0 #1a466b}
 .infoStrip span{display:flex;align-items:center;gap:6px;color:#1b466c;font-size:11px;font-weight:950}
 .infoStrip span:not(:last-child):after{content:"•";margin-left:12px}
@@ -284,7 +284,7 @@ button{color:inherit}
         </div>
       </button>
 
-      <button class="modeCard quick" id="quickCard" type="button" aria-label="Open Quick Play Mode rulebook">
+      <button class="modeCard quick" id="quickCard" type="button" aria-label="Choose Quick Play interactive tutorial or rulebook">
         <div class="modeHead"><span class="modeNo">02</span><h3>QUICK PLAY<br>MODE</h3><span class="modeIcon" aria-hidden="true">⚡</span></div>
         <div class="modeVisual">
           <div class="artCards" aria-hidden="true">
@@ -292,13 +292,13 @@ button{color:inherit}
             <img class="cardArt" data-webp="cards/football-card.webp" data-png="cards/football-card.png" src="cards/football-card.webp" alt="">
             <img class="cardArt" data-webp="cards/run-card.webp" data-png="cards/run-card.png" src="cards/run-card.webp" alt="">
           </div>
-          <span class="modeSticker">RULEBOOK LIVE!</span>
+          <span class="modeSticker">TUTORIAL + RULES</span>
         </div>
         <div class="modeBottom">
           <div class="modeFit"><span class="modeDifficulty medium">MEDIUM · SOME CHALLENGE</span><span class="fitAudience">BEGINNERS + FAMILIES</span></div>
           <p class="modeDescription">A lighter option for first-time players and families playing with kids. Race to three touchdowns without four-down limits or field goals. <strong>There are still rules to learn—choose Pigskin Frenzy if you want the easiest game.</strong></p>
           <div class="featureRow"><span class="feature">FIRST TO 3 TDs</span><span class="feature">NO 4 DOWNS</span><span class="feature">SOME STRATEGY</span></div>
-          <div class="enter">OPEN QUICK PLAY RULEBOOK <span class="enterArrow" aria-hidden="true">➜</span></div>
+          <div class="enter">EXPLORE QUICK PLAY <span class="enterArrow" aria-hidden="true">➜</span></div>
         </div>
       </button>
 
@@ -321,9 +321,9 @@ button{color:inherit}
       </button>
     </section>
     <div class="infoStrip" aria-label="Features">
-      <span>🃏 ONE CARD SET</span><span>🏈 THREE MODES</span><span>🎓 GUIDED TUTORIALS</span><span>🎮 SOLO PLAY</span>
+      <span>🃏 ONE CARD SET</span><span>🏈 THREE MODES</span><span>🎓 GUIDED TUTORIALS</span><span>📖 FULL RULEBOOKS</span>
     </div>
-    <footer class="footer">Official rulebooks for all three modes are available. Pigskin Frenzy tutorial and AI practice still use older rules.</footer>
+    <footer class="footer">Quick Play now has a guided interactive tutorial and complete rulebook. Pigskin Frenzy tutorial is still being updated.</footer>
   </main>
 </div>
 
@@ -352,6 +352,28 @@ button{color:inherit}
         <div class="choiceDesc">Read all nine steps, including two-human 2v2, team marker movement, Interception resets, Time Rewind, Bear defense, all six Action Cards, 20 Magic Cards and 10 animal roles.</div>
         <div class="mini">Full Nine-Step Game Day Rulebook</div>
         <div class="choiceBtn">OPEN RULEBOOK</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="choiceModal" id="quickModal" role="dialog" aria-modal="true" aria-label="Quick Play learning options">
+  <div class="choiceBox">
+    <div class="choiceHead">
+      <div><div class="choiceTitle">Choose Quick Play Mode</div>
+      <div class="choiceSub">Two ways to learn: the interactive tutorial and the complete nine-step rulebook. No AI game or solo practice.</div></div>
+      <button class="close" id="closeQuickChoice" type="button" aria-label="Close Quick Play options">×</button>
+    </div>
+    <div class="choiceGrid">
+      <button class="choiceCard tutorial" type="button" data-target="quick-play-tutorial.html?v=20261119-quick-tut-v1" data-title="QUICK PLAY TUTORIAL">
+        <div class="choiceIcon">🎓🏈</div><div class="choiceName">Interactive Tutorial</div>
+        <div class="choiceDesc">15 guided lessons: set up the mat, practice RUN/PASS, try STRIP with a die, learn Magic and Roles, reset quarters, and score 3 touchdowns.</div>
+        <div class="mini">Tap through each lesson</div><div class="choiceBtn">START TUTORIAL</div>
+      </button>
+      <a class="choiceCard rulebook" href="quick-play-rules.html?v=20261119-audit-v1">
+        <div class="choiceIcon">📖✨</div><div class="choiceName">Rulebook</div>
+        <div class="choiceDesc">Read all nine steps, including the field, kickoff, attack, defense, 20 Magic Cards, 10 Animal Roles, 6 Action Cards, and how to win.</div>
+        <div class="mini">Full Quick Play rules</div><div class="choiceBtn">OPEN RULEBOOK</div>
       </a>
     </div>
   </div>
@@ -388,6 +410,7 @@ button{color:inherit}
   ];
 
   const modal = $('#strategyModal');
+  const quickModal = $('#quickModal');
   const loader = $('#loader');
   const loadTitle = $('#loadTitle');
   const bar = $('#bar');
@@ -502,13 +525,14 @@ button{color:inherit}
   document.querySelectorAll('[data-target]').forEach(btn => {
     btn.addEventListener('click', () => {
       modal.classList.remove('show');
+      quickModal.classList.remove('show');
       openWithLoader(btn.dataset.target, btn.dataset.title || 'LOADING MODE');
     });
   });
 
-  $('#quickCard').addEventListener('click', () => {
-    openWithLoader('quick-play-rules.html?v=20261118-quick-play-strip-fumble','QUICK PLAY RULEBOOK');
-  });
+  $('#quickCard').addEventListener('click', () => { quickModal.classList.add('show'); });
+  $('#closeQuickChoice').addEventListener('click', () => { quickModal.classList.remove('show'); });
+  quickModal.addEventListener('click', e => { if(e.target === quickModal) quickModal.classList.remove('show'); });
 
   $('#casualCard').addEventListener('click', () => {
     openWithLoader('casual-en.html?v=20261118-mode3','PIGSKIN FRENZY RULES');
