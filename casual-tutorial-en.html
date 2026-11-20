@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#125187"><title>Pigskin Frenzy | Interactive Tutorial</title>
-<meta name="description" content="Learn Pigskin Frenzy in 12 interactive lessons using the new 15-minute and eight-football rules.">
+<meta name="description" content="Learn Pigskin Frenzy in 13 interactive lessons using the new 15-minute and eight-football rules.">
 <style>
 :root{--ink:#112f4f;--blue:#125187;--gold:#ffd15e;--cream:#fffaf0;--muted:#536e83;--line:#acc6d7}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(#d0dce4 1px,transparent 1px) 0 0/24px 24px,linear-gradient(#f5f6ee,#fffaf2);font:14px/1.6 "Trebuchet MS",Verdana,Arial,sans-serif}button,select{font:inherit}
@@ -47,7 +47,7 @@ a{color:inherit}.wrap{width:min(1120px,100%);margin:auto;padding:13px 14px 65px}
 <body>
 <div class="wrap">
 <header class="top"><div class="brand">🏈 TAILS &amp; TACKLES <small style="font:800 10px Arial,sans-serif;display:block;letter-spacing:.1em;margin-top:5px">PIGSKIN FRENZY · INTERACTIVE TUTORIAL</small></div>
-<div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261120-mode3-goal-tie">📖 RULEBOOK</a></div></header>
+<div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261120-mode3-chapter-guide">📖 RULEBOOK</a></div></header>
 <div class="hero"><span class="badge">MODE 3 · EASY</span><h1>LEARN AS YOU PLAY</h1><p>Follow the coach through 13 short, hands-on lessons. Tap cards to practice real examples, then use the rulebook to play at the table.</p>
 <div class="badges"><span class="badge">⏱️ 15 MINUTES</span><span class="badge">🏈 8 MINI FOOTBALLS</span><span class="badge">🪄 1 MAGIC EACH TO START</span></div></div>
 <div class="progress"><b id="progressLabel">LESSON 1 / 13</b><div class="track"><div class="bar" id="bar"></div></div></div>
@@ -168,7 +168,7 @@ var target=e.target.closest('[data-do]');if(target){action(target.getAttribute('
 var go=e.target.closest('[data-jump]');if(go){jump(Number(go.getAttribute('data-jump')))}
 });
 back.addEventListener('click',function(){if(n>0)jump(n-1)});
-next.addEventListener('click',function(){if(!done())return;if(n===lessons.length-1){location.href='casual-rules-en.html?v=20261120-mode3-goal-tie'}else jump(n+1)});
+next.addEventListener('click',function(){if(!done())return;if(n===lessons.length-1){location.href='casual-rules-en.html?v=20261120-mode3-chapter-guide'}else jump(n+1)});
 render();
 })();
 </script></body></html>
