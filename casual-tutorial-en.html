@@ -76,20 +76,20 @@ var lessons=[
 ];
 var spells=[
 ['Time Stop','Play on your turn. Take an extra turn immediately after this one.', 'ON YOUR TURN'],
-['Goalpost Warp','React to another player drawing FOOTBALL: move it one position deeper into the shared draw pile.', 'REACTION'],
+['Goalpost Warp','When another player announces FOOTBALL, return it face down to any one of the top five positions in the draw pile. This draw awards no mini football.', 'REACTION'],
 ['Flight','Look through the shared draw pile for FOOTBALL without changing its order.', 'ON YOUR TURN'],
-['Gravity','Other players need twice as many cards to use ordinary card abilities for this round.', 'ON YOUR TURN'],
-['Magic Barrier','Other effects cannot cancel your cards or take cards from your hand for this round.', 'ON YOUR TURN'],
+['Gravity','For the rest of this round, other players must use twice the normal number of Action Cards or numbered Scoring Cards to activate those abilities. Magic Cards are unaffected. Magic Barrier, Invincibility and Guardian protect their users from Gravity.', 'ON YOUR TURN'],
+['Magic Barrier','For the rest of this round, other effects cannot cancel your card abilities or steal cards from your hand. Your Action and Scoring abilities still require only their normal one card. Gravity and Gale Force do not affect you.', 'ON YOUR TURN'],
 ['Shatter','React when an opponent draws FOOTBALL: prevent that draw from earning a mini football.', 'REACTION'],
 ['Time Rewind','Play on your turn. Take an extra turn immediately after this one.', 'ON YOUR TURN'],
-['Invincibility','Other effects cannot cancel your cards or take cards from your hand for this round.', 'ON YOUR TURN'],
+['Invincibility','For the rest of this round, other effects cannot cancel your card abilities or steal cards from your hand. Your Action and Scoring abilities still require only their normal one card. Gravity and Gale Force do not affect you.', 'ON YOUR TURN'],
 ['Phantom Pass','Insert an unused Animal Role Card into the draw pile as a trap. If drawn, steal one mini football from the drawer.', 'ON YOUR TURN'],
 ['True Sight','Look through the shared draw pile for FOOTBALL without changing its order.', 'ON YOUR TURN'],
-['Gale Force','Other players need twice as many cards to use ordinary card abilities for this round.', 'ON YOUR TURN'],
+['Gale Force','For the rest of this round, other players must use twice the normal number of Action Cards or numbered Scoring Cards to activate those abilities. Magic Cards are unaffected. Magic Barrier, Invincibility and Guardian protect their users from Gale Force.', 'ON YOUR TURN'],
 ["Titan's Might",'Double the number of cards drawn by Action Card abilities during your turn. Scoring Card draws are unaffected.', 'ON YOUR TURN'],
-['Chaos','Everyone shuffles their hand into the shared deck and draws the same number again. FOOTBALL still scores.', 'ON YOUR TURN'],
-['Arcane Heist','Take one card from the hand of each other player.', 'ON YOUR TURN'],
-['Guardian','Other effects cannot cancel your cards or take cards from your hand for this round.', 'ON YOUR TURN'],
+['Chaos','Everyone shuffles their regular hand into the shared draw pile, then draws the same number of regular cards. If anyone draws FOOTBALL, announce it and resolve it using the normal FOOTBALL response and scoring rules. Keep FOOTBALL out until the full Chaos draw is complete, then return it. Magic Cards stay separate.', 'ON YOUR TURN'],
+['Arcane Heist','Steal exactly one item total: one mini football from a player or the shared center supply, one Magic Card from a player, or one regular card from a player. You cannot take any item from a player protected by Guardian.', 'ON YOUR TURN'],
+['Guardian','For the rest of this round, other effects cannot cancel your card abilities or steal cards from your hand. Your Action and Scoring abilities still require only their normal one card. Gravity and Gale Force do not affect you. Arcane Heist cannot steal any item from you.', 'ON YOUR TURN'],
 ['Copycat','Choose a face-up spell from the Magic discard pile and immediately copy its effect.', 'ON YOUR TURN'],
 ['Spell Swap','On your turn, steal one mini football from another player who has at least one. No hand-card exchange is involved.', 'ON YOUR TURN'],
 ['Invisibility','Draw one extra card on every player’s turn this round, whether or not they draw or play an Action Card.', 'ON YOUR TURN'],
@@ -103,7 +103,7 @@ var scrambleSteps=[
 '4 · NOW halve ONLY the REMAINING draw pile',
 '5 · Insert the one FOOTBALL Card FACE UP',
 '6 · Shuffle again, KEEPING FOOTBALL FACE UP',
-'7 · Start the 10-minute timer and begin play',
+'7 · Start the 10-minute phone timer and begin play',
 '8 · Grab the face-up FOOTBALL Card — WIN!'
 ];
 var n=0,passed={},picked={},seen={},state={balls:0,dir:1};
