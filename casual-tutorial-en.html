@@ -47,10 +47,10 @@ a{color:inherit}.wrap{width:min(1120px,100%);margin:auto;padding:13px 14px 65px}
 <body>
 <div class="wrap">
 <header class="top"><div class="brand">🏈 TAILS &amp; TACKLES <small style="font:800 10px Arial,sans-serif;display:block;letter-spacing:.1em;margin-top:5px">PIGSKIN FRENZY · INTERACTIVE TUTORIAL</small></div>
-<div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261119-mode3-timing-overtime">📖 RULEBOOK</a></div></header>
-<div class="hero"><span class="badge">MODE 3 · EASY</span><h1>LEARN AS YOU PLAY</h1><p>Follow the coach through 12 short, hands-on lessons. Tap cards to practice real examples, then use the rulebook to play at the table.</p>
+<div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261119-mode3-grab-overtime">📖 RULEBOOK</a></div></header>
+<div class="hero"><span class="badge">MODE 3 · EASY</span><h1>LEARN AS YOU PLAY</h1><p>Follow the coach through 13 short, hands-on lessons. Tap cards to practice real examples, then use the rulebook to play at the table.</p>
 <div class="badges"><span class="badge">⏱️ 15 MINUTES</span><span class="badge">🏈 8 MINI FOOTBALLS</span><span class="badge">🪄 1 MAGIC EACH TO START</span></div></div>
-<div class="progress"><b id="progressLabel">LESSON 1 / 12</b><div class="track"><div class="bar" id="bar"></div></div></div>
+<div class="progress"><b id="progressLabel">LESSON 1 / 13</b><div class="track"><div class="bar" id="bar"></div></div></div>
 <div class="layout">
 <nav class="menu" id="menu" aria-label="Choose a lesson"></nav>
 <main class="panel" id="panel" tabindex="-1"><div id="lesson"></div><div class="feedback" id="feedback" role="status" aria-live="polite"></div><div class="navbottom"><button id="back" type="button">← BACK</button><button id="next" type="button">NEXT →</button></div></main>
@@ -71,7 +71,8 @@ var lessons=[
 ['Six Scoring Cards','The printed values 30 / 20 / 10 / 6 / 3 / 1 are card labels, not victory points. The 20-point card is a REACTION that cancels only Action and numbered Scoring abilities. All other numbered Scoring Cards are used ON YOUR TURN.'],
 ['Magic, exchange and discard','Every player begins with one random Magic Card. Exchange one mini football for one unused Magic Card and return the paid mini football to the center. Used Magic Cards go face up in a separate discard; Copycat can only copy spells from there. Play multiple Magic Cards if their timing allows.'],
 ['FOOTBALL and reactions','When FOOTBALL is drawn, announce it and pause. Opponents may respond with an eligible card such as SHATTER or GOALPOST WARP. SPELL SWAP is an own-turn effect that steals one mini football already owned by an opponent; it does not respond to a FOOTBALL draw. Shuffle FOOTBALL back only after the current draw finishes.'],
-['Finish and tiebreaker','End regular play when the eight mini footballs are all claimed, or at 15 minutes. Compare mini footballs. If tied for first, only tied leaders take part in a 10-minute Football Scramble. Use half the Action Cards and half the numbered Scoring Cards, with all 20 Magic Cards divided as evenly as possible; no Magic purchases during overtime.']
+['Finish regular play','Regular play ends when all eight mini footballs are claimed or the 15-minute timer expires. The player with the most wins. If tied for first, only the tied leaders enter Football Scramble overtime.'],
+['FOOTBALL SCRAMBLE — FIRST GRAB WINS','Tied leaders race to grab the single FACE-UP FOOTBALL Card. Shuffle all 20 Magic Cards and divide them evenly; mix Action + Scoring Cards; deal FIVE cards each; THEN halve only the REMAINING draw pile. Insert FOOTBALL FACE UP, reshuffle while keeping it face up, start the 10-minute timer, and race to grab it. Whoever grabs the card first wins immediately.']
 ];
 var spells=[
 ['Time Stop','Play on your turn. Take an extra turn immediately after this one.', 'ON YOUR TURN'],
@@ -94,6 +95,16 @@ var spells=[
 ['Invisibility','Draw one extra card on every player’s turn this round, whether or not they draw or play an Action Card.', 'ON YOUR TURN'],
 ['Roll of Fate','Roll two dice. If the total is greater than six, claim one available mini football.', 'ON YOUR TURN'],
 ['Mystic Fog','Steal one mini football from another player.', 'ON YOUR TURN']
+];
+var scrambleSteps=[
+'1 · Divide ALL 20 Magic Cards evenly among tied players',
+'2 · Mix and shuffle ALL Action + numbered Scoring Cards',
+'3 · Deal 5 regular cards to EACH tied player FIRST',
+'4 · NOW halve ONLY the REMAINING draw pile',
+'5 · Insert the one FOOTBALL Card FACE UP',
+'6 · Shuffle again, KEEPING FOOTBALL FACE UP',
+'7 · Start the 10-minute timer and begin play',
+'8 · Grab the face-up FOOTBALL Card — WIN!'
 ];
 var n=0,passed={},picked={},seen={},state={balls:0,dir:1};
 var lesson=document.getElementById('lesson'),feedback=document.getElementById('feedback'),menu=document.getElementById('menu'),back=document.getElementById('back'),next=document.getElementById('next');
@@ -121,11 +132,15 @@ if(n===7)h+='<div class="prompt">Current direction: '+(state.dir>0?'CLOCKWISE �
 if(n===8)h+='<div class="prompt">Tap each Scoring Card to see its Mode 3 effect</div><div class="buttons">'+['30','20','10','6','3','1'].map(function(x){return button(x+'-POINT CARD','score-'+x,(picked['score'+x]?'green':'secondary'))}).join('')+'</div><p id="scoreeffect">A 30-point card draws five physical cards together; FOOTBALL cannot appear twice in those same five cards. Try it first!</p>';
 if(n===9)h+='<div class="prompt">Explore each spell’s usage timing, then practice the exchange (tap three spells)</div><div class="magiclist">'+spells.map(function(s,i){return '<button class="magicbtn '+(picked['spell'+i]?'active':'')+'" type="button" data-do="spell-'+i+'">'+(i+1)+'. '+s[0]+'</button>'}).join('')+'</div><div class="magicdesc" id="magicdesc">Pick a spell to read its Mode 3 effect.</div><div class="buttons">'+button('Return 1 mini football to center · get 1 Magic Card','magic-buy')+'</div>';
 if(n===10)h+='<div class="prompt">An opponent draws FOOTBALL. Choose a legal reaction</div><div class="buttons">'+button('SHATTER · deny football','react-shatter')+button('GOALPOST WARP · move card','react-warp')+button('SPELL SWAP · OWN TURN ONLY','react-swap')+'</div><p class="cardsLegend">Call out FOOTBALL, allow reactions, finish this single draw effect, then reshuffle the card into the deck. SPELL SWAP steals a held mini football on your own turn; it is not a FOOTBALL-draw reaction.</p>';
-if(n===11)h+='<div class="prompt">Practice the finish and the 10-minute tiebreaker</div>'+footballs(picked['finish8']?8:0)+'<div class="buttons">'+button('All 8 mini footballs claimed','finish8')+button('15-minute timer expires','finish15')+button('Players tied for first','finish-tie')+'</div>';
+if(n===11)h+='<div class="prompt">Finish regular play — how does a tie work?</div>'+footballs(picked['finish8']?8:0)+'<div class="buttons">'+button('All 8 mini footballs claimed','finish8')+button('15-minute timer expires','finish15')+button('Players tied for first','finish-tie')+'</div><p>A tie for most mini footballs triggers a 10-minute sudden-death FOOTBALL scramble, NOT a second eight-football race.</p>';
+if(n===12){h+='<div class="prompt">Tap the steps IN ORDER. Deal 5 BEFORE halving the remaining deck.</div><div class="buttons">'+scrambleSteps.slice(0,7).map(function(label,i){return button((picked['scramble-'+i]?'✓  ':'')+label,'scramble-'+i,picked['scramble-'+i]?'green':'secondary')}).join('')+'</div>';if(picked['scramble-6'])h+='<p><b>FOOTBALL IS FACE UP!</b> As soon as it appears during play, race to physically grab it:</p><div class="cardrow">'+card('Football','scramble-7')+'</div>';else h+='<p class="cardsLegend">Do not grab during setup or shuffling. The scramble starts after the ten-minute timer begins.</p>'}
+
 h+='</div>';
 if(n===2)h+='<div class="note">Every player starts with five regular cards and one Magic Card. At the end of each normal turn, draw one card. Multiple eligible cards may be played; finish each card effect before moving on.</div>';
 if(n===8)h+='<div class="note">Card values are labels only: 30 = draw 5 (ON YOUR TURN); 20 = cancel an Action or numbered Scoring Card only (REACTION); 10 = end turn, then draw 3 on your next turn; 6 = reorder top 5; 3 = reveal top 3; 1 = reshuffle the draw pile and draw 1.</div>';
-if(n===11)h+='<div class="note">Tied leaders replay the mode for ten minutes with half of each regular-card category. All 20 Magic Cards are dealt as evenly as possible, and Magic cannot be purchased. Use half the Action Cards, half the numbered Scoring Cards and all 20 Magic Cards, divided as evenly as possible. Reset the mini footballs and play for ten minutes.</div>';
+if(n===11)h+='<div class="note">Only players tied for first take part. The FIRST player to grab the face-up FOOTBALL Card wins the match immediately. Do not compare mini-football totals in overtime.</div>';
+if(n===12)h+='<div class="note"><b>STRICT ORDER:</b> Mix all Action + Scoring → DEAL 5 EACH → halve only the REMAINING draw pile → insert FOOTBALL FACE UP → reshuffle keeping FOOTBALL face up → start the ten-minute timer → FIRST GRAB WINS. All 20 Magic Cards are shared evenly; no buying Magic during overtime.</div>';
+
 lesson.innerHTML=h;
 feedback.textContent=seen[n]||'';
 back.disabled=n===0;next.disabled=!done();
@@ -145,14 +160,15 @@ if(n===8&&s.indexOf('score-')===0){var val=s.slice(6);picked['score'+val]=true;v
 if(n===9&&s==='magic-buy'){picked['magic-buy']=true;feedbackOnly('Return one of your mini footballs to the center to draw one unused Magic Card. The paid football can be claimed again. Used Magic stays face up in its discard pile.');return}
 if(n===9&&s.indexOf('spell-')===0){var idx=Number(s.slice(6));if(!isFinite(idx)||idx<0||idx>=spells.length)return;picked['spell'+idx]=true;document.getElementById('magicdesc').innerHTML='<strong>'+spells[idx][0]+'</strong> · <strong>'+spells[idx][2]+'</strong><p>'+spells[idx][1]+'</p>';document.querySelectorAll('.magicbtn').forEach(function(el,j){el.classList.toggle('active',!!picked['spell'+j])});if(spells.filter(function(z,j){return picked['spell'+j]}).length>=3){complete('You explored at least three spells. Browse all 20 or continue.');}return}
 if(n===10&&s.indexOf('react-')===0){var out={'react-shatter':'SHATTER prevents this FOOTBALL from awarding a mini football.','react-warp':'GOALPOST WARP returns FOOTBALL just below the top card, without awarding a mini football.'};if(s==='react-swap'){feedbackOnly('SPELL SWAP steals an opponent’s existing mini football on your own turn, so it does not respond to a FOOTBALL draw. Choose SHATTER or GOALPOST WARP.');return}complete(out[s]);return}
-if(n===11&&(s==='finish8'||s==='finish15'||s==='finish-tie')){picked[s]=true;var msg=s==='finish-tie'?'Return all eight mini footballs to the center for a 10-minute scramble. Use half the Action Cards, half the Scoring Cards and all 20 Magic Cards divided evenly; no buying Magic.':(s==='finish8'?'Eight mini footballs claimed. Compare each player’s total.':'15 minutes are up. Compare each player’s total.');complete(msg);render();feedback.textContent=seen[n]=msg;return}
+if(n===11&&(s==='finish8'||s==='finish15'||s==='finish-tie')){picked[s]=true;var msg=s==='finish-tie'?'A tie for first starts a ten-minute, first-to-grab-FOOTBALL scramble. The NEXT lesson teaches the exact setup order.':(s==='finish8'?'Eight mini footballs claimed. Compare each player’s total.':'15 minutes are up. Compare each player’s total.');complete(msg);render();feedback.textContent=seen[n]=msg;return}
+if(n===12&&s.indexOf('scramble-')===0){var idx=Number(s.slice(9));var nextIdx=scrambleSteps.findIndex(function(label,j){return !picked['scramble-'+j]});if(idx!==nextIdx){feedbackOnly('Steps MUST be in order: DEAL 5 FIRST, halve remaining deck SECOND, then insert FOOTBALL FACE UP.');return}picked[s]=true;var msg=idx===7?'You grabbed the FACE-UP FOOTBALL Card FIRST — YOU WIN THE MATCH!':'Correct: '+scrambleSteps[idx];if(idx===7)complete(msg);else feedbackOnly(msg);render();feedback.textContent=seen[n]=msg;return}
 }
 document.addEventListener('click',function(e){
 var target=e.target.closest('[data-do]');if(target){action(target.getAttribute('data-do'));return}
 var go=e.target.closest('[data-jump]');if(go){jump(Number(go.getAttribute('data-jump')))}
 });
 back.addEventListener('click',function(){if(n>0)jump(n-1)});
-next.addEventListener('click',function(){if(!done())return;if(n===lessons.length-1){location.href='casual-rules-en.html?v=20261119-mode3-timing-overtime'}else jump(n+1)});
+next.addEventListener('click',function(){if(!done())return;if(n===lessons.length-1){location.href='casual-rules-en.html?v=20261119-mode3-grab-overtime'}else jump(n+1)});
 render();
 })();
 </script></body></html>
