@@ -49,7 +49,7 @@ a{color:inherit}.wrap{width:min(1120px,100%);margin:auto;padding:13px 14px 65px}
 <header class="top"><div class="brand">🏈 TAILS &amp; TACKLES <small style="font:800 10px Arial,sans-serif;display:block;letter-spacing:.1em;margin-top:5px">PIGSKIN FRENZY · INTERACTIVE TUTORIAL</small></div>
 <div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261119-mode3-audit">📖 RULEBOOK</a></div></header>
 <div class="hero"><span class="badge">MODE 3 · EASY</span><h1>LEARN AS YOU PLAY</h1><p>Follow the coach through 12 short, hands-on lessons. Tap cards to practice real examples, then use the rulebook to play at the table.</p>
-<div class="badges"><span class="badge">⏱️ 15 MINUTES</span><span class="badge">🏈 8 MINI FOOTBALLS</span><span class="badge">🪄 ONE MAGIC CARD EACH</span></div></div>
+<div class="badges"><span class="badge">⏱️ 15 MINUTES</span><span class="badge">🏈 8 MINI FOOTBALLS</span><span class="badge">🪄 1 MAGIC EACH TO START</span></div></div>
 <div class="progress"><b id="progressLabel">LESSON 1 / 12</b><div class="track"><div class="bar" id="bar"></div></div></div>
 <div class="layout">
 <nav class="menu" id="menu" aria-label="Choose a lesson"></nav>
@@ -60,18 +60,18 @@ a{color:inherit}.wrap{width:min(1120px,100%);margin:auto;padding:13px 14px 65px}
 (function(){
 'use strict';
 var lessons=[
-['The goal','Collect the most mini footballs. The game ends when the 8 mini footballs are all claimed or 15 minutes run out—whichever comes first.'],
-['Sort the decks','Separate the Magic Cards. Shuffle Action Cards and Scoring Cards together with the single FOOTBALL Card. No Animal Role abilities are used.'],
-['Set up the table','Deal one Magic Card per player. Set out eight mini footballs and start a 15-minute timer when the first turn begins.'],
-['Run: draw one','Use RUN to draw one card from the shared draw pile. If that card is FOOTBALL, it can score a mini football.'],
-['Pass: draw two','Use PASS to draw two cards. Look at both, keep one and give the other to any player you choose.'],
-['Tackle and Block','TACKLE takes one card from a player, including a card just drawn with RUN. BLOCK can cancel TACKLE or INTERCEPTION.'],
-['Interception','When someone uses PASS, INTERCEPTION takes the card the passer chose to keep. The passer may cancel with BLOCK.'],
-['Strip reverses play','STRIP is the fixed name of the physical card. In Mode 3, its effect reverses the direction of play.'],
-['Six Scoring Cards','The printed 30 / 20 / 10 / 6 / 3 / 1 values are card names, not points counted toward victory.'],
-['Twenty Magic Cards','Each player starts with one Magic Card. Use it once, then remove it from the game. Its effect belongs to Mode 3 only.'],
-['A FOOTBALL reaction','When FOOTBALL appears, pause to allow a valid reaction such as SHATTER, GOALPOST WARP or SPELL SWAP before awarding the mini football.'],
-['Finish the game','The first of two conditions ends the game: all eight mini footballs are claimed, or the 15-minute timer expires. The player holding the most wins.']
+['The goal','Collect mini footballs. When all eight are claimed or the 15-minute timer ends, whoever holds the most wins. A tie for first leads to a 10-minute Football Scramble.'],
+['Sort the decks','Separate Magic Cards. Shuffle Action and numbered Scoring Cards together, but do not add FOOTBALL yet. No Animal Role abilities are used.'],
+['Set up in order','Deal each player one random Magic Card. Deal five cards each from the shuffled Action + Scoring deck. Only after dealing, insert FOOTBALL and reshuffle the remaining regular draw pile. Put out eight mini footballs, then start the timer.'],
+['Run: draw one','On your own turn, use RUN to draw one card. You can play several eligible cards in one turn; resolve each card fully before playing another.'],
+['Pass: draw two','On your turn, use PASS to draw two cards. Look at both, give one to a player of your choice and keep the other. Complete this PASS before the next play.'],
+['Tackle and Block','TACKLE may be played only on your own turn to take one card from another player. The target may play BLOCK to cancel TACKLE.'],
+['Interception','When someone uses PASS and selects a card to keep, INTERCEPTION can take that card during that PASS. BLOCK can cancel it.'],
+['Strip reverses play','STRIP is the fixed card name. Playing it on your turn reverses the direction of play.'],
+['Six Scoring Cards','The printed values 30 / 20 / 10 / 6 / 3 / 1 are card labels, not victory points. The 20-point card only cancels Action and numbered Scoring abilities.'],
+['Magic, exchange and discard','Every player begins with one random Magic Card. Exchange one mini football for one extra unused Magic Card. Used Magic Cards go face up in a separate discard; Copycat can only copy spells from there. Play multiple Magic Cards if their timing allows.'],
+['FOOTBALL and reactions','When FOOTBALL is drawn, announce it and pause. Opponents may respond with an eligible card such as SHATTER or GOALPOST WARP. SPELL SWAP is own-turn only and cannot normally be used on an opponent’s turn. Shuffle FOOTBALL back only after the current draw finishes.'],
+['Finish and tiebreaker','End regular play when the eight mini footballs are all claimed, or at 15 minutes. Compare mini footballs. If tied for first, only tied leaders take part in a 10-minute Football Scramble. Divide Magic Cards evenly; no Magic-for-football exchanges during overtime.']
 ];
 var spells=[
 ['Time Stop','Play on your turn. Take an extra turn immediately after this one.'],
@@ -89,8 +89,8 @@ var spells=[
 ['Chaos','Everyone shuffles their hand into the shared deck and draws the same number again. FOOTBALL still scores.'],
 ['Arcane Heist','Take one card from the hand of each other player.'],
 ['Guardian','Other effects cannot cancel your cards or take cards from your hand for this round.'],
-['Copycat','Immediately copy one Magic Card effect already used in this game. You cannot save it for later.'],
-['Spell Swap','When another player draws FOOTBALL, swap one card from your hand for their FOOTBALL Card.'],
+['Copycat','Choose a face-up spell from the Magic discard pile and immediately copy its effect.'],
+['Spell Swap','Play only on your turn. If another player reveals FOOTBALL during your turn, exchange a hand card for it before scoring.'],
 ['Invisibility','Draw one extra card on every player’s turn this round, whether or not they draw or play an Action Card.'],
 ['Roll of Fate','Roll two dice. If the total is greater than six, claim one available mini football.'],
 ['Mystic Fog','Steal one mini football from another player.']
@@ -111,21 +111,21 @@ var info=lessons[n];document.getElementById('progressLabel').textContent='LESSON
 menu.innerHTML=lessons.map(function(l,i){return '<button type="button" data-jump="'+i+'" class="'+(n===i?'active':'')+'"><span class="num">'+(i+1)+'</span>'+l[0]+'</button>'}).join('');
 var h='<div class="stepOverline">COACH · LESSON '+(n+1)+'</div><h2>'+info[0]+'</h2><p>'+info[1]+'</p><div class="stage">';
 if(n===0)h+='<div class="prompt">Try it: draw FOOTBALL</div>'+card('Football','football')+footballs(picked[0]?1:0);
-if(n===1)h+='<div class="prompt">Tap all three piles to sort them</div><div class="buttons">'+button('🪄 MAGIC · separate','magic','secondary')+button('🃏 ACTION + SCORING · together','mixed','secondary')+button('🐾 ANIMAL ROLES · aside','roles','secondary')+'</div><p>Magic is a separate deck. Action, Scoring and FOOTBALL share one draw pile. Animal Roles are not dealt in this mode.</p>';
-if(n===2)h+='<div class="prompt">Practice the setup</div><div class="buttons">'+button('1 · Deal one Magic Card each','deal-magic')+button('2 · Place eight mini footballs','place-balls')+button('3 · Start the 15-minute timer','start-clock')+'</div><p class="cardsLegend">The number of regular starting cards is still a playtest decision; the rulebook flags it rather than inventing a final number.</p>';
+if(n===1)h+='<div class="prompt">First separate these piles</div><div class="buttons">'+button('🪄 MAGIC · separate','magic','secondary')+button('🃏 ACTION + SCORING · together','mixed','secondary')+button('🐾 ANIMAL ROLES · aside','roles','secondary')+'</div><p>Keep FOOTBALL aside until every player receives five Action/Scoring Cards. Add FOOTBALL to the remaining deck only afterward.</p>';
+if(n===2)h+='<div class="prompt">Complete each setup step in order</div><div class="buttons">'+button('1 · Deal one Magic Card each','deal-magic')+button('2 · Deal five regular cards each','deal-five')+button('3 · Insert FOOTBALL and reshuffle','insert-ball')+button('4 · Place eight mini footballs','place-balls')+button('5 · Start the 15-minute timer','start-clock')+'</div><p class="cardsLegend">The five starting cards come from the mixed Action + numbered Scoring deck. FOOTBALL is added only after dealing.</p>';
 if(n===3)h+='<div class="prompt">Tap RUN</div><div class="cardrow">'+card('Run','run')+card('Football','wrong-run')+'</div>';
 if(n===4)h+='<div class="prompt">You drew FOOTBALL and BLOCK. Which would you keep?</div><div class="cardrow">'+card('Football','pass-football')+card('Block','pass-block')+'</div><p>Choose one to keep; give the other to the player you name. FOOTBALL scoring is resolved after legal responses.</p>';
-if(n===5)h+='<div class="prompt">You are being targeted by TACKLE. What stops it?</div><div class="cardrow">'+card('Block','block')+card('Tackle','wrong-block')+'</div>';
+if(n===5)h+='<div class="prompt">Another player played TACKLE on their turn. What stops it?</div><div class="cardrow">'+card('Block','block')+card('Tackle','wrong-block')+'</div>';
 if(n===6)h+='<div class="prompt">Opponent just used PASS and chose a card to keep. Respond!</div><div class="cardrow">'+card('Interception','interception')+card('Run','wrong-interception')+'</div>';
 if(n===7)h+='<div class="prompt">Current direction: '+(state.dir>0?'CLOCKWISE ↻':'COUNTERCLOCKWISE ↺')+'</div><div class="buttons">'+button('STRIP · REVERSE DIRECTION','strip')+'</div>';
 if(n===8)h+='<div class="prompt">Tap each Scoring Card to see its Mode 3 effect</div><div class="buttons">'+['30','20','10','6','3','1'].map(function(x){return button(x+'-POINT CARD','score-'+x,(picked['score'+x]?'green':'secondary'))}).join('')+'</div><p id="scoreeffect">The 30-point card lets you draw five cards. Try it first!</p>';
-if(n===9)h+='<div class="prompt">Explore the 20 Magic Cards (tap any three)</div><div class="magiclist">'+spells.map(function(s,i){return '<button class="magicbtn '+(picked['spell'+i]?'active':'')+'" type="button" data-do="spell-'+i+'">'+(i+1)+'. '+s[0]+'</button>'}).join('')+'</div><div class="magicdesc" id="magicdesc">Pick a card to read its unique name and current Mode 3 effect.</div>';
-if(n===10)h+='<div class="prompt">An opponent draws FOOTBALL. Choose one legal Magic reaction</div><div class="buttons">'+button('SHATTER · deny football','react-shatter')+button('GOALPOST WARP · move card','react-warp')+button('SPELL SWAP · exchange','react-swap')+'</div><p class="cardsLegend">Only a holder of the matching one-use Magic Card can make that response. Exact multi-reaction priority is still awaiting confirmation.</p>';
-if(n===11)h+='<div class="prompt">Practice both end conditions</div>'+footballs(picked['finish8']?8:0)+'<div class="buttons">'+button('All 8 mini footballs claimed','finish8')+button('15-minute timer expires','finish15')+'</div>';
+if(n===9)h+='<div class="prompt">Explore the Magic Cards, then practice the exchange (tap three spells)</div><div class="magiclist">'+spells.map(function(s,i){return '<button class="magicbtn '+(picked['spell'+i]?'active':'')+'" type="button" data-do="spell-'+i+'">'+(i+1)+'. '+s[0]+'</button>'}).join('')+'</div><div class="magicdesc" id="magicdesc">Pick a spell to read its Mode 3 effect.</div><div class="buttons">'+button('Exchange 1 mini football for 1 unused Magic Card','magic-buy')+'</div>';
+if(n===10)h+='<div class="prompt">An opponent draws FOOTBALL. Choose a legal reaction</div><div class="buttons">'+button('SHATTER · deny football','react-shatter')+button('GOALPOST WARP · move card','react-warp')+button('SPELL SWAP · exchange','react-swap')+'</div><p class="cardsLegend">Call out FOOTBALL, allow reactions, finish this single draw effect, then reshuffle the card into the deck. SPELL SWAP is not an opponent-turn reaction.</p>';
+if(n===11)h+='<div class="prompt">Practice an ending and a tie</div>'+footballs(picked['finish8']?8:0)+'<div class="buttons">'+button('All 8 mini footballs claimed','finish8')+button('15-minute timer expires','finish15')+'</div>';
 h+='</div>';
-if(n===2)h+='<div class="note">Rulebook note: the exact initial regular hand size and detailed turn order are not finalized. Do not teach the old first-to-three-footballs rule.</div>';
+if(n===2)h+='<div class="note">Every player starts with five regular cards and one Magic Card. At the end of each normal turn, draw one card. Multiple eligible cards may be played; finish each card effect before moving on.</div>';
 if(n===8)h+='<div class="note">Card values are labels only: 30 = draw 5; 20 = cancel a card ability; 10 = end turn, then draw 3 on your next turn; 6 = reorder top 5; 3 = reveal top 3; 1 = reshuffle the draw pile and draw 1.</div>';
-if(n===11)h+='<div class="note">Tied-player tiebreakers and some card-response rules are still pending. Check the rulebook before using them in a real game.</div>';
+if(n===11)h+='<div class="note">Tied leaders enter a 10-minute Football Scramble; Magic is dealt evenly and cannot be purchased. The older detailed scramble procedure is still awaiting verification in the rulebook.</div>';
 lesson.innerHTML=h;
 feedback.textContent=seen[n]||'';
 back.disabled=n===0;next.disabled=!done();
@@ -133,18 +133,19 @@ next.textContent=n===lessons.length-1?'OPEN RULEBOOK →':'NEXT →';
 }
 function jump(k){n=k;render();document.getElementById('panel').focus();}
 function action(s){
-if(s==='football'&&n===0){picked[0]=true;complete('You earned one mini football! Seven remain in the shared supply.');render();feedback.textContent=seen[n]='You earned one mini football! Seven remain in the shared supply.';return}
+if(s==='football'&&n===0){picked[0]=true;complete('You announced FOOTBALL and gave others time to react. No one responded, so take one mini football.');render();feedback.textContent=seen[n]='You announced FOOTBALL and gave others time to react. No one responded, so take one mini football.';return}
 if(n===1&&['magic','mixed','roles'].indexOf(s)>=0){picked[s]=true;if(picked.magic&&picked.mixed&&picked.roles)complete('Setup piles sorted! Only one Magic Card is dealt to each player.');else feedbackOnly('Good! Tap the remaining piles.');return}
-if(n===2&&['deal-magic','place-balls','start-clock'].indexOf(s)>=0){picked[s]=true;if(picked['deal-magic']&&picked['place-balls']&&picked['start-clock'])complete('Ready for the first turn. Magic is one-use only!');else feedbackOnly('Great. Complete the other setup steps.');return}
+if(n===2&&['deal-magic','deal-five','insert-ball','place-balls','start-clock'].indexOf(s)>=0){picked[s]=true;if(['deal-magic','deal-five','insert-ball','place-balls','start-clock'].every(function(k){return picked[k]}))complete('All set! Five regular cards each; FOOTBALL was shuffled in only after the deal.');else feedbackOnly('Good. Complete all five setup steps.');return}
 if(n===3){if(s==='run'){complete('RUN draws one card. A FOOTBALL draw earns a mini football unless a legal reaction prevents it.');return}else{feedbackOnly('Try RUN. FOOTBALL is what you hope to draw.');return}}
 if(n===4){if(s==='pass-football'){complete('You kept FOOTBALL and give BLOCK to another player. Resolve any legal reaction, then score the FOOTBALL draw.');return}else{feedbackOnly('You could give FOOTBALL away, but to practice scoring, keep it!');return}}
-if(n===5){if(s==='block'){complete('BLOCK cancels the TACKLE. Put your BLOCK in the discard pile.');return}else{feedbackOnly('TACKLE does not cancel another TACKLE. Use BLOCK.');return}}
+if(n===5){if(s==='block'){complete('BLOCK cancels the TACKLE. Put your BLOCK in the discard pile.');return}else{feedbackOnly('Play BLOCK to cancel their TACKLE. TACKLE itself is used on the active player’s turn.');return}}
 if(n===6){if(s==='interception'){complete('INTERCEPTION takes the card the passer kept. BLOCK can stop this.');return}else{feedbackOnly('RUN draws a card; INTERCEPTION reacts to PASS.');return}}
 if(n===7&&s==='strip'){state.dir*=-1;complete('Direction reversed. STRIP keeps its physical card name.');render();feedback.textContent=seen[n]='Direction reversed. STRIP keeps its physical card name.';return}
-if(n===8&&s.indexOf('score-')===0){var val=s.slice(6);picked['score'+val]=true;var effects={'30':'Immediately draw five cards.','20':'Cancel the ability of any one card.','10':'End your turn now; draw three cards on your next turn.','6':'Privately examine and reorder the top five cards.','3':'Reveal the top three cards to everybody without changing their order.','1':'Reshuffle the shared draw pile, then draw one card.'};document.getElementById('scoreeffect').textContent=val+'-POINT CARD: '+effects[val];if(['30','20','10','6','3','1'].every(function(v){return picked['score'+v]}))complete('You have reviewed all six Scoring Card abilities. These values are not points in Mode 3.');return}
+if(n===8&&s.indexOf('score-')===0){var val=s.slice(6);picked['score'+val]=true;var effects={'30':'Immediately draw five cards.','20':'Cancel one Action or numbered Scoring Card ability—not Magic or FOOTBALL.','10':'End your turn now; draw three cards on your next turn.','6':'Privately examine and reorder the top five cards.','3':'Reveal the top three cards to everybody without changing their order.','1':'Reshuffle the shared draw pile, then draw one card.'};document.getElementById('scoreeffect').textContent=val+'-POINT CARD: '+effects[val];if(['30','20','10','6','3','1'].every(function(v){return picked['score'+v]}))complete('You have reviewed all six Scoring Card abilities. These values are not points in Mode 3.');return}
+if(n===9&&s==='magic-buy'){picked['magic-buy']=true;feedbackOnly('Spend one mini football to draw one unused Magic Card. Used Magic Cards stay face up in the Magic discard.');return}
 if(n===9&&s.indexOf('spell-')===0){var idx=Number(s.slice(6));if(!isFinite(idx)||idx<0||idx>=spells.length)return;picked['spell'+idx]=true;document.getElementById('magicdesc').innerHTML='<strong>'+spells[idx][0]+'</strong><p>'+spells[idx][1]+'</p>';document.querySelectorAll('.magicbtn').forEach(function(el,j){el.classList.toggle('active',!!picked['spell'+j])});if(spells.filter(function(z,j){return picked['spell'+j]}).length>=3){complete('You explored at least three spells. Browse all 20 or continue.');}return}
-if(n===10&&s.indexOf('react-')===0){var out={'react-shatter':'SHATTER stops this mini football from being awarded.','react-warp':'GOALPOST WARP inserts FOOTBALL one card deeper into the draw pile.','react-swap':'SPELL SWAP trades a card from your hand for FOOTBALL before it scores.'};complete(out[s]);return}
-if(n===11&&(s==='finish8'||s==='finish15')){picked[s]=true;complete(s==='finish8'?'All eight have been claimed: the player with the most wins.':'Time is up: the player with the most mini footballs wins.');render();feedback.textContent=seen[n]=(s==='finish8'?'All eight have been claimed: the player with the most wins.':'Time is up: the player with the most mini footballs wins.');return}
+if(n===10&&s.indexOf('react-')===0){var out={'react-shatter':'SHATTER prevents this FOOTBALL from awarding a mini football.','react-warp':'GOALPOST WARP returns FOOTBALL just below the top card, without awarding a mini football.'};if(s==='react-swap'){feedbackOnly('Not now! SPELL SWAP is only playable during your own turn. Choose SHATTER or GOALPOST WARP.');return}complete(out[s]);return}
+if(n===11&&(s==='finish8'||s==='finish15'||s==='finish-tie')){picked[s]=true;var msg=s==='finish-tie'?'Tied leaders enter 10 minutes of Football Scramble. Deal Magic evenly; no Magic purchases during overtime.':(s==='finish8'?'Eight mini footballs claimed. Compare each player’s total.':'15 minutes are up. Compare each player’s total.');complete(msg);render();feedback.textContent=seen[n]=msg;return}
 }
 document.addEventListener('click',function(e){
 var target=e.target.closest('[data-do]');if(target){action(target.getAttribute('data-do'));return}
