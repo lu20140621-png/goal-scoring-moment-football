@@ -47,7 +47,7 @@ a{color:inherit}.wrap{width:min(1120px,100%);margin:auto;padding:13px 14px 65px}
 <body>
 <div class="wrap">
 <header class="top"><div class="brand">🏈 TAILS &amp; TACKLES <small style="font:800 10px Arial,sans-serif;display:block;letter-spacing:.1em;margin-top:5px">PIGSKIN FRENZY · INTERACTIVE TUTORIAL</small></div>
-<div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261120-mode3-30-text-clear">📖 RULEBOOK</a></div></header>
+<div class="links"><a href="casual-en.html">← MODE 3</a><a href="casual-rules-en.html?v=20261119-mode3-pass5-intercept">📖 RULEBOOK</a></div></header>
 <div class="hero"><span class="badge">MODE 3 · EASY</span><h1>LEARN AS YOU PLAY</h1><p>Follow the coach through 13 short, hands-on lessons. Tap cards to practice real examples, then use the rulebook to play at the table.</p>
 <div class="badges"><span class="badge">⏱️ 15 MINUTES</span><span class="badge">🏈 8 MINI FOOTBALLS</span><span class="badge">🪄 1 MAGIC EACH TO START</span></div></div>
 <div class="progress"><b id="progressLabel">LESSON 1 / 13</b><div class="track"><div class="bar" id="bar"></div></div></div>
@@ -168,7 +168,7 @@ var target=e.target.closest('[data-do]');if(target){action(target.getAttribute('
 var go=e.target.closest('[data-jump]');if(go){jump(Number(go.getAttribute('data-jump')))}
 });
 back.addEventListener('click',function(){if(n>0)jump(n-1)});
-next.addEventListener('click',function(){if(!done())return;if(n===lessons.length-1){location.href='casual-rules-en.html?v=20261120-mode3-30-text-clear'}else jump(n+1)});
+next.addEventListener('click',function(){if(!done())return;if(n===lessons.length-1){location.href='casual-rules-en.html?v=20261119-mode3-pass5-intercept'}else jump(n+1)});
 render();
 })();
 </script></body></html>
